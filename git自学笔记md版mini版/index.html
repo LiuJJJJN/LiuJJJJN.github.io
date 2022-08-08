@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">GIT自学笔记md版mini版 - LiuJN 的个人博客</title><meta name="Description" content="This is LiuJN"><meta property="og:title" content="GIT自学笔记md版mini版" />
+<meta property="og:description" content="GIT 大连交通大学 信息学院 刘嘉宁 2021-10-17 笔记摘自链接：bjpowernode 李宁 GIT：版本控制工具 一个开源的分布式版本控制系统，可以有效，高速的管理" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://liujjjjn.github.io/git%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88mini%E7%89%88/" /><meta property="og:image" content="https://liujjjjn.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-10-17T00:00:00+08:00" />
+<meta property="article:modified_time" content="2021-10-17T00:00:00+08:00" /><meta property="og:site_name" content="刘嘉宁的个人博客" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://liujjjjn.github.io/logo.png"/>
+
+<meta name="twitter:title" content="GIT自学笔记md版mini版"/>
+<meta name="twitter:description" content="GIT 大连交通大学 信息学院 刘嘉宁 2021-10-17 笔记摘自链接：bjpowernode 李宁 GIT：版本控制工具 一个开源的分布式版本控制系统，可以有效，高速的管理"/>
+<meta name="application-name" content="LiuJN">
+<meta name="apple-mobile-web-app-title" content="LiuJN">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://liujjjjn.github.io/git%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88mini%E7%89%88/" /><link rel="next" href="https://liujjjjn.github.io/git%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "GIT自学笔记md版mini版",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/liujjjjn.github.io\/git%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88mini%E7%89%88\/"
+        },"genre": "posts","wordcount":  1384 ,
+        "url": "https:\/\/liujjjjn.github.io\/git%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88mini%E7%89%88\/","datePublished": "2021-10-17T00:00:00+08:00","dateModified": "2021-10-17T00:00:00+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "刘嘉宁"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="auto" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark');}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="LiuJN 的个人博客">刘嘉宁的个人博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="LiuJN 的个人博客">刘嘉宁的个人博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "false")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">GIT自学笔记md版mini版</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://liujjjjn.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author">刘嘉宁</a>
+                </span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-17">2021-10-17</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2021-10-17">2021-10-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1384 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#git版本控制工具">GIT：版本控制工具</a></li>
+    <li><a href="#git的作用">GIT的作用</a></li>
+    <li><a href="#git的优点">GIT的优点</a></li>
+    <li><a href="#git的目录">GIT的目录</a></li>
+    <li><a href="#git常用命令">GIT常用命令</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#查看版本号-git---version">查看版本号 <code>git --version</code></a></li>
+            <li><a href="#创建本地仓库-git-init">创建本地仓库 <code>git init</code></a></li>
+            <li><a href="#工作目录添加到暂存区-add">工作目录<strong>添加</strong>到暂存区 <code>add</code></a></li>
+            <li><a href="#暂存区还原到工作目录--reset">暂存区<strong>还原</strong>到工作目录  <code>reset</code></a></li>
+            <li><a href="#暂存区提交到本地仓库-commit">暂存区<strong>提交</strong>到本地仓库 <code>commit</code></a></li>
+            <li><a href="#查看暂存区文件状态-git-status">查看暂存区文件状态 <code>git status</code></a></li>
+            <li><a href="#设置签名config">设置签名<code>config</code></a></li>
+            <li><a href="#查看日志信息-log">查看日志信息 <code>log</code></a></li>
+            <li><a href="#版本切换-reset">版本切换 <code>reset</code></a></li>
+            <li><a href="#文件删除-rm">文件删除 <code>rm</code></a></li>
+            <li><a href="#文件找回-restore">文件找回 <code>restore</code></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#分支管理">分支管理</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#创建分支branch">创建分支<code>branch</code></a></li>
+            <li><a href="#查看分支branch">查看分支<code>branch</code></a></li>
+            <li><a href="#切换分支checkout">切换分支<code>checkout</code></a></li>
+            <li><a href="#创建并切换分支checkout--b">创建并切换分支<code>checkout -b</code></a></li>
+            <li><a href="#删除分支branch--d">删除分支<code>branch -d</code></a></li>
+            <li><a href="#强制删除分支branch--d">强制删除分支<code>branch -D</code></a></li>
+            <li><a href="#分支合并merge">分支合并<code>merge</code></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#远程仓库">远程仓库</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#本地仓库关联远程仓库remote-add">本地仓库关联远程仓库<code>remote add</code></a></li>
+            <li><a href="#查看关联的远程仓库信息remote--v">查看关联的远程仓库信息<code>remote -v</code></a></li>
+            <li><a href="#删除与远程仓库的关联关系remote-remove">删除与远程仓库的关联关系<code>remote remove</code></a></li>
+            <li><a href="#将本地仓库推送到远程仓库push">将本地仓库推送到远程仓库<code>push</code></a></li>
+            <li><a href="#删除远程仓库分支push--d">删除远程仓库分支<code>push -d</code></a></li>
+            <li><a href="#克隆代码到本地仓库clone">克隆代码到本地仓库<code>clone</code></a></li>
+            <li><a href="#拉取分支到本地仓库pull">拉取分支到本地仓库<code>pull</code></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="git" class="headerLink">
+    <a href="#git" class="header-mark"></a>GIT</h1><blockquote>
+<p>大连交通大学 信息学院 刘嘉宁 2021-10-17</p>
+<p>笔记摘自链接：bjpowernode 李宁</p>
+</blockquote>
+<h2 id="git版本控制工具" class="headerLink">
+    <a href="#git%e7%89%88%e6%9c%ac%e6%8e%a7%e5%88%b6%e5%b7%a5%e5%85%b7" class="header-mark"></a>GIT：版本控制工具</h2><ul>
+<li>
+<p>一个开源的分布式版本控制系统，可以有效，高速的管理项目版本。</p>
+</li>
+<li>
+<p>用于存储，追踪目录和文件的修改历史</p>
+</li>
+</ul>
+<h2 id="git的作用" class="headerLink">
+    <a href="#git%e7%9a%84%e4%bd%9c%e7%94%a8" class="header-mark"></a>GIT的作用</h2><ul>
+<li>协同开发</li>
+<li>版本控制</li>
+<li>数据备份</li>
+<li>权限控制</li>
+<li>分支管理</li>
+</ul>
+<h2 id="git的优点" class="headerLink">
+    <a href="#git%e7%9a%84%e4%bc%98%e7%82%b9" class="header-mark"></a>GIT的优点</h2><ul>
+<li>
+<p>适合分布式，强调个体。</p>
+</li>
+<li>
+<p>公共服务器压力和数据量都不大。</p>
+</li>
+<li>
+<p>速度快，灵活。</p>
+</li>
+<li>
+<p>相对容易的解决冲突。</p>
+</li>
+<li>
+<p>大部分操作在本地完成，不需要联网。</p>
+</li>
+<li>
+<p>以快照流的方式工作。</p>
+</li>
+</ul>
+<h2 id="git的目录" class="headerLink">
+    <a href="#git%e7%9a%84%e7%9b%ae%e5%bd%95" class="header-mark"></a>GIT的目录</h2><ul>
+<li>工作目录
+<ul>
+<li>保存代码的文件夹</li>
+</ul>
+</li>
+<li>暂存区
+<ul>
+<li>类似于回收站，暂时保存代码用</li>
+</ul>
+</li>
+<li>本地仓库
+<ul>
+<li>git init 创建出来的 .git 隐藏目录</li>
+</ul>
+</li>
+<li>远程仓库
+<ul>
+<li>代码的托管平台 Github / Gitee</li>
+</ul>
+</li>
+</ul>
+<h2 id="git常用命令" class="headerLink">
+    <a href="#git%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4" class="header-mark"></a>GIT常用命令</h2><p>移动到Git中test文件夹：<code>cd D:/Document/Git/test</code></p>
+<p>==git是不会管理空文件夹的==</p>
+<p><img
+        class="lazyload"
+        data-src="GIT%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0md%e7%89%88.assets/image-20211017160227536.png"
+        data-srcset="GIT%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0md%e7%89%88.assets/image-20211017160227536.png, GIT%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0md%e7%89%88.assets/image-20211017160227536.png 1.5x, GIT%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0md%e7%89%88.assets/image-20211017160227536.png 2x"
+        data-sizes="auto"
+        alt="GIT自学笔记md版.assets/image-20211017160227536.png"
+        title="image-20211017160227536"></p>
+<h4 id="查看版本号-git---version" class="headerLink">
+    <a href="#%e6%9f%a5%e7%9c%8b%e7%89%88%e6%9c%ac%e5%8f%b7-git---version" class="header-mark"></a>查看版本号 <code>git --version</code></h4><p><img
+        class="lazyload"
+        data-src="GIT%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0md%e7%89%88.assets/image-20211017161841111.png"
+        data-srcset="GIT%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0md%e7%89%88.assets/image-20211017161841111.png, GIT%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0md%e7%89%88.assets/image-20211017161841111.png 1.5x, GIT%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0md%e7%89%88.assets/image-20211017161841111.png 2x"
+        data-sizes="auto"
+        alt="GIT自学笔记md版.assets/image-20211017161841111.png"
+        title="image-20211017161841111"></p>
+<h4 id="创建本地仓库-git-init" class="headerLink">
+    <a href="#%e5%88%9b%e5%bb%ba%e6%9c%ac%e5%9c%b0%e4%bb%93%e5%ba%93-git-init" class="header-mark"></a>创建本地仓库 <code>git init</code></h4><ul>
+<li>本地仓库创建后会出现一个隐藏的 .git 文件夹</li>
+</ul>
+<h4 id="工作目录添加到暂存区-add" class="headerLink">
+    <a href="#%e5%b7%a5%e4%bd%9c%e7%9b%ae%e5%bd%95%e6%b7%bb%e5%8a%a0%e5%88%b0%e6%9a%82%e5%ad%98%e5%8c%ba-add" class="header-mark"></a>工作目录<strong>添加</strong>到暂存区 <code>add</code></h4><ul>
+<li><code>git add 文件</code></li>
+<li><code>git add .</code> 提交当前目录所有文件</li>
+</ul>
+<h4 id="暂存区还原到工作目录--reset" class="headerLink">
+    <a href="#%e6%9a%82%e5%ad%98%e5%8c%ba%e8%bf%98%e5%8e%9f%e5%88%b0%e5%b7%a5%e4%bd%9c%e7%9b%ae%e5%bd%95--reset" class="header-mark"></a>暂存区<strong>还原</strong>到工作目录  <code>reset</code></h4><ul>
+<li><code>git reset 文件</code> 删除暂存区中的该文件</li>
+</ul>
+<h4 id="暂存区提交到本地仓库-commit" class="headerLink">
+    <a href="#%e6%9a%82%e5%ad%98%e5%8c%ba%e6%8f%90%e4%ba%a4%e5%88%b0%e6%9c%ac%e5%9c%b0%e4%bb%93%e5%ba%93-commit" class="header-mark"></a>暂存区<strong>提交</strong>到本地仓库 <code>commit</code></h4><ul>
+<li><code>git commit</code></li>
+<li><code>git commit -m &quot;日志信息&quot;</code></li>
+<li><code>git commit --amend -m &quot;日志信息&quot;</code> 重新提交日志信息</li>
+</ul>
+<h4 id="查看暂存区文件状态-git-status" class="headerLink">
+    <a href="#%e6%9f%a5%e7%9c%8b%e6%9a%82%e5%ad%98%e5%8c%ba%e6%96%87%e4%bb%b6%e7%8a%b6%e6%80%81-git-status" class="header-mark"></a>查看暂存区文件状态 <code>git status</code></h4><ul>
+<li>已跟踪文件：绿色，已经添加到暂存区【以跟踪】</li>
+<li>未跟踪文件：红色，未添加到暂存区【未跟踪】
+<ul>
+<li><code>git restore HEAD 文件名</code> 让文件变为【未跟踪】状态</li>
+</ul>
+</li>
+</ul>
+<h4 id="设置签名config" class="headerLink">
+    <a href="#%e8%ae%be%e7%bd%ae%e7%ad%be%e5%90%8dconfig" class="header-mark"></a>设置签名<code>config</code></h4><ul>
+<li>
+<p>设置签名（用户名，邮箱）</p>
+<p>​	<code>git config user.name &quot;LiuJN&quot;</code></p>
+<p>​	<code>git config user.email &quot;LiuJaNing@163.com&quot;</code></p>
+</li>
+<li>
+<p>设置全局签名（用户名，邮箱）</p>
+<p>​	<code>git config --global user.name &quot;LiuJN&quot;</code></p>
+<p>​	<code>git config --global user.email &quot;LiuJaNing@163.com&quot;</code></p>
+</li>
+<li>
+<p><code>git config --list</code> 查看当前所有 config 信息</p>
+</li>
+</ul>
+<h4 id="查看日志信息-log" class="headerLink">
+    <a href="#%e6%9f%a5%e7%9c%8b%e6%97%a5%e5%bf%97%e4%bf%a1%e6%81%af-log" class="header-mark"></a>查看日志信息 <code>log</code></h4><ul>
+<li>
+<p><code>git log</code>  查看当前日志信息，当前时间节点的日志信息</p>
+</li>
+<li>
+<p><code>git reflog</code>  查看本地仓库更新历史记录</p>
+</li>
+</ul>
+<h4 id="版本切换-reset" class="headerLink">
+    <a href="#%e7%89%88%e6%9c%ac%e5%88%87%e6%8d%a2-reset" class="header-mark"></a>版本切换 <code>reset</code></h4><ul>
+<li><code>git reset --hard 版本的Hash值</code></li>
+</ul>
+<h4 id="文件删除-rm" class="headerLink">
+    <a href="#%e6%96%87%e4%bb%b6%e5%88%a0%e9%99%a4-rm" class="header-mark"></a>文件删除 <code>rm</code></h4><ul>
+<li>
+<p>文件被删除之后，还需要 添加、提交 操作让本地仓库知道文件已经被删除</p>
+</li>
+<li>
+<p>通过 git 命令删除文件  <code>rm</code></p>
+<ul>
+<li><code>git rm 文件名</code> 删除工作目录、缓存区中的文件，直接提交即可</li>
+</ul>
+</li>
+</ul>
+<h4 id="文件找回-restore" class="headerLink">
+    <a href="#%e6%96%87%e4%bb%b6%e6%89%be%e5%9b%9e-restore" class="header-mark"></a>文件找回 <code>restore</code></h4><ul>
+<li>
+<p>==删除的文件如果已经提交则无法找回==</p>
+<ul>
+<li>
+<p><code>git restore 文件名</code> 找回添加到暂存区后被删除的文件</p>
+</li>
+<li>
+<p><code>git restore --staged 文件名</code> 找回使用 git rm 命令删除的文件到暂存区，然后 <code>git restore 文件名</code> 找回文件到工作目录</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="分支管理" class="headerLink">
+    <a href="#%e5%88%86%e6%94%af%e7%ae%a1%e7%90%86" class="header-mark"></a>分支管理</h2><h4 id="创建分支branch" class="headerLink">
+    <a href="#%e5%88%9b%e5%bb%ba%e5%88%86%e6%94%afbranch" class="header-mark"></a>创建分支<code>branch</code></h4><ul>
+<li>
+<p><code>git branch 分支名</code></p>
+<ul>
+<li>创建出来的分支基于当前分支的代码，创建之后分支的操作互不影响</li>
+</ul>
+</li>
+</ul>
+<h4 id="查看分支branch" class="headerLink">
+    <a href="#%e6%9f%a5%e7%9c%8b%e5%88%86%e6%94%afbranch" class="header-mark"></a>查看分支<code>branch</code></h4><ul>
+<li><code>git branch</code></li>
+</ul>
+<h4 id="切换分支checkout" class="headerLink">
+    <a href="#%e5%88%87%e6%8d%a2%e5%88%86%e6%94%afcheckout" class="header-mark"></a>切换分支<code>checkout</code></h4><ul>
+<li><code>git checkout 分支名</code></li>
+</ul>
+<h4 id="创建并切换分支checkout--b" class="headerLink">
+    <a href="#%e5%88%9b%e5%bb%ba%e5%b9%b6%e5%88%87%e6%8d%a2%e5%88%86%e6%94%afcheckout--b" class="header-mark"></a>创建并切换分支<code>checkout -b</code></h4><ul>
+<li><code>git checkout -b 分支名称</code></li>
+</ul>
+<h4 id="删除分支branch--d" class="headerLink">
+    <a href="#%e5%88%a0%e9%99%a4%e5%88%86%e6%94%afbranch--d" class="header-mark"></a>删除分支<code>branch -d</code></h4><ul>
+<li>无法删除当前所处的分支</li>
+<li><code>git branch -d 分支名</code></li>
+</ul>
+<h4 id="强制删除分支branch--d" class="headerLink">
+    <a href="#%e5%bc%ba%e5%88%b6%e5%88%a0%e9%99%a4%e5%88%86%e6%94%afbranch--d" class="header-mark"></a>强制删除分支<code>branch -D</code></h4><ul>
+<li>如果分支已经被修改过，必须使用强制删除</li>
+<li><code>git branch -D 分支名</code></li>
+</ul>
+<h4 id="分支合并merge" class="headerLink">
+    <a href="#%e5%88%86%e6%94%af%e5%90%88%e5%b9%b6merge" class="header-mark"></a>分支合并<code>merge</code></h4><ul>
+<li><code>git merge 目标分支的名称</code> 将目标分支的内容合并到当前分支</li>
+</ul>
+<h2 id="远程仓库" class="headerLink">
+    <a href="#%e8%bf%9c%e7%a8%8b%e4%bb%93%e5%ba%93" class="header-mark"></a>远程仓库</h2><h4 id="本地仓库关联远程仓库remote-add" class="headerLink">
+    <a href="#%e6%9c%ac%e5%9c%b0%e4%bb%93%e5%ba%93%e5%85%b3%e8%81%94%e8%bf%9c%e7%a8%8b%e4%bb%93%e5%ba%93remote-add" class="header-mark"></a>本地仓库关联远程仓库<code>remote add</code></h4><ul>
+<li><code>git remote add 远程仓库名 远程仓库地址</code></li>
+</ul>
+<h4 id="查看关联的远程仓库信息remote--v" class="headerLink">
+    <a href="#%e6%9f%a5%e7%9c%8b%e5%85%b3%e8%81%94%e7%9a%84%e8%bf%9c%e7%a8%8b%e4%bb%93%e5%ba%93%e4%bf%a1%e6%81%afremote--v" class="header-mark"></a>查看关联的远程仓库信息<code>remote -v</code></h4><ul>
+<li><code>git remote -v</code></li>
+</ul>
+<h4 id="删除与远程仓库的关联关系remote-remove" class="headerLink">
+    <a href="#%e5%88%a0%e9%99%a4%e4%b8%8e%e8%bf%9c%e7%a8%8b%e4%bb%93%e5%ba%93%e7%9a%84%e5%85%b3%e8%81%94%e5%85%b3%e7%b3%bbremote-remove" class="header-mark"></a>删除与远程仓库的关联关系<code>remote remove</code></h4><ul>
+<li><code>git remote remove 远程仓库名</code></li>
+</ul>
+<h4 id="将本地仓库推送到远程仓库push" class="headerLink">
+    <a href="#%e5%b0%86%e6%9c%ac%e5%9c%b0%e4%bb%93%e5%ba%93%e6%8e%a8%e9%80%81%e5%88%b0%e8%bf%9c%e7%a8%8b%e4%bb%93%e5%ba%93push" class="header-mark"></a>将本地仓库推送到远程仓库<code>push</code></h4><ul>
+<li><code>git push 远程仓库名 本地分支名</code></li>
+<li>第一支推送的分支就是远程仓库的默认分支，无法删除</li>
+</ul>
+<h4 id="删除远程仓库分支push--d" class="headerLink">
+    <a href="#%e5%88%a0%e9%99%a4%e8%bf%9c%e7%a8%8b%e4%bb%93%e5%ba%93%e5%88%86%e6%94%afpush--d" class="header-mark"></a>删除远程仓库分支<code>push -d</code></h4><ul>
+<li><code>git push -d 远程仓库名 远程仓库分支名</code></li>
+</ul>
+<h4 id="克隆代码到本地仓库clone" class="headerLink">
+    <a href="#%e5%85%8b%e9%9a%86%e4%bb%a3%e7%a0%81%e5%88%b0%e6%9c%ac%e5%9c%b0%e4%bb%93%e5%ba%93clone" class="header-mark"></a>克隆代码到本地仓库<code>clone</code></h4><ul>
+<li>
+<p><code>git clone 远程仓库地址</code> 克隆到当前文件夹下，默认放在远程仓库名称</p>
+</li>
+<li>
+<p><code>git clone 远程仓库地址 本地文件夹名称</code> 自己指定本地文件夹名称</p>
+</li>
+<li>
+<p><code>git clone -b 远程仓库分支 远程仓库地址 本地文件夹名称</code> 克隆远程仓库的分支到本地</p>
+</li>
+</ul>
+<h4 id="拉取分支到本地仓库pull" class="headerLink">
+    <a href="#%e6%8b%89%e5%8f%96%e5%88%86%e6%94%af%e5%88%b0%e6%9c%ac%e5%9c%b0%e4%bb%93%e5%ba%93pull" class="header-mark"></a>拉取分支到本地仓库<code>pull</code></h4><ul>
+<li>拉取本地仓库不存在的分支
+<ul>
+<li><code>git pull 远程仓库名 远程仓库分支名:本地仓库分支名</code></li>
+</ul>
+</li>
+<li>拉取本地仓库已经存在的分支【本地已有同名分支】
+<ul>
+<li><code>git pull 远程仓库名称 远程仓库分支名</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>强制拉取远程仓库的内容到不同版本的本地仓库中 <code>git pull origin master --allow-unrelated-histories</code></p>
+</blockquote>
+</div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-10-17</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span><a class="link-to-mardown" href=/git%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88mini%E7%89%88/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                    </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://liujjjjn.github.io/git%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88mini%E7%89%88/" data-title="GIT自学笔记md版mini版" data-ralateuid="6018937938"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://liujjjjn.github.io/git%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88mini%E7%89%88/" data-title="GIT自学笔记md版mini版"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+            <a href="/git%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" class="next" rel="next" title="GIT自学笔记md版">GIT自学笔记md版<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://liujjjjn.github.io/" target="_blank" rel="noopener noreferrer">刘嘉宁</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript></div>
+</body>
+
+</html>
