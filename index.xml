@@ -8,16 +8,6 @@
       <url>https://liujjjjn.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
       <link>https://liujjjjn.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 08 Aug 2022 16:10:19 +0800</lastBuildDate><atom:link href="https://liujjjjn.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>My First Post</title>
-      <link>https://liujjjjn.github.io/posts/my-first-post/</link>
-      <pubDate>Mon, 08 Aug 2022 16:10:19 +0800</pubDate>
-      
-      <guid>https://liujjjjn.github.io/posts/my-first-post/</guid>
-      <description>测试页面 刘嘉宁 2022-08-08 </description>
-    </item>
-    
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://liujjjjn.github.io/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
