@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">Java多线程复习笔记md版 - LiuJN 的个人博客</title><meta name="Description" content="This is LiuJN"><meta property="og:title" content="Java多线程复习笔记md版" />
+<meta property="og:description" content="Java 多线程笔记 大连交通大学 信息学院 刘嘉宁 笔记摘自 西部开源 秦疆 多线程基础 进程与线程 进程（Process）：进程就是程序的一次执行过程，是系统分配" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://liujjjjn.github.io/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0md%E7%89%88/" /><meta property="og:image" content="https://liujjjjn.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-05T00:00:00+08:00" />
+<meta property="article:modified_time" content="2022-04-05T00:00:00+08:00" /><meta property="og:site_name" content="刘嘉宁的个人博客" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://liujjjjn.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Java多线程复习笔记md版"/>
+<meta name="twitter:description" content="Java 多线程笔记 大连交通大学 信息学院 刘嘉宁 笔记摘自 西部开源 秦疆 多线程基础 进程与线程 进程（Process）：进程就是程序的一次执行过程，是系统分配"/>
+<meta name="application-name" content="LiuJN">
+<meta name="apple-mobile-web-app-title" content="LiuJN">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://liujjjjn.github.io/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0md%E7%89%88/" /><link rel="prev" href="https://liujjjjn.github.io/juc%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" /><link rel="next" href="https://liujjjjn.github.io/shiro%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Java多线程复习笔记md版",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/liujjjjn.github.io\/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0md%E7%89%88\/"
+        },"genre": "posts","wordcount":  2518 ,
+        "url": "https:\/\/liujjjjn.github.io\/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0md%E7%89%88\/","datePublished": "2022-04-05T00:00:00+08:00","dateModified": "2022-04-05T00:00:00+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "刘嘉宁"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="auto" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark');}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="LiuJN 的个人博客">刘嘉宁的个人博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="LiuJN 的个人博客">刘嘉宁的个人博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "false")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Java多线程复习笔记md版</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://liujjjjn.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author">刘嘉宁</a>
+                </span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-05">2022-04-05</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-04-05">2022-04-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2518 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#多线程基础">多线程基础</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#进程与线程">进程与线程</a></li>
+            <li><a href="#thread-类常用方法">Thread 类常用方法</a></li>
+            <li><a href="#线程的五大步骤">线程的五大步骤</a></li>
+            <li><a href="#线程的相关方法">线程的相关方法</a></li>
+            <li><a href="#线程的停止">线程的停止</a></li>
+            <li><a href="#线程的阻塞">线程的阻塞</a></li>
+            <li><a href="#线程的礼让">线程的礼让</a></li>
+            <li><a href="#线程的插队">线程的插队</a></li>
+            <li><a href="#线程的优先级">线程的优先级</a></li>
+            <li><a href="#守护线程-daemon-线程">守护线程 daemon 线程</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#线程的实现">线程的实现</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#继承-thead-类">继承 Thead 类</a></li>
+            <li><a href="#实现-runnable-接口">实现 Runnable 接口</a></li>
+            <li><a href="#实现-callable-接口">实现 Callable 接口</a></li>
+            <li><a href="#小问题">小问题</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#线程同步">线程同步</a></li>
+    <li><a href="#死锁">死锁</a></li>
+    <li><a href="#生产者和消费者问题">生产者和消费者问题</a></li>
+    <li><a href="#线程池">线程池</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="java-多线程笔记" class="headerLink">
+    <a href="#java-%e5%a4%9a%e7%ba%bf%e7%a8%8b%e7%ac%94%e8%ae%b0" class="header-mark"></a>Java 多线程笔记</h1><blockquote>
+<p>大连交通大学 信息学院 刘嘉宁</p>
+<p>笔记摘自 西部开源 秦疆</p>
+</blockquote>
+<h2 id="多线程基础" class="headerLink">
+    <a href="#%e5%a4%9a%e7%ba%bf%e7%a8%8b%e5%9f%ba%e7%a1%80" class="header-mark"></a>多线程基础</h2><h4 id="进程与线程" class="headerLink">
+    <a href="#%e8%bf%9b%e7%a8%8b%e4%b8%8e%e7%ba%bf%e7%a8%8b" class="header-mark"></a>进程与线程</h4><ul>
+<li>进程（Process）：进程就是程序的一次执行过程，是系统分配的单位，操作系统在执行时里面有很多进程</li>
+<li>线程（Thread）：一个进程中可以有一至多个线程，是 CPU 调度和执行的单位，真正的线程是多个核心每个核心处理一个线程</li>
+</ul>
+<h4 id="thread-类常用方法" class="headerLink">
+    <a href="#thread-%e7%b1%bb%e5%b8%b8%e7%94%a8%e6%96%b9%e6%b3%95" class="header-mark"></a>Thread 类常用方法</h4><ul>
+<li><code>Thread.currentThread()</code> 获取当前线程</li>
+<li><code>Thread.currentThread().getName()</code> 获取当前线程 name</li>
+<li><code>new Thread(t1, &quot;张三&quot;)</code> 创建线程对象时，为线程设置 name</li>
+<li><code>Thread.sleep(200);</code> 设置阻塞，单位 ms</li>
+</ul>
+<h4 id="线程的五大步骤" class="headerLink">
+    <a href="#%e7%ba%bf%e7%a8%8b%e7%9a%84%e4%ba%94%e5%a4%a7%e6%ad%a5%e9%aa%a4" class="header-mark"></a>线程的五大步骤</h4><ol>
+<li>新建</li>
+<li>就绪</li>
+<li>运行</li>
+<li>阻塞</li>
+<li>终止</li>
+</ol>
+<img src="Java多线程复习笔记md版.assets/image-20220325205456137.png" alt="image-20220325205456137" style="zoom: 33%;" />
+<h4 id="线程的相关方法" class="headerLink">
+    <a href="#%e7%ba%bf%e7%a8%8b%e7%9a%84%e7%9b%b8%e5%85%b3%e6%96%b9%e6%b3%95" class="header-mark"></a>线程的相关方法</h4><ul>
+<li><code>final void setPriority(int newPriority)</code> 更改线程的优先级</li>
+<li><code>static void sleep(long millis)</code> 【休眠】</li>
+<li><code>void join()</code> 等待该线程终止，【插队】</li>
+<li><code>static void yield()</code> 暂停当前正在执行的线程对象，【礼让】</li>
+<li><code>void interrupt()</code> 中断线程（勿用）</li>
+<li><code>boolean isAlive()</code> 测试线程是否处于活动状态</li>
+<li><code>Thread.state getState()</code> 获取线程的状态（NEW、RUNNABLE、BLOCKED、WAITING、TIMED_WAITING、TERMINATED）</li>
+</ul>
+<h4 id="线程的停止" class="headerLink">
+    <a href="#%e7%ba%bf%e7%a8%8b%e7%9a%84%e5%81%9c%e6%ad%a2" class="header-mark"></a>线程的停止</h4><ul>
+<li><code>stop()</code>、<code>destory()</code> 已经被标识过时不建议使用</li>
+<li>让线程自己停下来【推荐】</li>
+<li>设置一个标记位，当其值为 flase 时，终止其循环</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">MyThread</span> <span class="kd">implements</span> <span class="n">Runnable</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">boolean</span> <span class="n">flag</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">1</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="o">(</span><span class="n">flag</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">i</span><span class="o">++);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">stop</span><span class="o">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">flag</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="线程的阻塞" class="headerLink">
+    <a href="#%e7%ba%bf%e7%a8%8b%e7%9a%84%e9%98%bb%e5%a1%9e" class="header-mark"></a>线程的阻塞</h4><ol>
+<li><code>Thread.sleep(1000ms)</code> 【静态方法】
+<ul>
+<li>每个线程都有一把锁，sleep 不会释放锁</li>
+</ul>
+</li>
+<li><code>wait()</code></li>
+<li>同步锁定时</li>
+</ol>
+<h4 id="线程的礼让" class="headerLink">
+    <a href="#%e7%ba%bf%e7%a8%8b%e7%9a%84%e7%a4%bc%e8%ae%a9" class="header-mark"></a>线程的礼让</h4><ul>
+<li><code>Thread.yield()</code>【静态方法】</li>
+<li>让当前线程从运行状态变为就绪状态，暂停一下</li>
+<li>cpu 会重新调度线程，不一定会礼让成功</li>
+</ul>
+<h4 id="线程的插队" class="headerLink">
+    <a href="#%e7%ba%bf%e7%a8%8b%e7%9a%84%e6%8f%92%e9%98%9f" class="header-mark"></a>线程的插队</h4><ul>
+<li><code>t.join()</code></li>
+<li>让 t 线程强制执行，其它线程阻塞，执行结束后其他线程才可继续</li>
+</ul>
+<h4 id="线程的优先级" class="headerLink">
+    <a href="#%e7%ba%bf%e7%a8%8b%e7%9a%84%e4%bc%98%e5%85%88%e7%ba%a7" class="header-mark"></a>线程的优先级</h4><ul>
+<li><code>getPriority().setPriority(5)</code></li>
+<li>线程的优先级由 1 ~ 10 表示，优先级越高权重就越大，但调度器未必完全按优先级来执行</li>
+</ul>
+<h4 id="守护线程-daemon-线程" class="headerLink">
+    <a href="#%e5%ae%88%e6%8a%a4%e7%ba%bf%e7%a8%8b-daemon-%e7%ba%bf%e7%a8%8b" class="header-mark"></a>守护线程 daemon 线程</h4><ul>
+<li>线程分为<strong>用户线程</strong>和<strong>守护线程</strong></li>
+<li>JVM 不会等待守护线程执行完毕</li>
+<li><code>setDaemon(true)</code> 设置一个线程为守护线程</li>
+</ul>
+<h2 id="线程的实现" class="headerLink">
+    <a href="#%e7%ba%bf%e7%a8%8b%e7%9a%84%e5%ae%9e%e7%8e%b0" class="header-mark"></a>线程的实现</h2><ul>
+<li>run 方法：线程执行的内容</li>
+<li>start 方法：开启线程的方法，线程开启不一定立即执行，由 CPU 调度执行</li>
+</ul>
+<h4 id="继承-thead-类" class="headerLink">
+    <a href="#%e7%bb%a7%e6%89%bf-thead-%e7%b1%bb" class="header-mark"></a>继承 Thead 类</h4><blockquote>
+<p>OOP 单继承局限性</p>
+</blockquote>
+<ul>
+<li>创建一个类，继承 Thread 类 <code>class 线程对象 extends Thread</code></li>
+<li>重写 run 方法</li>
+<li>调用其 start 方法开启线程</li>
+</ul>
+<h4 id="实现-runnable-接口" class="headerLink">
+    <a href="#%e5%ae%9e%e7%8e%b0-runnable-%e6%8e%a5%e5%8f%a3" class="header-mark"></a>实现 Runnable 接口</h4><blockquote>
+<p>避免单继承的局限性，灵活方便，方便同一个对象被多个线程使用</p>
+</blockquote>
+<ul>
+<li>创建一个类，实现 Runnable 接口 <code>class 线程对象 implements Runnable</code></li>
+<li>重写 run 方法</li>
+<li>创建 Thread <strong>代理类</strong>实例 <code>Thread 代理对象 = new Thread(线程对象)</code></li>
+<li>调用代理类 srart 方法开启线程</li>
+</ul>
+<h4 id="实现-callable-接口" class="headerLink">
+    <a href="#%e5%ae%9e%e7%8e%b0-callable-%e6%8e%a5%e5%8f%a3" class="header-mark"></a>实现 Callable 接口</h4><blockquote>
+<p>可以定义返回值，可以抛出异常，实现较为复杂</p>
+</blockquote>
+<ul>
+<li>
+<p>创建一个类，实现 Callable 接口 <code>class 线程对象 implements Callable&lt;返回值类型&gt;</code></p>
+</li>
+<li>
+<p>重写 call 方法（需要抛出异常）<code>public Boolean call() throws Exception</code></p>
+</li>
+<li>
+<p>创建线程对象</p>
+</li>
+<li>
+<p>创建执行服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//													线程池数量（也就是想要创建几个线程）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">ExecutorService</span> <span class="n">service</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newFixedThreadPool</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>提交执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//想要创建几个线程就写多少行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Future</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="n">线程对象</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>获取结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//创建了几个线程就写多少行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">返回值类型</span> <span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>关闭服务 <code>service.shutdown();</code></p>
+</li>
+</ul>
+<h4 id="小问题" class="headerLink">
+    <a href="#%e5%b0%8f%e9%97%ae%e9%a2%98" class="header-mark"></a>小问题</h4><ul>
+<li>使用 Runnable 实现多线程的时候，为什么说 Thread 是代理类？
+<ul>
+<li>因为此时的 Thread 充当的就是<strong>静态代理</strong>中的代理类</li>
+<li>在 <code>new Thread(线程对象)</code> 后，Thread 类会将线程对象作为其成员变量 <code>private Runnable target;</code></li>
+<li>在启动线程后，调用 Thread 类的 run 方法实际上调用的是 <code>target.run();</code> 并对其进行<strong>访问控制</strong>、<strong>功能增强</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="线程同步" class="headerLink">
+    <a href="#%e7%ba%bf%e7%a8%8b%e5%90%8c%e6%ad%a5" class="header-mark"></a>线程同步</h2><ul>
+<li>
+<p>线程同步就是一种等待机制，多个需要同时访问此对象的线程进入<strong>线程的等待池</strong>形成<strong>队列</strong>，等待前一个线程执行完毕，后面的才能执行</p>
+</li>
+<li>
+<p>锁机制，为当前线程设置排它锁，独占资源</p>
+<ul>
+<li>
+<p>synchronized</p>
+</li>
+<li>
+<p>lock</p>
+<ul>
+<li>使用 Lock 对象充当同步锁，Lock 接口的实现类 ReentrantLock 【可重入锁】可以显式的加锁、释放锁</li>
+<li>是显式锁，需要手动关闭锁</li>
+<li>只有代码块锁，没有方法锁</li>
+<li>使用 Lock 锁减少 JVM 调度线程的时间，性能更好</li>
+</ul>
+</li>
+<li>
+<p>优先使用：Lock  &gt; 同步代码块 &gt; 同步方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">MyThread1</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">ReentrantLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ReentrantLock</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">lock</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="o">...</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//}catch (Exception e){
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">lock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p>锁机制会存在的问题：</p>
+<ul>
+<li>当一个线程持有锁，其他线程都要挂起等待</li>
+<li>多线程竞争时，加锁、释放锁，会导致较多的<strong>上下文切换</strong>、<strong>调度延时</strong>，引起性能问题</li>
+<li>如果一个优先级高的线程在等待优先级低的线程释放锁，导致<strong>性能倒置</strong></li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>为方法加锁
+<ul>
+<li>锁的是<strong>同步监视器</strong> 也就是 this</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Blank</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">money</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">buy</span><span class="o">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>添加锁方法块
+<ul>
+<li>锁的<strong>同步监视器</strong>是括号中的对象
+<ul>
+<li>this：锁 this 就是给当前这个对象整个锁起来了，相等于给银行锁起来，但是人们还在里面取钱</li>
+<li>变量：锁 变化的量 ，锁的是进行业务操作的对象，也就是账户这个类而不是银行这个类</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Account</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Blank</span><span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Account</span> <span class="n">account</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">//如果此时将fun方法上锁，就是错误的锁
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">fun</span><span class="o">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sybchronized</span> <span class="o">(</span><span class="n">account</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    		<span class="o">...</span>
+</span></span><span class="line"><span class="cl">		<span class="o">}</span>	
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="死锁" class="headerLink">
+    <a href="#%e6%ad%bb%e9%94%81" class="header-mark"></a>死锁</h2><ul>
+<li>多个线程都在等待对方释放资源，都停止执行的情形
+<ul>
+<li>互斥条件：一个资源每次只能被一个进程使用</li>
+<li>请求与保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放</li>
+<li>不剥夺条件：进程已获得的资源，在未使用完之前，不能强行剥夺</li>
+<li>循环等待条件：若干进程之间形成一种头尾相接的循环等待资源关系</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">DLTest</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">static</span> <span class="n">Integer</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">static</span> <span class="n">Integer</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">flag</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="nf">DLTest</span><span class="o">(</span><span class="kt">int</span> <span class="n">flag</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">flag</span> <span class="o">=</span> <span class="n">flag</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">makeup</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">makeup</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">flag</span> <span class="o">==</span> <span class="n">0</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">            <span class="kd">synchronized</span> <span class="o">(</span><span class="n">a</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span><span class="s">&#34; 拿到了a&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="kd">synchronized</span> <span class="o">(</span><span class="n">b</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span><span class="s">&#34; 拿到了b&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kd">synchronized</span> <span class="o">(</span><span class="n">b</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span><span class="s">&#34; 拿到了b&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="kd">synchronized</span> <span class="o">(</span><span class="n">a</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span><span class="s">&#34; 拿到了a&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">DLTest</span> <span class="n">dl1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DLTest</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">DLTest</span> <span class="n">dl2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DLTest</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">dl1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dl2</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>使用命令行查看是否死锁：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">jps //查看当前用户下的java进程的pid及基本信息
+</span></span><span class="line"><span class="cl">jstack 进程号 //查看指定进程（pid）的堆栈信息，用以分析线程情况
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<h2 id="生产者和消费者问题" class="headerLink">
+    <a href="#%e7%94%9f%e4%ba%a7%e8%80%85%e5%92%8c%e6%b6%88%e8%b4%b9%e8%80%85%e9%97%ae%e9%a2%98" class="header-mark"></a>生产者和消费者问题</h2><ul>
+<li>
+<p>生产者和消费者问题</p>
+<ul>
+<li>假设仓库中只能存放一件产品, 生产者将生产出来的产品放入仓库, 消费者将仓库中产品取走消费.</li>
+<li>如果仓库中没有产品, 则生产者将产品放入仓库, 否则停止生产并等待, 直到仓库中的产品被消费者取走为止.</li>
+<li>如果仓库中放有产品, 则消费者可以将产品取走消费, 否则停止消费并等待, 直到仓库中再次放入产品为止.</li>
+</ul>
+</li>
+<li>
+<p>只能在同步代码块中使用</p>
+<ul>
+<li>
+<p><code>wait()</code> 让线程处于等待状态，直到其他线程通知【会释放锁】</p>
+</li>
+<li>
+<p><code>notify()</code> 唤醒一个处于等待状态的线程</p>
+</li>
+<li>
+<p><code>notityAll()</code> 唤醒一个对象上所有调用 wait 的线程</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="线程池" class="headerLink">
+    <a href="#%e7%ba%bf%e7%a8%8b%e6%b1%a0" class="header-mark"></a>线程池</h2><ul>
+<li>经常创建、销毁线程对性能影响比较大</li>
+<li>使用多线程可以
+<ul>
+<li>提高相应速度</li>
+<li>降低资源消耗</li>
+<li>便于线程管理</li>
+</ul>
+</li>
+<li><code>ExecutorService</code> 线程池接口</li>
+<li><code>Executors</code> 工具类、工厂类，用于创建并返回不同类型的线程池</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.concurrent.ExecutorService</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.concurrent.Executors</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ThreadPoolTest</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//创建一个线程池，池大小为 10
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">ExecutorService</span> <span class="n">service</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newFixedThreadPool</span><span class="o">(</span><span class="n">10</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//执行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">service</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">MyThread2</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">service</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">MyThread2</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">service</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">MyThread2</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">service</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">MyThread2</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">        <span class="n">service</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">MyThread2</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//关闭线程池
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">service</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">MyThread2</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Callable 就是使用的线程池创建的线程</li>
+</ul>
+</div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-04-05</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span><a class="link-to-mardown" href=/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0md%E7%89%88/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                    </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://liujjjjn.github.io/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0md%E7%89%88/" data-title="Java多线程复习笔记md版" data-ralateuid="6018937938"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://liujjjjn.github.io/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0md%E7%89%88/" data-title="Java多线程复习笔记md版"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/juc%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" class="prev" rel="prev" title="JUC自学笔记md版"><i class="fas fa-angle-left fa-fw"></i>JUC自学笔记md版</a>
+            <a href="/shiro%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" class="next" rel="next" title="Shiro自学笔记md版">Shiro自学笔记md版<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://liujjjjn.github.io/" target="_blank" rel="noopener noreferrer">刘嘉宁</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript></div>
+</body>
+
+</html>

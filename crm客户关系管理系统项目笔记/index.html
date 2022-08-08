@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">CRM客户关系管理系统项目笔记 - LiuJN 的个人博客</title><meta name="Description" content="This is LiuJN"><meta property="og:title" content="CRM客户关系管理系统项目笔记" />
+<meta property="og:description" content="CRM：客户关系管理系统 大连交通大学 信息学院 刘嘉宁 2021-10-19 &ndash; 2022-01 笔记摘自：bjpowernode 李宁 项目使用手册： 修改 pom.xml 中 MySQL 驱动等依赖版本 创建 crm2 库并" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://liujjjjn.github.io/crm%E5%AE%A2%E6%88%B7%E5%85%B3%E7%B3%BB%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/" /><meta property="og:image" content="https://liujjjjn.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-10-17T00:00:00+08:00" />
+<meta property="article:modified_time" content="2021-10-17T00:00:00+08:00" /><meta property="og:site_name" content="刘嘉宁的个人博客" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://liujjjjn.github.io/logo.png"/>
+
+<meta name="twitter:title" content="CRM客户关系管理系统项目笔记"/>
+<meta name="twitter:description" content="CRM：客户关系管理系统 大连交通大学 信息学院 刘嘉宁 2021-10-19 &ndash; 2022-01 笔记摘自：bjpowernode 李宁 项目使用手册： 修改 pom.xml 中 MySQL 驱动等依赖版本 创建 crm2 库并"/>
+<meta name="application-name" content="LiuJN">
+<meta name="apple-mobile-web-app-title" content="LiuJN">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://liujjjjn.github.io/crm%E5%AE%A2%E6%88%B7%E5%85%B3%E7%B3%BB%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/" /><link rel="prev" href="https://liujjjjn.github.io/git%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" /><link rel="next" href="https://liujjjjn.github.io/dubbo%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "CRM客户关系管理系统项目笔记",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/liujjjjn.github.io\/crm%E5%AE%A2%E6%88%B7%E5%85%B3%E7%B3%BB%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0\/"
+        },"genre": "posts","wordcount":  3226 ,
+        "url": "https:\/\/liujjjjn.github.io\/crm%E5%AE%A2%E6%88%B7%E5%85%B3%E7%B3%BB%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0\/","datePublished": "2021-10-17T00:00:00+08:00","dateModified": "2021-10-17T00:00:00+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "刘嘉宁"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="auto" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark');}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="LiuJN 的个人博客">刘嘉宁的个人博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="LiuJN 的个人博客">刘嘉宁的个人博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "false")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">CRM客户关系管理系统项目笔记</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://liujjjjn.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author">刘嘉宁</a>
+                </span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-17">2021-10-17</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2021-10-17">2021-10-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3226 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#jsp的base标签">JSP的base标签</a></li>
+    <li><a href="#1-applicationcontext-webxml">1. applicationContext-web.xml</a></li>
+    <li><a href="#2-applicationcontext-service-xml">2. applicationContext-service .xml</a></li>
+    <li><a href="#3-applicationcontext-daoxml">3. applicationContext-dao.xml</a></li>
+    <li><a href="#项目搭建流图">项目搭建流图</a></li>
+    <li><a href="#uuid">UUID</a></li>
+    <li><a href="#ajax路径url">Ajax路径URL</a></li>
+    <li><a href="#ajax返回值resp约定定义">Ajax返回值resp约定定义</a></li>
+    <li><a href="#实体类序列化与反序列化">实体类序列化与反序列化</a></li>
+    <li><a href="#idea-的-free-mybatis-plugins-插件">IDEA 的 Free mybatis plugins 插件</a></li>
+    <li><a href="#cookie的设置">Cookie的设置</a></li>
+    <li><a href="#清除session中的数据">清除Session中的数据</a></li>
+    <li><a href="#灵活运用jstl">灵活运用JSTL</a></li>
+    <li><a href="#全选与反选">全选与反选</a></li>
+    <li><a href="#封装返回值类型实体类">封装返回值类型实体类</a></li>
+    <li><a href="#当前方法已过时标记">当前方法已过时标记</a></li>
+    <li><a href="#在mybatis动态查询的if标签中">在mybatis动态查询的if标签中</a></li>
+    <li><a href="#html设置select标签默认option">HTML：设置select标签默认option</a></li>
+    <li><a href="#poi-office-文档的-java-处理包">POI: Office 文档的 Java 处理包</a></li>
+    <li><a href="#文件-input-框的使用">文件 input 框的使用</a></li>
+    <li><a href="#调用浏览器的文件下载功能">调用浏览器的文件下载功能</a></li>
+    <li><a href="#为异步加载出的标签绑定事件">为异步加载出的标签绑定事件</a></li>
+    <li><a href="#服务器缓存">服务器缓存</a></li>
+    <li><a href="#如何将对象存至redis中">如何将对象存至Redis中？</a></li>
+    <li><a href="#jquery中获取键盘事件">JQuery中，获取键盘事件</a></li>
+    <li><a href="#关闭输入框自动提示">关闭输入框自动提示</a></li>
+    <li><a href="#bootstrap-自动补全插件">Bootstrap 自动补全插件</a></li>
+    <li><a href="#echarts-图表插件">echarts 图表插件</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="crm客户关系管理系统" class="headerLink">
+    <a href="#crm%e5%ae%a2%e6%88%b7%e5%85%b3%e7%b3%bb%e7%ae%a1%e7%90%86%e7%b3%bb%e7%bb%9f" class="header-mark"></a>CRM：客户关系管理系统</h1><blockquote>
+<p>大连交通大学 信息学院 刘嘉宁 2021-10-19 &ndash; 2022-01</p>
+<p>笔记摘自：bjpowernode 李宁</p>
+</blockquote>
+<p>项目使用手册：</p>
+<ul>
+<li>修改 pom.xml 中 MySQL 驱动等依赖版本</li>
+<li>创建 crm2 库并导入 crm2.sql</li>
+<li>在 crm/utils/RedisUtil.java 中配置 Jedis 连接信息</li>
+</ul>
+<p>项目演示：</p>
+<ul>
+<li><a href="http://49.232.2.175:8080/crm" target="_blank" rel="noopener noreffer">演示地址</a></li>
+</ul>
+<h2 id="jsp的base标签" class="headerLink">
+    <a href="#jsp%e7%9a%84base%e6%a0%87%e7%ad%be" class="header-mark"></a>JSP的base标签</h2><ul>
+<li>basePath为拼接的url连接</li>
+<li>base标签href引入了basePath变量</li>
+<li>在页面使用相对路径的地方可以使用basePath前缀</li>
+<li>自动拼接出：http://localhost:8080/crm/</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">&lt;%@ page contentType=&#34;text/html;charset=UTF-8&#34; language=&#34;java&#34; isELIgnored=&#34;false&#34; %&gt;
+</span></span><span class="line"><span class="cl">&lt;%
+</span></span><span class="line"><span class="cl">String basePath = request.getScheme() + &#34;://&#34; + request.getServerName() + &#34;:&#34; + request.getServerPort() + request.getContextPath() + &#34;/&#34;;
+</span></span><span class="line"><span class="cl">%&gt;
+</span></span><span class="line"><span class="cl">&lt;html&gt;
+</span></span><span class="line"><span class="cl">&lt;head&gt;
+</span></span><span class="line"><span class="cl">   &lt;base href=&#34;&lt;%=basePath%&gt;&#34;&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="1-applicationcontext-webxml" class="headerLink">
+    <a href="#1-applicationcontext-webxml" class="header-mark"></a>1. applicationContext-web.xml</h2><ul>
+<li>
+<p>注解扫描, 扫描 ontroller 包下的注解</p>
+</li>
+<li>
+<p>注解驱动, 加载处理器适配器和处理器映射器</p>
+</li>
+<li>
+<p>视图解析器, 前缀和后缀加载视图 ( Jsp )</p>
+<ul>
+<li>
+<p>前缀 : <code>/WEB-INF/jsp</code></p>
+</li>
+<li>
+<p>后缀 : <code>.jsp</code></p>
+</li>
+<li>
+<p>控制器返回的资源 : <code>return &quot;/index&quot;;</code></p>
+<p><code>/WEB-INF/jsp/index.jsp</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>拦截器配置</p>
+<ul>
+<li>权限校验: 除了访问登录页面和登录操作外, 其余必须要求当前用户登录才可以访问</li>
+</ul>
+</li>
+<li>
+<p>文件上传解析器</p>
+<ul>
+<li>文件上传操作</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-applicationcontext-service-xml" class="headerLink">
+    <a href="#2-applicationcontext-service-xml" class="header-mark"></a>2. applicationContext-service .xml</h2><ul>
+<li>注解扫描, 扫描 service 包下的注解</li>
+<li>加载 spring 的声明式事务控制
+<ul>
+<li>aop = 切面 + 切入点</li>
+<li>声明式事务控制 = 切入点 + 切面 + 事务管理器</li>
+<li>save, update , delete开头的方法需要开启事务</li>
+<li>其他方法只读事务</li>
+</ul>
+</li>
+<li>加载 applicationContext-dao.xml 配置文件</li>
+</ul>
+<h2 id="3-applicationcontext-daoxml" class="headerLink">
+    <a href="#3-applicationcontext-daoxml" class="header-mark"></a>3. applicationContext-dao.xml</h2><ul>
+<li>数据库连接池配置
+<ul>
+<li>driver, url, username, password</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>mybatis 的整合
+<ul>
+<li>sqlSessionFactoryBean
+<ul>
+<li>生成sqlSessionFactory</li>
+<li>加载 mybatis 的配置文件</li>
+</ul>
+</li>
+<li>mapperScanner
+<ul>
+<li>生成sqlSession</li>
+<li>扫描 mybatis 的 dao 接口, 将接口创建对应的代理对象, 交给 spring 容器进行管理</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="项目搭建流图" class="headerLink">
+    <a href="#%e9%a1%b9%e7%9b%ae%e6%90%ad%e5%bb%ba%e6%b5%81%e5%9b%be" class="header-mark"></a>项目搭建流图</h2><img src="README.assets/image-20211019193901041.png" alt="image-20211019193901041" style="zoom:67%;" />
+<ul>
+<li>exception包：异常包</li>
+<li>interceptor包：拦截器包</li>
+<li>setting包：代表setting业务模块，以后还有workbench等
+<ul>
+<li>dao包：处理持久层的接口和mapper文件</li>
+<li>domain包：存放实体类，也有命名为entity、pojo</li>
+<li>service包：处理业务逻辑层事务业务等</li>
+<li>web包：web项目
+<ul>
+<li>controller包：存放Servlet文件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>utils包：工具包，其中放的工具也会被其他业务使用</li>
+</ul>
+<h2 id="uuid" class="headerLink">
+    <a href="#uuid" class="header-mark"></a>UUID</h2><ul>
+<li>什么是UUID：共36位由字母和数字和 &rsquo; - &rsquo; 生成的随机串，全世界唯一。</li>
+<li>UUID组成：随机数 + 时间戳 + 硬件编码</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">UUID</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">.</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&#34;-&#34;</span><span class="o">,</span> <span class="s">&#34;&#34;</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="ajax路径url" class="headerLink">
+    <a href="#ajax%e8%b7%af%e5%be%84url" class="header-mark"></a>Ajax路径URL</h2><ul>
+<li>相对路径：settings/user/login.do
+<ul>
+<li>相对路径会自动拼接项目名称</li>
+<li>http://localhost:8080/crm/settings/user/login.do</li>
+</ul>
+</li>
+<li>绝对路径：/settings/user/login.do
+<ul>
+<li>绝对路径不会自动拼接项目名称</li>
+<li>http://localhost:8080/settings/user/login.do</li>
+</ul>
+</li>
+</ul>
+<h2 id="ajax返回值resp约定定义" class="headerLink">
+    <a href="#ajax%e8%bf%94%e5%9b%9e%e5%80%bcresp%e7%ba%a6%e5%ae%9a%e5%ae%9a%e4%b9%89" class="header-mark"></a>Ajax返回值resp约定定义</h2><ul>
+<li>code：返回值的编码
+<ul>
+<li>0：操作成功</li>
+<li>1：操作失败</li>
+<li>2：用户名或密码错误</li>
+<li>&hellip;</li>
+</ul>
+</li>
+<li>msg：日志信息</li>
+<li>data：具体数据</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">resp</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="err">code:</span> <span class="nt">&#34;0/1/...&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="err">msg:</span> <span class="nt">&#34;respInfo&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="err">data:</span> <span class="err">{</span>
+</span></span><span class="line"><span class="cl">        <span class="err">null,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">[</span><span class="nt">&#34;abcd&#34;</span><span class="p">,</span> <span class="nt">&#34;efgh&#34;</span><span class="p">,</span> <span class="nt">&#34;jklm&#34;</span><span class="err">]</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="err">[</span>
+</span></span><span class="line"><span class="cl">	    	<span class="err">{name:</span> <span class="nt">&#34;admin&#34;</span><span class="p">,</span> <span class="err">pswd:</span> <span class="nt">&#34;123&#34;</span><span class="p">}</span><span class="err">,</span>
+</span></span><span class="line"><span class="cl">	    	<span class="p">{</span><span class="err">name:</span> <span class="nt">&#34;admin1&#34;</span><span class="p">,</span> <span class="err">pswd:</span> <span class="nt">&#34;1234&#34;</span><span class="p">}</span><span class="err">,</span>
+</span></span><span class="line"><span class="cl">    	<span class="err">]</span>
+</span></span><span class="line"><span class="cl">    <span class="err">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="实体类序列化与反序列化" class="headerLink">
+    <a href="#%e5%ae%9e%e4%bd%93%e7%b1%bb%e5%ba%8f%e5%88%97%e5%8c%96%e4%b8%8e%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" class="header-mark"></a>实体类序列化与反序列化</h2><ul>
+<li>实现 <code>Serializable</code> 接口</li>
+</ul>
+<img src="README.assets/image-20211020103628625.png" alt="image-20211020103628625" style="zoom:50%;" />
+<h2 id="idea-的-free-mybatis-plugins-插件" class="headerLink">
+    <a href="#idea-%e7%9a%84-free-mybatis-plugins-%e6%8f%92%e4%bb%b6" class="header-mark"></a>IDEA 的 Free mybatis plugins 插件</h2><ul>
+<li>可以根据 DAO 类方法名自动生成 Mapper映射文件的对应标签
+<ul>
+<li>find =&gt; <code>&lt;select&gt;</code></li>
+<li>delete  =&gt; <code>&lt;delete&gt;</code></li>
+<li>update =&gt; <code>&lt;update&gt;</code></li>
+<li>insert =&gt; <code>&lt;insert&gt;</code></li>
+</ul>
+</li>
+</ul>
+<img src="README.assets/image-20211020104852625.png" alt="image-20211020104852625" style="zoom:67%;" />
+<img src="README.assets/image-20211020104933744.png" alt="image-20211020104933744" style="zoom:67%;" />
+<h2 id="cookie的设置" class="headerLink">
+    <a href="#cookie%e7%9a%84%e8%ae%be%e7%bd%ae" class="header-mark"></a>Cookie的设置</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//将Cookie设置为根路径下，让所有模块都能访问到这个Cookie
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">cookie</span><span class="o">.</span><span class="na">setPath</span><span class="o">(</span><span class="s">&#34;/&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//设置Cookie存放在硬盘中，60*60*24为一天
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">cookie</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="n">60</span><span class="o">*</span><span class="n">60</span><span class="o">*</span><span class="n">24</span><span class="o">*</span><span class="n">10</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        data-src="README.assets/image-20211023212708246.png"
+        data-srcset="README.assets/image-20211023212708246.png, README.assets/image-20211023212708246.png 1.5x, README.assets/image-20211023212708246.png 2x"
+        data-sizes="auto"
+        alt="README.assets/image-20211023212708246.png"
+        title="image-20211023212708246"></p>
+<h2 id="清除session中的数据" class="headerLink">
+    <a href="#%e6%b8%85%e9%99%a4session%e4%b8%ad%e7%9a%84%e6%95%b0%e6%8d%ae" class="header-mark"></a>清除Session中的数据</h2><ul>
+<li>session.removeAttribute(&ldquo;数据名&rdquo;);</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//2. 清除Session中的数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">HttpSession</span> <span class="n">session</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getSession</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">session</span><span class="o">.</span><span class="na">removeAttribute</span><span class="o">(</span><span class="s">&#34;user&#34;</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="灵活运用jstl" class="headerLink">
+    <a href="#%e7%81%b5%e6%b4%bb%e8%bf%90%e7%94%a8jstl" class="header-mark"></a>灵活运用JSTL</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="n">c</span><span class="o">:</span><span class="n">forEach</span> <span class="n">items</span><span class="o">=</span><span class="s">&#34;${typeList}&#34;</span> <span class="n">var</span><span class="o">=</span><span class="s">&#34;t&#34;</span> <span class="n">varStatus</span><span class="o">=</span><span class="s">&#34;i&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">   <span class="o">&lt;%--</span>
+</span></span><span class="line"><span class="cl">      <span class="n">varStatus</span><span class="o">:</span> <span class="n">相当于index</span>
+</span></span><span class="line"><span class="cl">         <span class="n">i</span><span class="o">.</span><span class="na">index从0开始</span>
+</span></span><span class="line"><span class="cl">         <span class="n">i</span><span class="o">.</span><span class="na">count从1开始</span>
+</span></span><span class="line"><span class="cl">   <span class="o">--%&gt;</span>
+</span></span><span class="line"><span class="cl">   <span class="o">&lt;%--</span><span class="n">灵活运用三目表达式</span><span class="o">--%&gt;</span>
+</span></span><span class="line"><span class="cl">   <span class="o">&lt;</span><span class="n">tr</span> <span class="n">class</span><span class="o">=</span><span class="s">&#34;${i.count%2 == 0? &#34;&#34;: &#34;</span><span class="n">active</span><span class="s">&#34;}&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">&#34;checkbox&#34;</span> <span class="o">/&gt;&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">i</span><span class="o">.</span><span class="na">count</span><span class="o">}&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">t</span><span class="o">.</span><span class="na">code</span><span class="o">}&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">t</span><span class="o">.</span><span class="na">name</span><span class="o">}&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">t</span><span class="o">.</span><span class="na">description</span><span class="o">}&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">   <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;/</span><span class="n">c</span><span class="o">:</span><span class="n">forEach</span><span class="o">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="全选与反选" class="headerLink">
+    <a href="#%e5%85%a8%e9%80%89%e4%b8%8e%e5%8f%8d%e9%80%89" class="header-mark"></a>全选与反选</h2><ul>
+<li>jsp传统实现方式</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">//全选
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span> <span class="nx">SelectAllAndUnSelectAll</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">   <span class="kd">var</span> <span class="nx">select</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#checkAll&#34;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&#34;checked&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">   <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;input[name=ck]&#34;</span><span class="p">).</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;input[name=ck]&#34;</span><span class="p">)[</span><span class="nx">i</span><span class="p">].</span><span class="nx">checked</span> <span class="o">=</span> <span class="nx">select</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//反选
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span> <span class="nx">reSelectAll</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">   <span class="k">if</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&#34;input[name=ck]&#34;</span><span class="p">).</span><span class="nx">length</span> <span class="o">==</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;input[name=ck]:checked&#34;</span><span class="p">).</span><span class="nx">length</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#checkAll&#34;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&#34;checked&#34;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#checkAll&#34;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&#34;checked&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>ajax异步刷新的方式</li>
+<li>使用异步刷新加载出来的代码<strong>不能</strong>使用 <code>$(&quot;input[name=ck]&quot;)</code> jQuery 方式绑定DOM对象</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">//  不是由 ajax 异步出来的 html 标签  事件名     子容器对象         回调方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#dictionaryValueListBody&#34;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&#34;click&#34;</span><span class="p">,</span> <span class="s2">&#34;input[name=ck]&#34;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#checkAll&#34;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&#34;checked&#34;</span><span class="p">,</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;input[name=ck]:checked&#34;</span><span class="p">).</span><span class="nx">length</span> <span class="o">==</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;input[name=ck]&#34;</span><span class="p">).</span><span class="nx">length</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="封装返回值类型实体类" class="headerLink">
+    <a href="#%e5%b0%81%e8%a3%85%e8%bf%94%e5%9b%9e%e5%80%bc%e7%b1%bb%e5%9e%8b%e5%ae%9e%e4%bd%93%e7%b1%bb" class="header-mark"></a>封装返回值类型实体类</h2><ul>
+<li>每次 ajax 请求都要返回一些固定格式的 MAP</li>
+<li>将使用频率高相似度高的 MAP 内容包装成实体类</li>
+<li>返回时就可以返回这个类</li>
+<li>ajax 在前端也可以向解析 MAP 一样解析这个类中的内容、</li>
+</ul>
+<ol>
+<li>通过实体类进行封装</li>
+</ol>
+<img src="README.assets/image-20211025213652007.png" alt="image-20211025213652007" style="zoom:67%;" />
+<ol start="2">
+<li>通过 MAP 集合基础上进行封装</li>
+</ol>
+<img src="README.assets/image-20211025214814460.png" alt="image-20211025214814460" style="zoom:67%;" />
+<ol start="3">
+<li>
+<p>对分页查询进行封装</p>
+<p>略</p>
+</li>
+</ol>
+<h2 id="当前方法已过时标记" class="headerLink">
+    <a href="#%e5%bd%93%e5%89%8d%e6%96%b9%e6%b3%95%e5%b7%b2%e8%bf%87%e6%97%b6%e6%a0%87%e8%ae%b0" class="header-mark"></a>当前方法已过时标记</h2><ul>
+<li><code>@Deprecated</code></li>
+</ul>
+<img src="README.assets/image-20211026104437175.png" alt="image-20211026104437175" style="zoom: 33%;" />
+<img src="README.assets/image-20211026104554860.png" alt="image-20211026104554860" style="zoom: 50%;" />
+<h2 id="在mybatis动态查询的if标签中" class="headerLink">
+    <a href="#%e5%9c%a8mybatis%e5%8a%a8%e6%80%81%e6%9f%a5%e8%af%a2%e7%9a%84if%e6%a0%87%e7%ad%be%e4%b8%ad" class="header-mark"></a>在mybatis动态查询的if标签中</h2><ul>
+<li><code>&lt;</code> <code>&gt;</code> 会被解析成标签的开始和结束</li>
+<li>应使用 <code>&amp;lt;</code> <code>&amp;gt;</code>转义</li>
+</ul>
+<img src="README.assets/image-20211026105557523.png" alt="image-20211026105557523" style="zoom:50%;" />
+<ul>
+<li>模糊查询 &lsquo;%&rsquo; 左右都要加上空格</li>
+</ul>
+<img src="README.assets/image-20211026112837565.png" alt="image-20211026112837565" style="zoom:50%;" />
+<h2 id="html设置select标签默认option" class="headerLink">
+    <a href="#html%e8%ae%be%e7%bd%aeselect%e6%a0%87%e7%ad%be%e9%bb%98%e8%ae%a4option" class="header-mark"></a>HTML：设置select标签默认option</h2><ul>
+<li>设置 select 标签 value 属性即可</li>
+</ul>
+<img src="README.assets/image-20211026123834660.png" alt="image-20211026123834660" style="zoom:50%;" />
+<h2 id="poi-office-文档的-java-处理包" class="headerLink">
+    <a href="#poi-office-%e6%96%87%e6%a1%a3%e7%9a%84-java-%e5%a4%84%e7%90%86%e5%8c%85" class="header-mark"></a>POI: Office 文档的 Java 处理包</h2><ul>
+<li>POI 对 Excel 文件的坐标
+<ul>
+<li>HSSFWorkbook : Excel工作簿对象</li>
+<li>HSSFSheet: Excel页码对象</li>
+<li>HSSFRow : Excel行对象</li>
+<li>HSSFCell: Excel列/单元格对象</li>
+</ul>
+</li>
+<li>使用 MultipartFile 获取到前端传入的对象，然后通过 HSSFWorkbook 等对象转换提取后，存入数据库</li>
+</ul>
+<img src="README.assets/image-20211104214942661.png" alt="image-20211104214942661" style="zoom:67%;" />
+<p><img
+        class="lazyload"
+        data-src="README.assets/image-20211104220054246.png"
+        data-srcset="README.assets/image-20211104220054246.png, README.assets/image-20211104220054246.png 1.5x, README.assets/image-20211104220054246.png 2x"
+        data-sizes="auto"
+        alt="README.assets/image-20211104220054246.png"
+        title="image-20211104220054246"></p>
+<h2 id="文件-input-框的使用" class="headerLink">
+    <a href="#%e6%96%87%e4%bb%b6-input-%e6%a1%86%e7%9a%84%e4%bd%bf%e7%94%a8" class="header-mark"></a>文件 input 框的使用</h2><ul>
+<li>为文件 input 框添加 Form 表单</li>
+<li>为 Form 表单添加 enctype 属性为 <code>multipart/form-data</code>
+<ul>
+<li>application/x-www-form-urlencoded【默认】只能上传文本格式的文件</li>
+<li>multipart/form-data 以二进制形式上传，可以上传所有类型文件</li>
+</ul>
+</li>
+</ul>
+<img src="README.assets/image-20211109091456366.png" alt="image-20211109091456366" style="zoom:67%;" />
+<ul>
+<li>再后端使用 MultipartFile 类型接收文件
+<ul>
+<li><code>String originalFilename = activityFile.getOriginalFilename();</code> 获取文件名</li>
+<li><code>activityFile.transferTo(new File(url+&quot;/&quot;+fileName));</code> 将文件写入到指定文件中</li>
+</ul>
+</li>
+</ul>
+<img src="README.assets/image-20211109093742327.png" alt="image-20211109093742327" style="zoom: 50%;" />
+<h2 id="调用浏览器的文件下载功能" class="headerLink">
+    <a href="#%e8%b0%83%e7%94%a8%e6%b5%8f%e8%a7%88%e5%99%a8%e7%9a%84%e6%96%87%e4%bb%b6%e4%b8%8b%e8%bd%bd%e5%8a%9f%e8%83%bd" class="header-mark"></a>调用浏览器的文件下载功能</h2><ul>
+<li>利用 response 对象创建输出流，POI 就可以通过这个输出流输出文件</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//声明返回类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">response</span><span class="o">.</span><span class="na">setContentType</span><span class="o">(</span><span class="s">&#34;octets/stream&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">response</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">&#34;Content-Disposition&#34;</span><span class="o">,</span><span class="s">&#34;attachment;filename=Activity-&#34;</span><span class="o">+</span><span class="n">DateTimeUtil</span><span class="o">.</span><span class="na">getSysTime</span><span class="o">()+</span><span class="s">&#34;.xls&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//创建输出流
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">OutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//通过输出流输出workbook的内容
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">workbook</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">out</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="为异步加载出的标签绑定事件" class="headerLink">
+    <a href="#%e4%b8%ba%e5%bc%82%e6%ad%a5%e5%8a%a0%e8%bd%bd%e5%87%ba%e7%9a%84%e6%a0%87%e7%ad%be%e7%bb%91%e5%ae%9a%e4%ba%8b%e4%bb%b6" class="header-mark"></a>为异步加载出的标签绑定事件</h2><ul>
+<li>使用异步刷新加载出来的代码<strong>不能</strong>使用 <code>$(&quot;...&quot;)</code> jQuery 方式绑定DOM对象</li>
+</ul>
+<p>解决方式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">//  不是由 ajax 异步出来的 html 标签  事件名     子容器对象         回调方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#dictionaryValueListBody&#34;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&#34;click&#34;</span><span class="p">,</span> <span class="s2">&#34;input[name=ck]&#34;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#checkAll&#34;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&#34;checked&#34;</span><span class="p">,</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;input[name=ck]:checked&#34;</span><span class="p">).</span><span class="nx">length</span> <span class="o">==</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;input[name=ck]&#34;</span><span class="p">).</span><span class="nx">length</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="服务器缓存" class="headerLink">
+    <a href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%bc%93%e5%ad%98" class="header-mark"></a>服务器缓存</h2><ul>
+<li>使用全局作用域 ServletContext 作为缓存区域，将常用字典值存在全局作用域中，需要时直接从缓存中取</li>
+<li>需要注意：
+<ul>
+<li>当持久化数据库的值增删改时，缓存数据应及时更新</li>
+<li>需要处理缓存穿透、缓存击穿、缓存雪崩的问题</li>
+</ul>
+</li>
+</ul>
+<h2 id="如何将对象存至redis中" class="headerLink">
+    <a href="#%e5%a6%82%e4%bd%95%e5%b0%86%e5%af%b9%e8%b1%a1%e5%ad%98%e8%87%b3redis%e4%b8%ad" class="header-mark"></a>如何将对象存至Redis中？</h2><ul>
+<li>Redis 中只支持 String 类型，但是 String 类型是二进制安全的，这意味着 String 类型可以存储任意类型数据。</li>
+<li>任何图片、视频等等格式文件，只要可以<strong>序列化</strong>与<strong>反序列化</strong>，那么它都可以保存至 Redis 中。</li>
+<li>Redis 的 String 类型最大可以存储 512MB 内容。</li>
+<li>在 Java 中，一个类实现了 Serializable 接口，那么这个类就是可以序列化的。</li>
+</ul>
+<p>序列化工具类：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SerializableUtil</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//序列化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">byte</span> <span class="o">[]</span> <span class="n">serialize</span><span class="o">(</span><span class="n">Object</span> <span class="n">obj</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ObjectOutputStream</span> <span class="n">obi</span><span class="o">=</span><span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ByteArrayOutputStream</span> <span class="n">bai</span><span class="o">=</span><span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">bai</span><span class="o">=</span><span class="k">new</span> <span class="n">ByteArrayOutputStream</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">obi</span><span class="o">=</span><span class="k">new</span> <span class="n">ObjectOutputStream</span><span class="o">(</span><span class="n">bai</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">obi</span><span class="o">.</span><span class="na">writeObject</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">byte</span><span class="o">[]</span> <span class="n">byt</span><span class="o">=</span><span class="n">bai</span><span class="o">.</span><span class="na">toByteArray</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">byt</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//反序列化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Object</span> <span class="nf">unserizlize</span><span class="o">(</span><span class="kt">byte</span><span class="o">[]</span> <span class="n">byt</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ObjectInputStream</span> <span class="n">oii</span><span class="o">=</span><span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ByteArrayInputStream</span> <span class="n">bis</span><span class="o">=</span><span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">bis</span><span class="o">=</span><span class="k">new</span> <span class="n">ByteArrayInputStream</span><span class="o">(</span><span class="n">byt</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">oii</span><span class="o">=</span><span class="k">new</span> <span class="n">ObjectInputStream</span><span class="o">(</span><span class="n">bis</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Object</span> <span class="n">obj</span><span class="o">=</span><span class="n">oii</span><span class="o">.</span><span class="na">readObject</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">obj</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="jquery中获取键盘事件" class="headerLink">
+    <a href="#jquery%e4%b8%ad%e8%8e%b7%e5%8f%96%e9%94%ae%e7%9b%98%e4%ba%8b%e4%bb%b6" class="header-mark"></a>JQuery中，获取键盘事件</h2><ul>
+<li>在相应的事件回调方法上加 event 形参，JQuery 会自动将事件对象传入</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#searchActivity&#34;</span><span class="p">).</span><span class="nx">keydown</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">keyCode</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">==</span> <span class="mi">13</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">alert</span><span class="p">(</span><span class="s2">&#34;敲击了回车&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>   
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="关闭输入框自动提示" class="headerLink">
+    <a href="#%e5%85%b3%e9%97%ad%e8%be%93%e5%85%a5%e6%a1%86%e8%87%aa%e5%8a%a8%e6%8f%90%e7%a4%ba" class="header-mark"></a>关闭输入框自动提示</h2><ul>
+<li>为输入框添加属性 autocomplete 值为 off</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">autocomplete</span><span class="o">=</span><span class="s">&#34;off&#34;</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="bootstrap-自动补全插件" class="headerLink">
+    <a href="#bootstrap-%e8%87%aa%e5%8a%a8%e8%a1%a5%e5%85%a8%e6%8f%92%e4%bb%b6" class="header-mark"></a>Bootstrap 自动补全插件</h2><ul>
+<li>typeahead 插件</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">//source: 输入框内容变化时,自动回调的方法
+</span></span></span><span class="line"><span class="cl"><span class="c1">//	query: 输入的关键字
+</span></span></span><span class="line"><span class="cl"><span class="c1">//	process: 解析数据的方法(需按规则对内容解析)
+</span></span></span><span class="line"><span class="cl"><span class="c1">//delay: 等待多久发送一次请求(毫秒)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#create-customerName&#34;</span><span class="p">).</span><span class="nx">typeahead</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">source</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="nx">process</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;workbench/transaction/getCustomerName.do&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span> <span class="s2">&#34;name&#34;</span> <span class="o">:</span> <span class="nx">query</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//data格式: data[&#34;张三有限责任公司&#34;, &#34;法外狂徒张三&#34;, &#34;思阁张三&#34;]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">process</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;json&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">delay</span><span class="o">:</span> <span class="mi">500</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="echarts-图表插件" class="headerLink">
+    <a href="#echarts-%e5%9b%be%e8%a1%a8%e6%8f%92%e4%bb%b6" class="header-mark"></a>echarts 图表插件</h2><ol>
+<li>导入插件</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/javascript&#34;</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;jquery/ECharts/echarts.min.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>为插件提供显示区域</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="c">&lt;!-- 为 ECharts 准备一个定义了宽高的 DOM --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;main&#34;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;width: 600px;height:400px;&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>
+<p>初始化插件，指定显示区域、指定配置和数据、显示</p>
+<ul>
+<li>
+<p>option：图表的配置和数据</p>
+<ul>
+<li>
+<p>legend：图表的数据种类</p>
+</li>
+<li>
+<p>xAxis：图表 x 轴坐标显示内容</p>
+</li>
+<li>
+<p>yAxis：图表 y 轴坐标显示内容（默认自动）</p>
+</li>
+<li>
+<p>series：显示内容列表</p>
+<ul>
+<li>name：对应的数据种类</li>
+<li>type：显示的图的类型</li>
+<li>data：图的数据</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="c1">// 基于准备好的dom，初始化echarts实例
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">var</span> <span class="nx">myChart</span> <span class="o">=</span> <span class="nx">echarts</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 指定图表的配置项和数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">var</span> <span class="nx">option</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">title</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;ECharts 入门示例&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">tooltip</span><span class="o">:</span> <span class="p">{},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">legend</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">data</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;销量&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">xAxis</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">data</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;衬衫&#39;</span><span class="p">,</span> <span class="s1">&#39;羊毛衫&#39;</span><span class="p">,</span> <span class="s1">&#39;雪纺衫&#39;</span><span class="p">,</span> <span class="s1">&#39;裤子&#39;</span><span class="p">,</span> <span class="s1">&#39;高跟鞋&#39;</span><span class="p">,</span> <span class="s1">&#39;袜子&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">yAxis</span><span class="o">:</span> <span class="p">{},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">series</span><span class="o">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;销量&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// type: &#39;bar&#39;,//柱状图
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="c1">// type: &#39;pie&#39;,//饼状图
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;line&#39;</span><span class="p">,</span><span class="c1">//折线图
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">data</span><span class="o">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 使用刚指定的配置项和数据显示图表。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">myChart</span><span class="p">.</span><span class="nx">setOption</span><span class="p">(</span><span class="nx">option</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>效果：</p>
+<img src="README.assets/image-20220109205304416.png" alt="image-20220109205304416" style="zoom: 50%;" />
+<p>交易历史图表效果：</p>
+<p><img
+        class="lazyload"
+        data-src="README.assets/image-20220109205341348.png"
+        data-srcset="README.assets/image-20220109205341348.png, README.assets/image-20220109205341348.png 1.5x, README.assets/image-20220109205341348.png 2x"
+        data-sizes="auto"
+        alt="README.assets/image-20220109205341348.png"
+        title="image-20220109205341348"></p>
+</div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-10-17</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span><a class="link-to-mardown" href=/crm%E5%AE%A2%E6%88%B7%E5%85%B3%E7%B3%BB%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                    </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://liujjjjn.github.io/crm%E5%AE%A2%E6%88%B7%E5%85%B3%E7%B3%BB%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/" data-title="CRM客户关系管理系统项目笔记" data-ralateuid="6018937938"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://liujjjjn.github.io/crm%E5%AE%A2%E6%88%B7%E5%85%B3%E7%B3%BB%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/" data-title="CRM客户关系管理系统项目笔记"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/git%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" class="prev" rel="prev" title="GIT自学笔记md版"><i class="fas fa-angle-left fa-fw"></i>GIT自学笔记md版</a>
+            <a href="/dubbo%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" class="next" rel="next" title="Dubbo自学笔记md版">Dubbo自学笔记md版<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://liujjjjn.github.io/" target="_blank" rel="noopener noreferrer">刘嘉宁</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript></div>
+</body>
+
+</html>

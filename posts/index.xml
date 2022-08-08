@@ -4,26 +4,75 @@
         <link>https://liujjjjn.github.io/posts/</link>
         <description>所有文章 | LiuJN 的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>LiuJaNing@163.com (刘嘉宁)</managingEditor>
-            <webMaster>LiuJaNing@163.com (刘嘉宁)</webMaster><lastBuildDate>Mon, 08 Aug 2022 17:36:48 &#43;0800</lastBuildDate><atom:link href="https://liujjjjn.github.io/posts/" rel="self" type="application/rss+xml" /><item>
-    <title>First_post</title>
-    <link>https://liujjjjn.github.io/first_post/</link>
-    <pubDate>Mon, 08 Aug 2022 17:36:48 &#43;0800</pubDate><author>
+            <webMaster>LiuJaNing@163.com (刘嘉宁)</webMaster><lastBuildDate>Sat, 16 Apr 2022 00:00:00 &#43;0800</lastBuildDate><atom:link href="https://liujjjjn.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>校园后勤管理系统项目笔记</title>
+    <link>https://liujjjjn.github.io/%E6%A0%A1%E5%9B%AD%E5%90%8E%E5%8B%A4%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/</link>
+    <pubDate>Sat, 16 Apr 2022 00:00:00 &#43;0800</pubDate><author>
         <name>刘嘉宁</name>
-    </author><guid>https://liujjjjn.github.io/first_post/</guid>
-    <description><![CDATA[]]></description>
+    </author><guid>https://liujjjjn.github.io/%E6%A0%A1%E5%9B%AD%E5%90%8E%E5%8B%A4%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/</guid>
+    <description><![CDATA[校园智慧后勤管理系统 大连交通大学 信息学院 张箬晗、刘嘉宁 一个简易的校园后勤管理系统，学习、练习的项目笔记 项目技术栈 前端 Vue Vue-router Element-ui axios 后端 SpringMVC Mybatis Shiro 数据库]]></description>
+</item><item>
+    <title>Shiro自学笔记md版</title>
+    <link>https://liujjjjn.github.io/shiro%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</link>
+    <pubDate>Mon, 11 Apr 2022 00:00:00 &#43;0800</pubDate><author>
+        <name>刘嘉宁</name>
+    </author><guid>https://liujjjjn.github.io/shiro%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</guid>
+    <description><![CDATA[Shiro 大连交通大学 信息学院 刘嘉宁 笔记摘自 编程不良人 小陈 权限管理 权限管理属于系统安全的范畴，实现 对用户访问系统的控制 按照 安全规则 或 安全策略 控制用户]]></description>
+</item><item>
+    <title>Java多线程复习笔记md版</title>
+    <link>https://liujjjjn.github.io/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0md%E7%89%88/</link>
+    <pubDate>Tue, 05 Apr 2022 00:00:00 &#43;0800</pubDate><author>
+        <name>刘嘉宁</name>
+    </author><guid>https://liujjjjn.github.io/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0md%E7%89%88/</guid>
+    <description><![CDATA[Java 多线程笔记 大连交通大学 信息学院 刘嘉宁 笔记摘自 西部开源 秦疆 多线程基础 进程与线程 进程（Process）：进程就是程序的一次执行过程，是系统分配]]></description>
+</item><item>
+    <title>JUC自学笔记md版</title>
+    <link>https://liujjjjn.github.io/juc%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</link>
+    <pubDate>Tue, 05 Apr 2022 00:00:00 &#43;0800</pubDate><author>
+        <name>刘嘉宁</name>
+    </author><guid>https://liujjjjn.github.io/juc%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</guid>
+    <description><![CDATA[JUC 大连交通大学 信息学院 刘嘉宁 笔记摘自 尚硅谷 什么是 JUC 是 java.util.concurrent 工具包的简称 是一个线程处理工具包，从 JDK 1.5 开始出现 进程与线程 进程（Process）：指系]]></description>
+</item><item>
+    <title>JVM自学笔记md版</title>
+    <link>https://liujjjjn.github.io/jvm%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</link>
+    <pubDate>Fri, 21 Jan 2022 00:00:00 &#43;0800</pubDate><author>
+        <name>刘嘉宁</name>
+    </author><guid>https://liujjjjn.github.io/jvm%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</guid>
+    <description><![CDATA[JVM 大连交通大学 信息学院 刘嘉宁 2022-01-21 笔记摘自：尚硅谷 宋红康 JVM Java虚拟机基础 JVM : Java HotSpot Virtual Machine 是程序虚拟机，就是二进制字节码的运行环境 JVM 是 Java 语言的基石]]></description>
+</item><item>
+    <title>RabbitMQ自学笔记md版</title>
+    <link>https://liujjjjn.github.io/rabbitmq%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</link>
+    <pubDate>Sun, 21 Nov 2021 00:00:00 &#43;0800</pubDate><author>
+        <name>刘嘉宁</name>
+    </author><guid>https://liujjjjn.github.io/rabbitmq%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</guid>
+    <description><![CDATA[RabbitMQ 大连交通大学 信息学院 刘嘉宁 2021-11-21 笔记摘自 bjpwernode 秦世国 什么是消息队列 消息队列 MQ ( Message Queue ) 解耦 生产者负责将数据写入到队列中，谁想不想要这个数据，与生产者]]></description>
+</item><item>
+    <title>SpringBoot自学笔记md版</title>
+    <link>https://liujjjjn.github.io/springboot%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</link>
+    <pubDate>Mon, 15 Nov 2021 00:00:00 &#43;0800</pubDate><author>
+        <name>刘嘉宁</name>
+    </author><guid>https://liujjjjn.github.io/springboot%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</guid>
+    <description><![CDATA[SpringBoot 大连交通大学 信息学院 刘嘉宁 2021-11-15 笔记摘自 bjpwernode 秦世国 SpringBoot 框架，整合了 Spring + SpringMVC + MyBatis 框架，简化开发 SpringBoot 抛弃了繁琐的 xml 配置过程，采用大量默认配置，简化开发 使用]]></description>
+</item><item>
+    <title>Dubbo自学笔记md版</title>
+    <link>https://liujjjjn.github.io/dubbo%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</link>
+    <pubDate>Fri, 12 Nov 2021 00:00:00 &#43;0800</pubDate><author>
+        <name>刘嘉宁</name>
+    </author><guid>https://liujjjjn.github.io/dubbo%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</guid>
+    <description><![CDATA[Dubbo 大连交通大学 信息学院 刘嘉宁 2021-11-12 笔记摘自 bjpwernode 秦世国 什么是Dubbo 高性能的 RPC 框架, 解决了分布式中的调用问题 不同于HTTP需要进行7步走(三次握手]]></description>
+</item><item>
+    <title>CRM客户关系管理系统项目笔记</title>
+    <link>https://liujjjjn.github.io/crm%E5%AE%A2%E6%88%B7%E5%85%B3%E7%B3%BB%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/</link>
+    <pubDate>Sun, 17 Oct 2021 00:00:00 &#43;0800</pubDate><author>
+        <name>刘嘉宁</name>
+    </author><guid>https://liujjjjn.github.io/crm%E5%AE%A2%E6%88%B7%E5%85%B3%E7%B3%BB%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/</guid>
+    <description><![CDATA[CRM：客户关系管理系统 大连交通大学 信息学院 刘嘉宁 2021-10-19 &ndash; 2022-01 笔记摘自：bjpowernode 李宁 项目使用手册： 修改 pom.xml 中 MySQL 驱动等依赖版本 创建 crm2 库并]]></description>
 </item><item>
     <title>GIT自学笔记md版</title>
     <link>https://liujjjjn.github.io/git%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</link>
     <pubDate>Sun, 17 Oct 2021 00:00:00 &#43;0800</pubDate><author>
         <name>刘嘉宁</name>
     </author><guid>https://liujjjjn.github.io/git%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</guid>
-    <description><![CDATA[GIT 大连交通大学 信息学院 刘嘉宁 2021-10-17 笔记摘自链接：bjpowernode 李宁 GIT：版本控制工具 一个开源的分布式版本控制系统，可以有效，高速的管理]]></description>
-</item><item>
-    <title>GIT自学笔记md版mini版</title>
-    <link>https://liujjjjn.github.io/git%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88mini%E7%89%88/</link>
-    <pubDate>Sun, 17 Oct 2021 00:00:00 &#43;0800</pubDate><author>
-        <name>刘嘉宁</name>
-    </author><guid>https://liujjjjn.github.io/git%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88mini%E7%89%88/</guid>
     <description><![CDATA[GIT 大连交通大学 信息学院 刘嘉宁 2021-10-17 笔记摘自链接：bjpowernode 李宁 GIT：版本控制工具 一个开源的分布式版本控制系统，可以有效，高速的管理]]></description>
 </item></channel>
 </rss>

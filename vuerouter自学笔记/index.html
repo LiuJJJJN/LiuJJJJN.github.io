@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">VueRouter自学笔记 - LiuJN 的个人博客</title><meta name="Description" content="This is LiuJN"><meta property="og:title" content="VueRouter自学笔记" />
+<meta property="og:description" content="Vue-Router 大连交通大学 信息学院 刘嘉宁 笔记摘自 表严肃 什么是 Vue 路由 是一个 Vue 的库，可以快速开发一个单页应用 指导网页层级、定位资源 避免后端通信整页刷新，做到" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://liujjjjn.github.io/vuerouter%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/" /><meta property="og:image" content="https://liujjjjn.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-05-19T00:00:00+08:00" />
+<meta property="article:modified_time" content="2021-05-19T00:00:00+08:00" /><meta property="og:site_name" content="刘嘉宁的个人博客" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://liujjjjn.github.io/logo.png"/>
+
+<meta name="twitter:title" content="VueRouter自学笔记"/>
+<meta name="twitter:description" content="Vue-Router 大连交通大学 信息学院 刘嘉宁 笔记摘自 表严肃 什么是 Vue 路由 是一个 Vue 的库，可以快速开发一个单页应用 指导网页层级、定位资源 避免后端通信整页刷新，做到"/>
+<meta name="application-name" content="LiuJN">
+<meta name="apple-mobile-web-app-title" content="LiuJN">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://liujjjjn.github.io/vuerouter%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/" /><link rel="prev" href="https://liujjjjn.github.io/vue%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/" /><link rel="next" href="https://liujjjjn.github.io/mysql%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0%E8%BF%9B%E9%98%B6md%E7%89%88/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "VueRouter自学笔记",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/liujjjjn.github.io\/vuerouter%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0\/"
+        },"genre": "posts","wordcount":  919 ,
+        "url": "https:\/\/liujjjjn.github.io\/vuerouter%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0\/","datePublished": "2021-05-19T00:00:00+08:00","dateModified": "2021-05-19T00:00:00+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "刘嘉宁"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="auto" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark');}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="LiuJN 的个人博客">刘嘉宁的个人博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="LiuJN 的个人博客">刘嘉宁的个人博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "false")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">VueRouter自学笔记</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://liujjjjn.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author">刘嘉宁</a>
+                </span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-19">2021-05-19</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2021-05-19">2021-05-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 919 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是-vue-路由">什么是 Vue 路由</a></li>
+    <li><a href="#使用-vue-router">使用 Vue-Router</a></li>
+    <li><a href="#传参">传参</a></li>
+    <li><a href="#子路由">子路由</a></li>
+    <li><a href="#传参-1">传参</a></li>
+    <li><a href="#命名视图">命名视图</a></li>
+    <li><a href="#导航钩子">导航钩子</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="vue-router" class="headerLink">
+    <a href="#vue-router" class="header-mark"></a>Vue-Router</h1><blockquote>
+<p>大连交通大学 信息学院 刘嘉宁</p>
+<p>笔记摘自 表严肃</p>
+</blockquote>
+<h2 id="什么是-vue-路由" class="headerLink">
+    <a href="#%e4%bb%80%e4%b9%88%e6%98%af-vue-%e8%b7%af%e7%94%b1" class="header-mark"></a>什么是 Vue 路由</h2><ul>
+<li>是一个 Vue 的库，可以快速开发一个单页应用</li>
+<li>指导网页层级、定位资源</li>
+<li>避免后端通信整页刷新，做到不丢失状态、不丢失数据</li>
+</ul>
+<h2 id="使用-vue-router" class="headerLink">
+    <a href="#%e4%bd%bf%e7%94%a8-vue-router" class="header-mark"></a>使用 Vue-Router</h2><ol>
+<li>导入 Vue 和 Vue-Router 的 js 文件</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;vue.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;vue-router..js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>定义路由 js 文件</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">routes</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">path</span><span class="o">:</span><span class="s1">&#39;/&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">component</span><span class="o">:</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">template</span><span class="o">:</span><span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">            &lt;div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;h1&gt;首页&lt;/h1&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">            &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">            `</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">path</span><span class="o">:</span><span class="s1">&#39;/about&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">component</span><span class="o">:</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">template</span><span class="o">:</span><span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">            &lt;div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;h1&gt;关于&lt;/h1&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">            &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">            `</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 这是 Vue-Router 暴露出来的构造器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">router</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">VueRouter</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">routes</span><span class="o">:</span> <span class="nx">routes</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 创建 Vue 对象,指定 router 路由
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">el</span><span class="o">:</span><span class="s1">&#39;#app&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">router</span><span class="o">:</span> <span class="nx">router</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>设定路由链接及显示</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;app&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="c">&lt;!-- 指定对应的路由地址 --&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/&#34;</span><span class="p">&gt;</span>首页<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/about&#34;</span><span class="p">&gt;</span>关于<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="c">&lt;!-- 路由显示的地方 --&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">router-view</span><span class="p">&gt;&lt;/</span><span class="nt">router-view</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="传参" class="headerLink">
+    <a href="#%e4%bc%a0%e5%8f%82" class="header-mark"></a>传参</h2><ul>
+<li>传递参数</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/user/王梓良&#34;</span><span class="p">&gt;</span>王梓良<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;/user/沈斌&#34;</span><span class="p">&gt;</span>沈斌<span class="p">&lt;/</span><span class="nt">router-link</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>获取参数</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 设置形参 name
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">path</span><span class="o">:</span><span class="s1">&#39;/user/:name&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">component</span><span class="o">:</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">template</span><span class="o">:</span><span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">            &lt;div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;!-- 获取 result风格 传递的参数 --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;h1&gt;关于 用户: {{$route.params.name}}&lt;/h1&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;!-- 获取 ?age=18&amp;b=1 传递的参数: http://localhost/web/user/张三?age=18 --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;h1&gt;关于 用户: {{$route.query.age}}&lt;/h1&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">            &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">            `</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="子路由" class="headerLink">
+    <a href="#%e5%ad%90%e8%b7%af%e7%94%b1" class="header-mark"></a>子路由</h2><ul>
+<li>在父级路显示界面由中添加子路由显示界面</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl">        <span class="c1">// 设置形参 name
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">path</span><span class="o">:</span><span class="s1">&#39;/user/:name&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">component</span><span class="o">:</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">template</span><span class="o">:</span><span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">            &lt;div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;!-- 子路由方式1 --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;!--&lt;router-link to=&#34;more&#34; append&gt; more &lt;/router-link&gt;--&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;!--&lt;router-view&gt;&lt;/router-view&gt;--&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;!-- 子路由方式2 【推荐】 --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;router-link :to=&#34;&#39;/user/&#39; + $route.params.name + &#39;/more&#39;&#34;&gt; more &lt;/router-link&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;router-view&gt;&lt;/router-view&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">            &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">            `</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">children</span><span class="o">:</span><span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">path</span><span class="o">:</span><span class="s1">&#39;more&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">component</span><span class="o">:</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">template</span><span class="o">:</span><span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">                    &lt;div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                        用户 {{$route.params.name}} 的更多信息
+</span></span></span><span class="line"><span class="cl"><span class="sb">                    &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                    `</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="传参-1" class="headerLink">
+    <a href="#%e4%bc%a0%e5%8f%82-1" class="header-mark"></a>传参</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl">	<span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 设置形参 name
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">path</span><span class="o">:</span><span class="s1">&#39;/user/:name&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">name</span><span class="o">:</span><span class="s1">&#39;user&#39;</span><span class="p">,</span>  <span class="c1">//为路由指定名字
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">component</span><span class="o">:</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">template</span><span class="o">:</span><span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">            &lt;div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">            &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">            `</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/*======================================================*/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 创建 Vue 对象,指定 router 路由
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">el</span><span class="o">:</span><span class="s1">&#39;#app&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">router</span><span class="o">:</span> <span class="nx">router</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">methods</span><span class="o">:</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">surf</span><span class="o">:</span><span class="kd">function</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="p">.</span><span class="nx">router</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">name</span><span class="o">:</span><span class="s2">&#34;user&#34;</span><span class="p">,</span> <span class="c1">// 同 为路由指定的名字
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">params</span><span class="o">:</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nx">name</span><span class="o">:</span><span class="s1">&#39;沈斌&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="命名视图" class="headerLink">
+    <a href="#%e5%91%bd%e5%90%8d%e8%a7%86%e5%9b%be" class="header-mark"></a>命名视图</h2><ul>
+<li>可以同时存在多个 <code>&lt;router-view&gt;</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">router</span><span class="o">-</span><span class="nx">view</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&#34;sidebar&#34;</span><span class="o">&gt;&lt;</span><span class="err">/router-view&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">router</span><span class="o">-</span><span class="nx">view</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&#34;content&#34;</span><span class="o">&gt;&lt;</span><span class="err">/router-view&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/*========================================================*/</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">path</span><span class="o">:</span><span class="s1">&#39;/about&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">component</span><span class="o">:</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">sidebar</span><span class="o">:</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">template</span><span class="o">:</span><span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                    &lt;h1&gt;sidebar&lt;/h1&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">          	  	`</span>
+</span></span><span class="line"><span class="cl">			<span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">content</span><span class="o">:</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">template</span><span class="o">:</span><span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                    &lt;h1&gt;content&lt;/h1&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">                &lt;/div&gt;
+</span></span></span><span class="line"><span class="cl"><span class="sb">          	  	`</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="导航钩子" class="headerLink">
+    <a href="#%e5%af%bc%e8%88%aa%e9%92%a9%e5%ad%90" class="header-mark"></a>导航钩子</h2><ul>
+<li>
+<p>用来控制访问权限</p>
+</li>
+<li>
+<p>略</p>
+</li>
+</ul>
+</div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-05-19</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span><a class="link-to-mardown" href=/vuerouter%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                    </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://liujjjjn.github.io/vuerouter%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/" data-title="VueRouter自学笔记" data-ralateuid="6018937938"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://liujjjjn.github.io/vuerouter%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/" data-title="VueRouter自学笔记"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/vue%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/" class="prev" rel="prev" title="VUE自学笔记"><i class="fas fa-angle-left fa-fw"></i>VUE自学笔记</a>
+            <a href="/mysql%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0%E8%BF%9B%E9%98%B6md%E7%89%88/" class="next" rel="next" title="MySQL自学笔记进阶md版">MySQL自学笔记进阶md版<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://liujjjjn.github.io/" target="_blank" rel="noopener noreferrer">刘嘉宁</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript></div>
+</body>
+
+</html>

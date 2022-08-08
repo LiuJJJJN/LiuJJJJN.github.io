@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">Redis自学笔记 - LiuJN 的个人博客</title><meta name="Description" content="This is LiuJN"><meta property="og:title" content="Redis自学笔记" />
+<meta property="og:description" content="Redis自学笔记 大连交通大学 信息学院 刘嘉宁 2021-10-11 笔记摘自：bjpowernode 杨震 NoSQL（Not Only SQL） 解决大规模数据集合多重数据种类" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://liujjjjn.github.io/redis%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/" /><meta property="og:image" content="https://liujjjjn.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-10-11T00:00:00+08:00" />
+<meta property="article:modified_time" content="2021-10-11T00:00:00+08:00" /><meta property="og:site_name" content="刘嘉宁的个人博客" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://liujjjjn.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Redis自学笔记"/>
+<meta name="twitter:description" content="Redis自学笔记 大连交通大学 信息学院 刘嘉宁 2021-10-11 笔记摘自：bjpowernode 杨震 NoSQL（Not Only SQL） 解决大规模数据集合多重数据种类"/>
+<meta name="application-name" content="LiuJN">
+<meta name="apple-mobile-web-app-title" content="LiuJN">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://liujjjjn.github.io/redis%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/" /><link rel="prev" href="https://liujjjjn.github.io/linux%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" /><link rel="next" href="https://liujjjjn.github.io/nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Redis自学笔记",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/liujjjjn.github.io\/redis%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0\/"
+        },"genre": "posts","wordcount":  5450 ,
+        "url": "https:\/\/liujjjjn.github.io\/redis%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0\/","datePublished": "2021-10-11T00:00:00+08:00","dateModified": "2021-10-11T00:00:00+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "刘嘉宁"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="auto" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark');}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="LiuJN 的个人博客">刘嘉宁的个人博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="LiuJN 的个人博客">刘嘉宁的个人博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "false")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Redis自学笔记</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://liujjjjn.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author">刘嘉宁</a>
+                </span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-11">2021-10-11</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2021-10-11">2021-10-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5450 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#nosqlnot-only-sql">NoSQL（Not Only SQL）</a></li>
+    <li><a href="#redis和mysql数据库的区别">Redis和MySQL数据库的区别</a></li>
+    <li><a href="#redis的特点">Redis的特点</a></li>
+    <li><a href="#redis基础知识">Redis基础知识</a></li>
+    <li><a href="#redis常用命令">Redis常用命令</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#string字符串类型">String字符串类型</a></li>
+            <li><a href="#list列表类型">List列表类型</a></li>
+            <li><a href="#hash哈希类型">Hash哈希类型</a></li>
+            <li><a href="#set集合类型">Set集合类型</a></li>
+            <li><a href="#zset有序集合类型">Zset有序集合类型</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#redis持久化">Redis持久化</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#一rdb持久化">一、RDB持久化</a></li>
+            <li><a href="#二rof持久化">二、ROF持久化</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#redis事务管理">Redis事务管理</a></li>
+    <li><a href="#redis消息订阅">Redis消息订阅</a></li>
+    <li><a href="#redis的主从复制和哨兵模式">Redis的主从复制和哨兵模式</a></li>
+    <li><a href="#使用jedis操作redis">使用Jedis操作Redis</a></li>
+    <li><a href="#在-springmvc-中使用-redis">在 SpringMVC 中使用 Redis</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="redis自学笔记" class="headerLink">
+    <a href="#redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0" class="header-mark"></a>Redis自学笔记</h1><blockquote>
+<p>大连交通大学 信息学院 刘嘉宁 2021-10-11</p>
+<p>笔记摘自：bjpowernode 杨震</p>
+</blockquote>
+<h2 id="nosqlnot-only-sql" class="headerLink">
+    <a href="#nosqlnot-only-sql" class="header-mark"></a>NoSQL（Not Only SQL）</h2><ul>
+<li>解决大规模数据集合多重数据种类带来的挑战，特别是超大规模数据的存储。</li>
+<li><strong>非关系型数据库</strong>，数据之间一旦没有关系，扩展性、读写性能都大大提高。</li>
+</ul>
+<h2 id="redis和mysql数据库的区别" class="headerLink">
+    <a href="#redis%e5%92%8cmysql%e6%95%b0%e6%8d%ae%e5%ba%93%e7%9a%84%e5%8c%ba%e5%88%ab" class="header-mark"></a>Redis和MySQL数据库的区别</h2><ol>
+<li>MySQL
+<ul>
+<li>关系型数据库</li>
+<li>易于维护</li>
+<li>易于向用户展示具有隶属关系的信息</li>
+<li>查询时需要从硬盘读取数据，查询效率相对低</li>
+</ul>
+</li>
+<li>Redis：Remote Dictionary Server(远程字典服务器)
+<ul>
+<li>非关系型数据库</li>
+<li>数据以MAP集合形式存储在内存中</li>
+<li>不适于长期存储，适于频繁快速的查询</li>
+</ul>
+</li>
+</ol>
+<h2 id="redis的特点" class="headerLink">
+    <a href="#redis%e7%9a%84%e7%89%b9%e7%82%b9" class="header-mark"></a>Redis的特点</h2><ol>
+<li>支持数据持久化：可以将内存中的数据保持在磁盘中，重启的时候可以再次加载进行使用。</li>
+<li>支持多种数据结构：key-value类型、list、set、zset、hash 等数据结构的存储。</li>
+<li>支持数据备份：Redis支持数据的备份，即master-slave模式的数据备份。</li>
+</ol>
+<h2 id="redis基础知识" class="headerLink">
+    <a href="#redis%e5%9f%ba%e7%a1%80%e7%9f%a5%e8%af%86" class="header-mark"></a>Redis基础知识</h2><ol>
+<li>
+<p>Redis默认使用16个数据库</p>
+<ul>
+<li>可以在安装目录/redis.conf文件中修改 port值</li>
+</ul>
+</li>
+<li>
+<p>启动Redis数据库</p>
+<ul>
+<li>Redis默认端口：6379
+<ul>
+<li>在安装目录下执行命令：<code>redis-server</code></li>
+<li>后台启动Redis服务：<code>redis-server &amp;</code></li>
+<li>根据配置文件启动Redis：<code>redis-server 配置文件 &amp;</code></li>
+</ul>
+</li>
+<li><strong>如果修改了redis的配置文件redis.conf，必须在启动时指定配置文件，否则修改无效！</strong></li>
+</ul>
+</li>
+<li>
+<p>关闭Redis数据库</p>
+<ul>
+<li>执行命令：<code>redis-cli shutdown</code></li>
+<li>执行命令：
+<ol>
+<li><code>ps -ef | grep redis</code> 查询出redis进程的PID</li>
+<li><code>kill pid</code> 或者 <code>kill -9 pid</code> 杀掉进程</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>连接redis</p>
+<ul>
+<li>
+<p>在任意位置执行命令：<code>redis-cli</code></p>
+<ul>
+<li>使用<code>ping</code>命令测试是否连通</li>
+</ul>
+<img src="Redis自学笔记.assets/image-20211012172632083.png" alt="image-20211012172632083" style="zoom:67%;" />
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="redis常用命令" class="headerLink">
+    <a href="#redis%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4" class="header-mark"></a>Redis常用命令</h2><ol>
+<li>
+<p>切换数据库：</p>
+<ul>
+<li>select 数据库编号</li>
+</ul>
+</li>
+<li>
+<p>查看当前数据库有哪些key：</p>
+<ul>
+<li>keys *</li>
+</ul>
+</li>
+<li>
+<p>删除当前数据库中的数据：</p>
+<ul>
+<li>flushdb</li>
+</ul>
+</li>
+<li>
+<p>删除所有库中的所有数据：</p>
+<ul>
+<li>flushall</li>
+</ul>
+</li>
+<li>
+<p>查看库中有多少条数据：</p>
+<ul>
+<li>dbsize</li>
+</ul>
+</li>
+</ol>
+<h4 id="string字符串类型" class="headerLink">
+    <a href="#string%e5%ad%97%e7%ac%a6%e4%b8%b2%e7%b1%bb%e5%9e%8b" class="header-mark"></a>String字符串类型</h4><ul>
+<li>最大值512MB</li>
+</ul>
+<p><img
+        class="lazyload"
+        data-src="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012184425965.png"
+        data-srcset="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012184425965.png, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012184425965.png 1.5x, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012184425965.png 2x"
+        data-sizes="auto"
+        alt="Redis自学笔记.assets/image-20211012184425965.png"
+        title="image-20211012184425965"></p>
+<ol>
+<li>
+<p>向MAP中存放键值对：<code>set key值 value值</code></p>
+<img src="Redis自学笔记.assets/image-20211012184656035.png" alt="image-20211012184656035" style="zoom:67%;" />
+</li>
+<li>
+<p>获取key值对应的value值：<code>get key值</code></p>
+<ul>
+<li>空为：nil</li>
+</ul>
+</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012184822511.png" alt="image-20211012184822511" style="zoom:67%;" />
+<ol start="3">
+<li>为原value值后追加字符：<code>append key值 value值</code>
+<ul>
+<li>返回追加后的字符串 类型 长度</li>
+</ul>
+</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012185025330.png" alt="image-20211012185025330" style="zoom:67%;" />
+<ol start="4">
+<li>返回对应的字符串字符个数：<code>strlen key值</code>
+<ul>
+<li>不存在返回 0</li>
+</ul>
+</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012185349567.png" alt="image-20211012185349567" style="zoom:67%;" />
+<ol start="5">
+<li>截取字符串：<code>getrange key值 开始下标 结束下标</code>
+<ul>
+<li>正负下标同pathon</li>
+<li>==左右都同时包含==</li>
+</ul>
+</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012185852288.png" alt="image-20211012185852288" style="zoom:67%;" />
+<ol start="6">
+<li>临时向MAP中存放键值对：setex key值 秒数 value值</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012190302353.png" alt="image-20211012190302353" style="zoom:67%;" />
+<h4 id="list列表类型" class="headerLink">
+    <a href="#list%e5%88%97%e8%a1%a8%e7%b1%bb%e5%9e%8b" class="header-mark"></a>List列表类型</h4><p><img
+        class="lazyload"
+        data-src="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190539057.png"
+        data-srcset="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190539057.png, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190539057.png 1.5x, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190539057.png 2x"
+        data-sizes="auto"
+        alt="Redis自学笔记.assets/image-20211012190539057.png"
+        title="image-20211012190539057"></p>
+<ol>
+<li>在列表左边压入键值对：<code>lpush key值 值...</code>
+<ul>
+<li>返回追加后的列表 长度</li>
+</ul>
+</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012191120759.png" alt="image-20211012191120759" style="zoom:67%;" />
+<ol start="2">
+<li>在指定下标区间中取值：<code>lrange key值 开始下标 结束下标</code>
+<ul>
+<li>==左右同时包含==</li>
+</ul>
+</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012191236375.png" alt="image-20211012191236375" style="zoom:67%;" />
+<ol start="3">
+<li>在列表右边压入键值对：<code>rpush key值 值...</code>
+<ul>
+<li>返回追加后的列表 长度</li>
+</ul>
+</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012191438874.png" alt="image-20211012191438874" style="zoom:67%;" />
+<ol start="4">
+<li>移除左侧第一个元素：<code>lpop key值</code>
+<ul>
+<li>返回删除掉的value值</li>
+</ul>
+</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012191601629.png" alt="image-20211012191601629" style="zoom:67%;" />
+<ol start="5">
+<li>移除右侧第一个元素：<code>rpop key值</code>
+<ul>
+<li>返回删除掉的value值</li>
+</ul>
+</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012191751613.png" alt="image-20211012191751613" style="zoom:67%;" />
+<ol start="6">
+<li>取指定下标上的值：<code>lindex key值 下标</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012192011756.png" alt="image-20211012192011756" style="zoom:67%;" />
+<ol start="7">
+<li>返回列表中有多少个数据：<code>llen key值</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012192143913.png" alt="image-20211012192143913" style="zoom:67%;" />
+<ol start="8">
+<li>更换列表中指定下标位的值：<code>lset key值 下标 value值</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012192357747.png" alt="image-20211012192357747" style="zoom:67%;" />
+<h4 id="hash哈希类型" class="headerLink">
+    <a href="#hash%e5%93%88%e5%b8%8c%e7%b1%bb%e5%9e%8b" class="header-mark"></a>Hash哈希类型</h4><p><img
+        class="lazyload"
+        data-src="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190551214.png"
+        data-srcset="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190551214.png, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190551214.png 1.5x, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190551214.png 2x"
+        data-sizes="auto"
+        alt="Redis自学笔记.assets/image-20211012190551214.png"
+        title="image-20211012190551214"></p>
+<ol>
+<li>在哈希列表key中添加 field域和value值 对：<code>hset key值 field值 value值  [field value …]</code>
+<ul>
+<li>返回当前哈希列表中域值对的数量</li>
+</ul>
+</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012195012164.png" alt="image-20211012195012164" style="zoom:67%;" />
+<ol start="2">
+<li>获取哈希列表中指定field域的value值：<code>hget key值 field值</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012195122186.png" alt="image-20211012195122186" style="zoom:67%;" />
+<ol start="3">
+<li>获取哈希列表中所有 域和值 ：<code>getall key值</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012195234873.png" alt="image-20211012195234873" style="zoom:67%;" />
+<ol start="4">
+<li>获取哈希列表中所有field域列表：<code>hkeys key值</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012195353781.png" alt="image-20211012195353781" style="zoom:67%;" />
+<ol start="5">
+<li>删除哈希列表中的一个 域值对 ：<code>hdel key值 field值</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012195616691.png" alt="image-20211012195616691" style="zoom:67%;" />
+<ol start="6">
+<li>获取哈希列表中所有value值列表：<code>hvals key值</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012195730456.png" alt="image-20211012195730456" style="zoom:67%;" />
+<ol start="7">
+<li>查看哈希列表中 是否存在对应的field域：<code>hexists key值 field值</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012200104644.png" alt="image-20211012200104644" style="zoom:67%;" />
+<h4 id="set集合类型" class="headerLink">
+    <a href="#set%e9%9b%86%e5%90%88%e7%b1%bb%e5%9e%8b" class="header-mark"></a>Set集合类型</h4><p><img
+        class="lazyload"
+        data-src="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190546650.png"
+        data-srcset="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190546650.png, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190546650.png 1.5x, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190546650.png 2x"
+        data-sizes="auto"
+        alt="Redis自学笔记.assets/image-20211012190546650.png"
+        title="image-20211012190546650"></p>
+<ol>
+<li>向集合中添加元素：<code>sadd key值 元素值 [元素值...]</code>
+<ul>
+<li>返回追加后的集合 长度</li>
+</ul>
+</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012200543034.png" alt="image-20211012200543034" style="zoom:67%;" />
+<ol start="2">
+<li>显示集合中所有元素：<code>smembers key值</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012200702474.png" alt="image-20211012200702474" style="zoom:67%;" />
+<ol start="3">
+<li>判断集合中是否存在对应的member值：<code>sismember key值 member值</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012200901701.png" alt="image-20211012200901701" style="zoom:67%;" />
+<ol start="4">
+<li>获取集合中元素的个数：<code>scard key值</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012200957953.png" alt="image-20211012200957953" style="zoom:67%;" />
+<ol start="5">
+<li>移除一个或多个元素：<code>srem key值 member值 [member值...]</code>
+<ul>
+<li>返回移除的集合 长度</li>
+</ul>
+</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012201122727.png" alt="image-20211012201122727" style="zoom:67%;" />
+<ol start="6">
+<li>返回指定集合的差集，第一个集合有，其他集合没有的值：<code>sdiff key值 [key值...]</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012201414894.png" alt="image-20211012201414894" style="zoom:67%;" />
+<ol start="7">
+<li>返回指定集合的交集，第一个集合有，其他集合也有的值：<code>sinter key值 [key值...]</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012201546957.png" alt="image-20211012201546957" style="zoom:67%;" />
+<ol start="8">
+<li>返回指定集合的并集，所有集合中的元素并在一起：<code>sunion key值 [key值...]</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012201707329.png" alt="image-20211012201707329" style="zoom:67%;" />
+<h4 id="zset有序集合类型" class="headerLink">
+    <a href="#zset%e6%9c%89%e5%ba%8f%e9%9b%86%e5%90%88%e7%b1%bb%e5%9e%8b" class="header-mark"></a>Zset有序集合类型</h4><ul>
+<li>通过每个元素的分数来确定元素</li>
+</ul>
+<p><img
+        class="lazyload"
+        data-src="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190557189.png"
+        data-srcset="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190557189.png, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190557189.png 1.5x, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211012190557189.png 2x"
+        data-sizes="auto"
+        alt="Redis自学笔记.assets/image-20211012190557189.png"
+        title="image-20211012190557189"></p>
+<ol>
+<li>向有序集合中添加元素：<code>zadd key值 score值 value值</code>
+<ul>
+<li>返回追加后的有序集合 长度</li>
+</ul>
+</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012202305542.png" alt="image-20211012202305542" style="zoom:67%;" />
+<ol start="2">
+<li>查询有序集合指定空间内的元素：<code>zrange key值 开始下标 结束下标</code>
+<ul>
+<li>其值按照score分数升序排序，最小为下标0</li>
+</ul>
+</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012202525539.png" alt="image-20211012202525539" style="zoom:67%;" />
+<ol start="3">
+<li>按分数查询有序集合指定空间内的元素：<code>zrangebyscore key值 min分数 max分数</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012202704719.png" alt="image-20211012202704719" style="zoom:67%;" />
+<ol start="4">
+<li>移除一个或多个元素：<code>zrem key值 member值 [member值...]</code>
+<ul>
+<li>返回移除的有序集合 长度</li>
+</ul>
+</li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012203049634.png" alt="image-20211012203049634" style="zoom:67%;" />
+<ol start="5">
+<li>获取有序集合中元素的个数：<code>zcard key值</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012203124447.png" alt="image-20211012203124447" style="zoom:67%;" />
+<ol start="6">
+<li>获取有序集合中成员的排名：<code>zrank key值 member值</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012203244806.png" alt="image-20211012203244806" style="zoom:67%;" />
+<ol start="7">
+<li>获取有序集合中元素的分数：<code>zscore key值 member值</code></li>
+</ol>
+<img src="Redis自学笔记.assets/image-20211012203510703.png" alt="image-20211012203510703" style="zoom:67%;" />
+<h2 id="redis持久化" class="headerLink">
+    <a href="#redis%e6%8c%81%e4%b9%85%e5%8c%96" class="header-mark"></a>Redis持久化</h2><p>将Redis数据库中的数据以二进制形式存储在硬盘中</p>
+<h4 id="一rdb持久化" class="headerLink">
+    <a href="#%e4%b8%80rdb%e6%8c%81%e4%b9%85%e5%8c%96" class="header-mark"></a>一、RDB持久化</h4><ul>
+<li>根据数据更新频率决定是否持久化</li>
+<li>Redis服务器默认开启RDB持久化方式</li>
+<li>持久化文件存储在数据库 安装目录 / dump.rdb</li>
+</ul>
+<ol>
+<li>
+<p>配置规则</p>
+<ul>
+<li>可以在安装目录/redis.conf文件中修改 save值<strong>是否开启RDB持久化</strong>
+<ul>
+<li>单位之间内达到被修改次数就会被持久化</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">save</span><span class="w"> </span><span class="mi">900</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">#</span><span class="mi">900</span><span class="err">秒内被修改</span><span class="mi">1</span><span class="err">次就会被持久化</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">save</span><span class="w"> </span><span class="mi">300</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">#</span><span class="mi">300</span><span class="err">秒内被修改</span><span class="mi">10</span><span class="err">次就会被持久化</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">save</span><span class="w"> </span><span class="mi">60</span><span class="w"> </span><span class="mi">10000</span><span class="w"> </span><span class="o">#</span><span class="mi">60</span><span class="err">秒内被修改</span><span class="mi">10000</span><span class="err">次就会被持久化</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>可以在安装目录/redis.conf文件中修改 dbfilename值修改<strong>持久化文件存放位置</strong></li>
+</ul>
+<img src="Redis自学笔记.assets/image-20211014211109722.png" alt="image-20211014211109722" style="zoom:67%;" />
+<ul>
+<li>可以在安装目录/redis.conf文件中修改 rdbcompression值修改<strong>持久化文件是否需要压缩</strong>
+<ul>
+<li>【yes】开启压缩，默认开启</li>
+</ul>
+</li>
+</ul>
+<img src="Redis自学笔记.assets/image-20211014211514827.png" alt="image-20211014211514827" style="zoom:67%;" />
+<ul>
+<li>可以在安装目录/redis.conf文件中修改 stop-writes-on-bgsave-error值修改<strong>持久化时发生错误是否阻止其他命令执行</strong>
+<ul>
+<li>【yes】之后的所有数据都不再持久化</li>
+<li>【no】之后数据更改不受影响</li>
+</ul>
+</li>
+</ul>
+<img src="Redis自学笔记.assets/image-20211014211638862.png" alt="image-20211014211638862" style="zoom:67%;" />
+</li>
+<li>
+<p>手动将数据持久化</p>
+<ul>
+<li>使用<code>bgsave</code>命令：直接将当前数据库中所有数据存储在dump.rdb中</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>RDB的缺点：无法保证dump.rdb中存储的数据与数据库中的数据保持一致</li>
+</ul>
+<h4 id="二rof持久化" class="headerLink">
+    <a href="#%e4%ba%8crof%e6%8c%81%e4%b9%85%e5%8c%96" class="header-mark"></a>二、ROF持久化</h4><ul>
+<li>根据指定的时间间隔持久化数据库数据</li>
+<li>Append Only File（AOF）</li>
+<li>持久化文件存储在数据库 安装目录 / appendonly.aof</li>
+</ul>
+<ol>
+<li>
+<p>配置规则</p>
+<ul>
+<li>可以在安</li>
+<li>装目录/redis.conf文件中修改 appendonly值<strong>是否开启AOF持久化</strong></li>
+</ul>
+<img src="Redis自学笔记.assets/image-20211014214613184.png" alt="image-20211014214613184" style="zoom:67%;" />
+<ul>
+<li>可以在安装目录/redis.conf文件中修改 appendfilename值修改<strong>持久化文件存放位置</strong></li>
+</ul>
+<img src="Redis自学笔记.assets/image-20211014214822346.png" alt="image-20211014214822346" style="zoom:67%;" />
+<ul>
+<li>可以在安装目录/redis.conf文件中修改 appendfsync值修改<strong>持久化方式</strong>
+<ul>
+<li>【always】每次数据修改都进行持久化，会增大服务器压力</li>
+<li>【everysec】每隔一秒对数据进行持久化一次</li>
+</ul>
+</li>
+</ul>
+<img src="Redis自学笔记.assets/image-20211014215033730.png" alt="image-20211014215033730" style="zoom:67%;" />
+</li>
+</ol>
+<h2 id="redis事务管理" class="headerLink">
+    <a href="#redis%e4%ba%8b%e5%8a%a1%e7%ae%a1%e7%90%86" class="header-mark"></a>Redis事务管理</h2><ul>
+<li>在MySQL中事务是通过临时备份表来实现的，开启事务时生成备份表，如果rollback就用备份表覆盖原表</li>
+<li>在Redis中事务是通过将命令存入一个栈来实现的，如果exec提交就执行栈中所有命令</li>
+</ul>
+<p>触发事务的错误：</p>
+<ol>
+<li>
+<p>语法错误:Redis事务管理对象销毁栈，所有的命令都无效</p>
+<blockquote>
+<p>set key1 100</p>
+<p>sets key2 200  # 语法错误，就是命令书写错误</p>
+</blockquote>
+</li>
+<li>
+<p>执行错误: 不会影响事务中其他命令的执行</p>
+<blockquote>
+<p>set key1 100
+set key2 200       # key2关联的数据是string
+lpush key2 300  # 语法没有错误/命令没有拼写错误，但是将key2的类型错误理解为列表</p>
+</blockquote>
+<ul>
+<li>这个错误只有在Redis执行这个命令时才会爆发，所以并不会影响其他命令</li>
+</ul>
+</li>
+</ol>
+<p>事务相关命令：</p>
+<ol>
+<li><code>multi</code> 要求Redis服务器提供一个事务管理对象, 相当于 start transaction</li>
+<li><code>exec</code> 要求事务管理对象执行栈中所有的命令, 相当于commit</li>
+<li><code>discard</code> 要求事务管理对象销毁栈, 相当于rollback</li>
+<li><code>watch</code> 通过watch监控某一个数据，如果在事务执行过程中这个被监控的数据被修改了则取消本次事务中所有的操作</li>
+</ol>
+<h2 id="redis消息订阅" class="headerLink">
+    <a href="#redis%e6%b6%88%e6%81%af%e8%ae%a2%e9%98%85" class="header-mark"></a>Redis消息订阅</h2><p>“ 消息订阅 “ ：一种数据共享的服务，便于redis客户端之间数据共享。</p>
+<ol>
+<li>通    道：redis信息订阅提供的存放共享数据的平台</li>
+<li>发布者：写入共享数据的redis客户端</li>
+<li>订阅者：读取共享数据的redis客户端</li>
+</ol>
+<p>消息订阅相关命令：</p>
+<pre><code>1. `subscribe 通道名1 [通道名2]`：订阅（自动接收）通道信息
+2. `publish 通道名 信息`：向通道发布信息
+</code></pre>
+<p><img
+        class="lazyload"
+        data-src="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015151825165.png"
+        data-srcset="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015151825165.png, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015151825165.png 1.5x, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015151825165.png 2x"
+        data-sizes="auto"
+        alt="Redis自学笔记.assets/image-20211015151825165.png"
+        title="image-20211015151825165"></p>
+<h2 id="redis的主从复制和哨兵模式" class="headerLink">
+    <a href="#redis%e7%9a%84%e4%b8%bb%e4%bb%8e%e5%a4%8d%e5%88%b6%e5%92%8c%e5%93%a8%e5%85%b5%e6%a8%a1%e5%bc%8f" class="header-mark"></a>Redis的主从复制和哨兵模式</h2><p>略</p>
+<h2 id="使用jedis操作redis" class="headerLink">
+    <a href="#%e4%bd%bf%e7%94%a8jedis%e6%93%8d%e4%bd%9credis" class="header-mark"></a>使用Jedis操作Redis</h2><p>Jedis：Redis作者使用 Java 写的工具类，用于连接Redis数据库</p>
+<ul>
+<li>需要关闭linux防火墙，让非本地客户端可以连接到redis。否则可能会抛出连接超时异常</li>
+</ul>
+<ol>
+<li>导入依赖</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="c">&lt;!-- jedis依赖 --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;groupId&gt;</span>redis.clients<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;artifactId&gt;</span>jedis<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;version&gt;</span>3.7.0<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>在redis.conf中 关闭Redis的保护模式</li>
+</ol>
+<p><img
+        class="lazyload"
+        data-src="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160222036.png"
+        data-srcset="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160222036.png, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160222036.png 1.5x, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160222036.png 2x"
+        data-sizes="auto"
+        alt="Redis自学笔记.assets/image-20211015160222036.png"
+        title="image-20211015160222036"></p>
+<ol start="3">
+<li>在redis.conf中 取消服务器与客户端IP的绑定</li>
+</ol>
+<p><img
+        class="lazyload"
+        data-src="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160459007.png"
+        data-srcset="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160459007.png, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160459007.png 1.5x, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160459007.png 2x"
+        data-sizes="auto"
+        alt="Redis自学笔记.assets/image-20211015160459007.png"
+        title="image-20211015160459007"></p>
+<ol start="4">
+<li>在redis.conf中 设置访问Redis服务器的密码</li>
+</ol>
+<p><img
+        class="lazyload"
+        data-src="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160634239.png"
+        data-srcset="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160634239.png, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160634239.png 1.5x, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160634239.png 2x"
+        data-sizes="auto"
+        alt="Redis自学笔记.assets/image-20211015160634239.png"
+        title="image-20211015160634239"></p>
+<ol start="5">
+<li>按照redis.conf 的配置文件启动Redis数据库</li>
+</ol>
+<p><img
+        class="lazyload"
+        data-src="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160821959.png"
+        data-srcset="Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160821959.png, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160821959.png 1.5x, Redis%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0.assets/image-20211015160821959.png 2x"
+        data-sizes="auto"
+        alt="Redis自学笔记.assets/image-20211015160821959.png"
+        title="image-20211015160821959"></p>
+<ol start="6">
+<li>测试ping数据库</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Test</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testJedis</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//1. 创建Jedis对象, 打开连接通道
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Jedis</span> <span class="n">jedis</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Jedis</span><span class="o">(</span><span class="s">&#34;192.168.50.128&#34;</span><span class="o">,</span> <span class="n">6379</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//2. 提供登录密码，验证
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">jedis</span><span class="o">.</span><span class="na">auth</span><span class="o">(</span><span class="s">&#34;123&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//3. 发送ping命令, 测试通道否建立成功
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">jedis</span><span class="o">.</span><span class="na">ping</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;result = &#34;</span> <span class="o">+</span> <span class="n">result</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>操作String字符串</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Test</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testJedisString</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//1. 创建Jedis对象, 打开连接通道
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Jedis</span> <span class="n">jedis</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Jedis</span><span class="o">(</span><span class="s">&#34;192.168.50.128&#34;</span><span class="o">,</span> <span class="n">6379</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//2. 提供登录密码，验证
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">jedis</span><span class="o">.</span><span class="na">auth</span><span class="o">(</span><span class="s">&#34;123&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//操作String字符串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">jedis</span><span class="o">.</span><span class="na">select</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">jedis</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">,</span> <span class="s">&#34;Hello&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">jedis</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="s">&#34;key2&#34;</span><span class="o">,</span> <span class="s">&#34;World&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">String</span> <span class="n">key1</span> <span class="o">=</span> <span class="n">jedis</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">key1</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">String</span> <span class="n">key2</span> <span class="o">=</span> <span class="n">jedis</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;key2&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">key2</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">jedis</span><span class="o">.</span><span class="na">flushDB</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Long</span> <span class="n">aLong</span> <span class="o">=</span> <span class="n">jedis</span><span class="o">.</span><span class="na">dbSize</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">aLong</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>操作list列表</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Test</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testJedisList</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//1. 创建Jedis对象, 打开连接通道
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Jedis</span> <span class="n">jedis</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Jedis</span><span class="o">(</span><span class="s">&#34;192.168.50.128&#34;</span><span class="o">,</span> <span class="n">6379</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//2. 提供登录密码，验证
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">jedis</span><span class="o">.</span><span class="na">auth</span><span class="o">(</span><span class="s">&#34;123&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//操作list列表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">jedis</span><span class="o">.</span><span class="na">lpush</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">,</span> <span class="s">&#34;Hello&#34;</span><span class="o">,</span> <span class="s">&#34;World&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">key1</span> <span class="o">=</span> <span class="n">jedis</span><span class="o">.</span><span class="na">lrange</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="n">2</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">key1</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">jedis</span><span class="o">.</span><span class="na">flushDB</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>操作Set集合</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Test</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testJedisSet</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//1. 创建Jedis对象, 打开连接通道
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Jedis</span> <span class="n">jedis</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Jedis</span><span class="o">(</span><span class="s">&#34;192.168.50.128&#34;</span><span class="o">,</span> <span class="n">6379</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//2. 提供登录密码，验证
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">jedis</span><span class="o">.</span><span class="na">auth</span><span class="o">(</span><span class="s">&#34;123&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//操作Set集合
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Long</span> <span class="n">num</span> <span class="o">=</span> <span class="n">jedis</span><span class="o">.</span><span class="na">sadd</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">,</span> <span class="s">&#34;10&#34;</span><span class="o">,</span> <span class="s">&#34;20&#34;</span><span class="o">,</span> <span class="s">&#34;10&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;当前key1中数据数量&#34;</span> <span class="o">+</span> <span class="n">num</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Boolean</span> <span class="n">is10</span> <span class="o">=</span> <span class="n">jedis</span><span class="o">.</span><span class="na">sismember</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">,</span> <span class="s">&#34;10&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;key1中是否有10&#34;</span> <span class="o">+</span> <span class="n">is10</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">key1</span> <span class="o">=</span> <span class="n">jedis</span><span class="o">.</span><span class="na">smembers</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">key1</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">jedis</span><span class="o">.</span><span class="na">flushDB</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>操作hash哈希</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Test</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testJedisHash</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//1. 创建Jedis对象, 打开连接通道
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Jedis</span> <span class="n">jedis</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Jedis</span><span class="o">(</span><span class="s">&#34;192.168.50.128&#34;</span><span class="o">,</span> <span class="n">6379</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//2. 提供登录密码，验证
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">jedis</span><span class="o">.</span><span class="na">auth</span><span class="o">(</span><span class="s">&#34;123&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//操作hash哈希
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">jedis</span><span class="o">.</span><span class="na">hset</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">,</span> <span class="s">&#34;deptNo&#34;</span><span class="o">,</span> <span class="s">&#34;10&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">jedis</span><span class="o">.</span><span class="na">hset</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">,</span> <span class="s">&#34;dName&#34;</span><span class="o">,</span> <span class="s">&#34;sales&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">jedis</span><span class="o">.</span><span class="na">hset</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">,</span> <span class="s">&#34;loc&#34;</span><span class="o">,</span> <span class="s">&#34;beijing&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">String</span> <span class="n">hget</span> <span class="o">=</span> <span class="n">jedis</span><span class="o">.</span><span class="na">hget</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">,</span> <span class="s">&#34;deptNo&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">hget</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">hget</span> <span class="o">=</span> <span class="n">jedis</span><span class="o">.</span><span class="na">hget</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">,</span> <span class="s">&#34;dName&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">hget</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">hget</span> <span class="o">=</span> <span class="n">jedis</span><span class="o">.</span><span class="na">hget</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">,</span> <span class="s">&#34;loc&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">hget</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">jedis</span><span class="o">.</span><span class="na">flushDB</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>操作ZSet有序集合</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Test</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testJedisZSet</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//1. 创建Jedis对象, 打开连接通道
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Jedis</span> <span class="n">jedis</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Jedis</span><span class="o">(</span><span class="s">&#34;192.168.50.128&#34;</span><span class="o">,</span> <span class="n">6379</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//2. 提供登录密码，验证
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">jedis</span><span class="o">.</span><span class="na">auth</span><span class="o">(</span><span class="s">&#34;123&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//操作ZSet有序集合
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">jedis</span><span class="o">.</span><span class="na">zadd</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">,</span> <span class="n">80</span><span class="o">,</span> <span class="s">&#34;mike&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">jedis</span><span class="o">.</span><span class="na">zadd</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">,</span> <span class="n">60</span><span class="o">,</span> <span class="s">&#34;smith&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">jedis</span><span class="o">.</span><span class="na">zadd</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">,</span> <span class="n">40</span><span class="o">,</span> <span class="s">&#34;tom&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">key1</span> <span class="o">=</span> <span class="n">jedis</span><span class="o">.</span><span class="na">zrange</span><span class="o">(</span><span class="s">&#34;key1&#34;</span><span class="o">,</span> <span class="n">0</span><span class="o">,</span> <span class="o">-</span><span class="n">1</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">key1</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">jedis</span><span class="o">.</span><span class="na">flushDB</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="在-springmvc-中使用-redis" class="headerLink">
+    <a href="#%e5%9c%a8-springmvc-%e4%b8%ad%e4%bd%bf%e7%94%a8-redis" class="header-mark"></a>在 SpringMVC 中使用 Redis</h2><ul>
+<li>在 pom.xml 中添加依赖</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">    <span class="c">&lt;!-- spring-data-redis --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;groupId&gt;</span>org.springframework.data<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;artifactId&gt;</span>spring-data-redis<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;version&gt;</span>2.6.4<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/dependency&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!-- jedis --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;dependency&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;groupId&gt;</span>redis.clients<span class="nt">&lt;/groupId&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;artifactId&gt;</span>jedis<span class="nt">&lt;/artifactId&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;version&gt;</span>4.2.2<span class="nt">&lt;/version&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在 resources 路径下创建 redis.properties 文件</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">redis.host=Redis的host
+</span></span><span class="line"><span class="cl">redis.port=Redis的端口号
+</span></span><span class="line"><span class="cl">redis.password=&#34;Redis的密码&#34;
+</span></span><span class="line"><span class="cl">redis.maxIdle=400
+</span></span><span class="line"><span class="cl">redis.maxTotal=6000
+</span></span><span class="line"><span class="cl">redis.maxWaitMillis=1000
+</span></span><span class="line"><span class="cl">redis.blockWhenExhausted=true
+</span></span><span class="line"><span class="cl">redis.testOnBorrow=true
+</span></span><span class="line"><span class="cl">redis.db=1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>创建 RedisService 类</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.springframework.data.redis.core.*</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.Set</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.util.concurrent.TimeUnit</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RedisService</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@Autowired</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">RedisTemplate</span> <span class="n">redisTemplate</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setRedisTemplate</span><span class="o">(</span><span class="n">RedisTemplate</span> <span class="n">redisTemplate</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">redisTemplate</span> <span class="o">=</span> <span class="n">redisTemplate</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 写入缓存
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param value
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">set</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">key</span><span class="o">,</span> <span class="n">Object</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">boolean</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ValueOperations</span><span class="o">&lt;</span><span class="n">Serializable</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">operations</span> <span class="o">=</span> <span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForValue</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">operations</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">result</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 写入缓存设置时效时间
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param value
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">set</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">key</span><span class="o">,</span> <span class="n">Object</span> <span class="n">value</span><span class="o">,</span> <span class="n">Long</span> <span class="n">expireTime</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">boolean</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ValueOperations</span><span class="o">&lt;</span><span class="n">Serializable</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">operations</span> <span class="o">=</span> <span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForValue</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">operations</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">redisTemplate</span><span class="o">.</span><span class="na">expire</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">expireTime</span><span class="o">,</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">result</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 批量删除对应的value
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param keys
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span><span class="o">...</span> <span class="n">keys</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">key</span> <span class="o">:</span> <span class="n">keys</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">remove</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 批量删除key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param pattern
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">removePattern</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">pattern</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Serializable</span><span class="o">&gt;</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">redisTemplate</span><span class="o">.</span><span class="na">keys</span><span class="o">(</span><span class="n">pattern</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">keys</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">0</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">redisTemplate</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">keys</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 删除对应的value
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">exists</span><span class="o">(</span><span class="n">key</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">redisTemplate</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 判断缓存中是否有对应的value
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">exists</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">redisTemplate</span><span class="o">.</span><span class="na">hasKey</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 读取缓存
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">get</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Object</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ValueOperations</span><span class="o">&lt;</span><span class="n">Serializable</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">operations</span> <span class="o">=</span> <span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForValue</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span> <span class="o">=</span> <span class="n">operations</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 哈希 添加
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param hashKey
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param value
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">hmSet</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">,</span> <span class="n">Object</span> <span class="n">hashKey</span><span class="o">,</span> <span class="n">Object</span> <span class="n">value</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">HashOperations</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">hash</span> <span class="o">=</span> <span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForHash</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">hash</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">hashKey</span><span class="o">,</span><span class="n">value</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 哈希 删除
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param hashKey
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">hmDel</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">,</span> <span class="n">Object</span> <span class="n">hashKey</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">HashOperations</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">hash</span> <span class="o">=</span> <span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForHash</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">hash</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">hashKey</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 哈希获取数据
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param hashKey
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">hmGet</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">,</span> <span class="n">Object</span> <span class="n">hashKey</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">HashOperations</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span>  <span class="n">hash</span> <span class="o">=</span> <span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForHash</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">hash</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">hashKey</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 列表添加
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param k
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param v
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lPush</span><span class="o">(</span><span class="n">String</span> <span class="n">k</span><span class="o">,</span><span class="n">Object</span> <span class="n">v</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ListOperations</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForList</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">list</span><span class="o">.</span><span class="na">rightPush</span><span class="o">(</span><span class="n">k</span><span class="o">,</span><span class="n">v</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 列表获取
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param k
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param l
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param l1
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="nf">lRange</span><span class="o">(</span><span class="n">String</span> <span class="n">k</span><span class="o">,</span> <span class="kt">long</span> <span class="n">l</span><span class="o">,</span> <span class="kt">long</span> <span class="n">l1</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ListOperations</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForList</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">list</span><span class="o">.</span><span class="na">range</span><span class="o">(</span><span class="n">k</span><span class="o">,</span><span class="n">l</span><span class="o">,</span><span class="n">l1</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 集合添加
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param value
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">,</span><span class="n">Object</span> <span class="n">value</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">SetOperations</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">set</span> <span class="o">=</span> <span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForSet</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">value</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 集合获取
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="nf">setMembers</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">SetOperations</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">set</span> <span class="o">=</span> <span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForSet</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">set</span><span class="o">.</span><span class="na">members</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 有序集合添加
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param value
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param scoure
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">zAdd</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">,</span><span class="n">Object</span> <span class="n">value</span><span class="o">,</span><span class="kt">double</span> <span class="n">scoure</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ZSetOperations</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">zset</span> <span class="o">=</span> <span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForZSet</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">zset</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">key</span><span class="o">,</span><span class="n">value</span><span class="o">,</span><span class="n">scoure</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * 有序集合获取
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param key
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param scoure
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @param scoure1
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="nf">rangeByScore</span><span class="o">(</span><span class="n">String</span> <span class="n">key</span><span class="o">,</span> <span class="kt">double</span> <span class="n">scoure</span><span class="o">,</span> <span class="kt">double</span> <span class="n">scoure1</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ZSetOperations</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">zset</span> <span class="o">=</span> <span class="n">redisTemplate</span><span class="o">.</span><span class="na">opsForZSet</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">zset</span><span class="o">.</span><span class="na">rangeByScore</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">scoure</span><span class="o">,</span> <span class="n">scoure1</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>创建配置类 RedisConfig</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">com.djtu.redis.RedisService</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.RedisStandaloneConfiguration</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.springframework.data.redis.connection.jedis.JedisConnectionFactory</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.springframework.data.redis.core.RedisTemplate</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.springframework.data.redis.serializer.StringRedisSerializer</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">redis.clients.jedis.JedisPoolConfig</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RedisConfig</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;${redis.host}&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">hostName</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;${redis.port}&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">int</span> <span class="n">port</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;${redis.password}&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">String</span> <span class="n">password</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@Value</span><span class="o">(</span><span class="s">&#34;${redis.db}&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kt">int</span> <span class="n">database</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * redis链接池配置
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return JedisPoolConfig
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Bean</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">JedisPoolConfig</span> <span class="nf">jedisPoolConfig</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">JedisPoolConfig</span> <span class="n">jedisPoolConfig</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JedisPoolConfig</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">jedisPoolConfig</span><span class="o">.</span><span class="na">setMaxTotal</span><span class="o">(</span><span class="n">100</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">jedisPoolConfig</span><span class="o">.</span><span class="na">setMinIdle</span><span class="o">(</span><span class="n">20</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">jedisPoolConfig</span><span class="o">.</span><span class="na">setMaxWaitMillis</span><span class="o">(</span><span class="n">10000</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">jedisPoolConfig</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * redis工厂方法
+</span></span></span><span class="line"><span class="cl"><span class="cm">     *
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * @return JedisConnectionFactory
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Bean</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">JedisConnectionFactory</span> <span class="nf">jedisConnectionFactory</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">hostName</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">RedisStandaloneConfiguration</span> <span class="n">redisStandaloneConfiguration</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RedisStandaloneConfiguration</span><span class="o">(</span><span class="n">hostName</span><span class="o">,</span> <span class="n">port</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">redisStandaloneConfiguration</span><span class="o">.</span><span class="na">setDatabase</span><span class="o">(</span><span class="n">database</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">redisStandaloneConfiguration</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="k">new</span> <span class="n">JedisConnectionFactory</span><span class="o">(</span><span class="n">redisStandaloneConfiguration</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@Bean</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">RedisTemplate</span> <span class="nf">redisTemplate</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">RedisTemplate</span> <span class="n">redisTemplate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RedisTemplate</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setConnectionFactory</span><span class="o">(</span><span class="n">jedisConnectionFactory</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">StringRedisSerializer</span> <span class="n">stringRedisSerializer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringRedisSerializer</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setDefaultSerializer</span><span class="o">(</span><span class="n">stringRedisSerializer</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">redisTemplate</span><span class="o">.</span><span class="na">setEnableTransactionSupport</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">redisTemplate</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@Bean</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">RedisService</span> <span class="nf">redisService</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">RedisService</span> <span class="n">redisService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RedisService</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">redisService</span><span class="o">.</span><span class="na">setRedisTemplate</span><span class="o">(</span><span class="n">redisTemplate</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">redisService</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在需要的地方注入 RedisService 即可使用</li>
+</ul>
+</div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-10-11</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span><a class="link-to-mardown" href=/redis%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                    </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://liujjjjn.github.io/redis%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/" data-title="Redis自学笔记" data-ralateuid="6018937938"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://liujjjjn.github.io/redis%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/" data-title="Redis自学笔记"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/linux%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" class="prev" rel="prev" title="Linux自学笔记md版"><i class="fas fa-angle-left fa-fw"></i>Linux自学笔记md版</a>
+            <a href="/nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" class="next" rel="next" title="Nginx自学笔记md版">Nginx自学笔记md版<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"></div></article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://liujjjjn.github.io/" target="_blank" rel="noopener noreferrer">刘嘉宁</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript></div>
+</body>
+
+</html>
