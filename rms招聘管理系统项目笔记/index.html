@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">招聘管理系统项目笔记 - LiuJN 的个人博客</title><meta name="Description" content="This is LiuJN"><meta property="og:title" content="招聘管理系统项目笔记" />
+<meta property="og:description" content="Recruitment Management System IBM定制班 实训项目 招聘管理系统 项目技术栈 后端 SpringBoot SpringSecurity Mybatis MySQL Redis 前端 Vue axios Pinia Element-Plus i18n 项目管理 SVN 前后端分离的校验规则 前端携带用户名密码访问登录接口 后端" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://liujjjjn.github.io/rms%E6%8B%9B%E8%81%98%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/" /><meta property="og:image" content="https://liujjjjn.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-10T00:00:00+08:00" />
+<meta property="article:modified_time" content="2022-12-10T00:00:00+08:00" /><meta property="og:site_name" content="刘嘉宁的个人博客" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://liujjjjn.github.io/logo.png"/>
+
+<meta name="twitter:title" content="招聘管理系统项目笔记"/>
+<meta name="twitter:description" content="Recruitment Management System IBM定制班 实训项目 招聘管理系统 项目技术栈 后端 SpringBoot SpringSecurity Mybatis MySQL Redis 前端 Vue axios Pinia Element-Plus i18n 项目管理 SVN 前后端分离的校验规则 前端携带用户名密码访问登录接口 后端"/>
+<meta name="application-name" content="LiuJN">
+<meta name="apple-mobile-web-app-title" content="LiuJN">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://liujjjjn.github.io/rms%E6%8B%9B%E8%81%98%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/" /><link rel="prev" href="https://liujjjjn.github.io/springsecurity%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "招聘管理系统项目笔记",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/liujjjjn.github.io\/rms%E6%8B%9B%E8%81%98%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0\/"
+        },"genre": "posts","wordcount":  3745 ,
+        "url": "https:\/\/liujjjjn.github.io\/rms%E6%8B%9B%E8%81%98%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0\/","datePublished": "2022-12-10T00:00:00+08:00","dateModified": "2022-12-10T00:00:00+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "刘嘉宁"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="auto" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark');}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="LiuJN 的个人博客">刘嘉宁的个人博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="LiuJN 的个人博客">刘嘉宁的个人博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "false")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">招聘管理系统项目笔记</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://liujjjjn.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author">刘嘉宁</a>
+                </span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-12-10">2022-12-10</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2022-12-10">2022-12-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3745 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#项目技术栈">项目技术栈</a></li>
+    <li><a href="#前后端分离的校验规则">前后端分离的校验规则</a></li>
+    <li><a href="#前后端分离的会话管理">前后端分离的会话管理</a></li>
+    <li><a href="#简略认证授权流程">简略认证授权流程</a></li>
+    <li><a href="#使用-uuid-做主键">使用 UUID 做主键</a></li>
+    <li><a href="#数据库定义">数据库定义</a></li>
+    <li><a href="#代码规范">代码规范</a>
+      <ul>
+        <li><a href="#通用规范">通用规范</a></li>
+        <li><a href="#前端代码规范">前端代码规范</a>
+          <ul>
+            <li><a href="#命名规范">命名规范</a></li>
+            <li><a href="#注释">注释</a></li>
+            <li><a href="#换行">换行</a></li>
+            <li><a href="#分号">分号</a></li>
+            <li><a href="#其它">其它</a></li>
+          </ul>
+        </li>
+        <li><a href="#后端代码规范">后端代码规范</a>
+          <ul>
+            <li><a href="#命名规范-1">命名规范</a></li>
+            <li><a href="#注释-1">注释</a></li>
+            <li><a href="#换行-1">换行</a></li>
+          </ul>
+        </li>
+        <li><a href="#式样书规范">式样书规范</a></li>
+      </ul>
+    </li>
+    <li><a href="#前端遇到的问题">前端遇到的问题</a>
+      <ul>
+        <li><a href="#vue3-如何打包成能直接运行的格式">Vue3 如何打包成能直接运行的格式</a></li>
+        <li><a href="#vue-如何修改-element-plus-的底层样式">Vue 如何修改 Element-Plus 的底层样式</a></li>
+        <li><a href="#vue3-如何修改-reactive-数组做响应式处理">Vue3 如何修改 reactive 数组做响应式处理</a></li>
+        <li><a href="#vue3-ref-和-reactive-的区别">Vue3 ref 和 reactive 的区别</a></li>
+        <li><a href="#vue-click-事件只点击一次却执行多次">Vue @click 事件只点击一次却执行多次</a></li>
+        <li><a href="#npm-install-下载缓慢">npm install 下载缓慢</a></li>
+      </ul>
+    </li>
+    <li><a href="#后端遇到的问题">后端遇到的问题</a>
+      <ul>
+        <li><a href="#axios-传递的参数结尾多了一个等于号--">axios 传递的参数结尾多了一个等于号 &lsquo;=&rsquo; ?</a></li>
+        <li><a href="#mybatis-的-resultmap-映射问题">mybatis 的 resultMap 映射问题</a></li>
+        <li><a href="#大写字母开头传值-springboot-为-null">大写字母开头传值 springboot 为 null</a></li>
+      </ul>
+    </li>
+    <li><a href="#服务器部署遇到的问题">服务器部署遇到的问题</a>
+      <ul>
+        <li><a href="#vue-项目部署到-nginx-服务器后除首页外刷新都跳转-404-页面">vue 项目部署到 nginx 服务器后，除首页外刷新都跳转 404 页面</a></li>
+        <li><a href="#长时间不进行操作-redis-抛出异常">长时间不进行操作 redis 抛出异常</a></li>
+      </ul>
+    </li>
+    <li><a href="#项目特色">项目特色</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="recruitment-management-system" class="headerLink">
+    <a href="#recruitment-management-system" class="header-mark"></a>Recruitment Management System</h1><blockquote>
+<p>IBM定制班 实训项目 招聘管理系统</p>
+</blockquote>
+<h2 id="项目技术栈" class="headerLink">
+    <a href="#%e9%a1%b9%e7%9b%ae%e6%8a%80%e6%9c%af%e6%a0%88" class="header-mark"></a>项目技术栈</h2><ul>
+<li>
+<p>后端</p>
+<ul>
+<li>SpringBoot</li>
+<li>SpringSecurity</li>
+<li>Mybatis</li>
+<li>MySQL</li>
+<li>Redis</li>
+</ul>
+</li>
+<li>
+<p>前端</p>
+<ul>
+<li>Vue</li>
+<li>axios</li>
+<li>Pinia</li>
+<li>Element-Plus</li>
+<li>i18n</li>
+</ul>
+</li>
+<li>
+<p>项目管理</p>
+<ul>
+<li>SVN</li>
+</ul>
+</li>
+</ul>
+<h2 id="前后端分离的校验规则" class="headerLink">
+    <a href="#%e5%89%8d%e5%90%8e%e7%ab%af%e5%88%86%e7%a6%bb%e7%9a%84%e6%a0%a1%e9%aa%8c%e8%a7%84%e5%88%99" class="header-mark"></a>前后端分离的校验规则</h2><ol>
+<li>前端携带用户名密码访问登录接口</li>
+<li>后端负责验证并生成一个 <code>JWT (加密的 json 格式的用户的签名(唯一标识))</code> 响应给前端</li>
+<li>之后前端的每次请求都要在请求头中携带这个 <code>JWT(Json Web Token)</code></li>
+<li>每次后端接收到请求后都会解析这个 token 验证用户权限返回资源</li>
+</ol>
+<h2 id="前后端分离的会话管理" class="headerLink">
+    <a href="#%e5%89%8d%e5%90%8e%e7%ab%af%e5%88%86%e7%a6%bb%e7%9a%84%e4%bc%9a%e8%af%9d%e7%ae%a1%e7%90%86" class="header-mark"></a>前后端分离的会话管理</h2><ul>
+<li>【问题】前后端分离后，后端怎么知道这次请求是否是认证过了的（已经登录过的）难道每次请求都要查询数据库验证账号密码嘛？
+<ul>
+<li>在成功登录后将用户信息以 用户 ID 为 Key，用户信息 为 Value 存入 Redis</li>
+<li>之后的每次校验解析 token 获取 用户 ID 从 Redis 中获取用户信息存入 SecurityContextHolder (Session)
+<ul>
+<li>【问题】为什么是存到 SecurityContextHolder 而不是 Session 中？
+<ul>
+<li>SpringSecurity 会在认证成功后将用户信息保存到 SecurityContextHolder 中，是通过 ThreadLocal 来实现的 <strong>线程绑定</strong> 这里面的变量只能被当前线程使用，不能被其它线程访问和修改</li>
+<li>在每次请求到来时，SpringSecurity 会从 Session 中将数据存入 SecurityContextHolder, 请求处理结束后将其中的数据拿出来保存到 Session 中，然后将 SecurityContextHolder 中的数据清空</li>
+<li>这一策略非常方便用户在 Controller、Service 层以及任何代码中获取当前登录用户数据</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="简略认证授权流程" class="headerLink">
+    <a href="#%e7%ae%80%e7%95%a5%e8%ae%a4%e8%af%81%e6%8e%88%e6%9d%83%e6%b5%81%e7%a8%8b" class="header-mark"></a>简略认证授权流程</h2><ul>
+<li>
+<p>当用户第一次登录时发送 login 接口请求，服务器将这个允许匿名访问的接口放行进入 Service 层</p>
+</li>
+<li>
+<p>在 Service 层会将前端传来的用户名和密码存入 authenticationManager 进行认证</p>
+<ul>
+<li>认证：在 UserDetailsService 的实现类中查询数据库中的用户名密码是否正确
+<ul>
+<li>错误：抛出异常，由前端处理</li>
+<li>正确：查询对应的权限信息，将用户实例和权限列表封装成 UserDetails 的实现类</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>认证通过后将 UserDetails 的实现类存入 Redis 缓存服务器，将用户ID 创建为 JWT 返回给前端存储</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>当用户发送非 login 接口请求时，进入过滤器
+<ul>
+<li>检查请求头中是否含有 token ，如果没有则报认证错误</li>
+<li>解析 token 得到用户 ID ，如果解析失败抛出 token 不合法异常</li>
+<li>通过用户 ID 从 Redis 中获取用户信息，如果没此用户抛出用户未登录异常</li>
+<li>将用户信息和查询到的权限信息交给 SpringSecurity 的 SecurityContextHolder</li>
+<li>放行</li>
+</ul>
+</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221202123812350.png" alt="image-20221202123812350" style="zoom: 80%;" />
+<h2 id="使用-uuid-做主键" class="headerLink">
+    <a href="#%e4%bd%bf%e7%94%a8-uuid-%e5%81%9a%e4%b8%bb%e9%94%ae" class="header-mark"></a>使用 UUID 做主键</h2><blockquote>
+<p>MySQL 的 8.0 通过实现三个新的 SQL 函数提高 UUID 操作的易用性：<code>UUID_TO_BIN()</code>，<code>BIN_TO_UUID()</code>，和 <code>IS_UUID()</code>。第一个从 UUID 格式化文本转换 <code>VARBINARY(16)</code> 为第二个 <code>VARBINARY(16)</code> 到 UUID 格式化文本，最后一个检查 UUID 格式文本的有效性。存储为 UUID <code>VARBINARY(16)</code> 可以使用功能索引进行索引。功能 <code>UUID_TO_BIN()</code> 和 <code>UUID_TO_BIN()</code> 也可以洗牌与时间相关的位，在开始移动它们使得指数友好，避免在 B 树中的随机插入，这样降低了插入时间。这种功能的缺乏被认为是使用 UUID 的缺点之一。</p>
+</blockquote>
+<h2 id="数据库定义" class="headerLink">
+    <a href="#%e6%95%b0%e6%8d%ae%e5%ba%93%e5%ae%9a%e4%b9%89" class="header-mark"></a>数据库定义</h2><ul>
+<li>数据字典类型表
+<ul>
+<li>所属公司 company</li>
+<li>用户状态 user_status</li>
+<li>性别 sex</li>
+<li>学历 education</li>
+<li>技术能力 tech_ability</li>
+<li>语言能力 lang_ability</li>
+<li>简历来源 source</li>
+<li>是否服从 obey</li>
+<li>面试状态 interview_status</li>
+<li>面试结果 result</li>
+<li>面试结果得分项 item</li>
+<li>备注类型 comment_type</li>
+</ul>
+</li>
+<li>用户表
+<ul>
+<li>status：0正常、1禁用</li>
+</ul>
+</li>
+<li>简历表
+<ul>
+<li>sex：0女、1男</li>
+<li>education：0无、1专科、2本科、3硕士、4海归、5其它</li>
+<li>tech_ability：0无、1Java、2C++、3Python、4Go、5PHP、6Vue</li>
+<li>lang_ability：0无、1日语N4、2日语N3、3日语N2、4日语N1、5英语4级、6英语6级</li>
+<li>source：0校招、1官网、2内推、3宣讲会、4招聘软件、5其它</li>
+<li>obey：0不服从、1服从</li>
+</ul>
+</li>
+<li>面试表
+<ul>
+<li>status：0等待指定Reviewer、0+1等待简历Review、1+1等待指定面试官、2+1等待确定面试时间、3+1等待面试、4+1等待面试提交反馈、5+1简历ReviewNG、6+1面试OK、7+1面试NG、8+1HOLD</li>
+</ul>
+</li>
+<li>面试反馈表
+<ul>
+<li>result：0NG、1OK</li>
+</ul>
+</li>
+<li>面试反馈得分表
+<ul>
+<li>item：&hellip;&hellip;</li>
+</ul>
+</li>
+<li>备注表
+<ul>
+<li>comment_type：0简历上传备注、1review备注、2面试反馈备注</li>
+</ul>
+</li>
+<li>权限表 code 的意义
+<ul>
+<li><code>CVUpload:*:*</code> ：的权限就是对 CVUpload 的所有数据的所有操作</li>
+<li><code>表 ：操作 ：数据</code> ：例如 <code>user:update:*</code> 的权限就是对 user 表的所有字段都有更新权限</li>
+</ul>
+</li>
+</ul>
+<h2 id="代码规范" class="headerLink">
+    <a href="#%e4%bb%a3%e7%a0%81%e8%a7%84%e8%8c%83" class="header-mark"></a>代码规范</h2><h3 id="通用规范" class="headerLink">
+    <a href="#%e9%80%9a%e7%94%a8%e8%a7%84%e8%8c%83" class="header-mark"></a>通用规范</h3><ul>
+<li>
+<p>代码必须经过 format</p>
+</li>
+<li>
+<p>代码必须经过自检运行跑通后才能提交 SVN</p>
+</li>
+<li>
+<p>代码书写应遵循</p>
+<ul>
+<li>没做完或需要后期更改的地方，应写上 todo 注释，并注明用途</li>
+</ul>
+  <img src="RMS招聘管理系统项目笔记.assets/image-20221123143959326.png" alt="image-20221123143959326" style="zoom:50%;" />
+<ul>
+<li>一行代码不得超过 120 字符</li>
+<li>变量名必须见名知意，不得用拼音</li>
+</ul>
+</li>
+<li>
+<p>注释书写应遵循</p>
+<ul>
+<li>注释内容由空格开始、注释中英文前后添加空格</li>
+</ul>
+  <img src="RMS招聘管理系统项目笔记.assets/image-20221123145714322.png" alt="image-20221123145714322" style="zoom:50%;" />
+</li>
+</ul>
+<h3 id="前端代码规范" class="headerLink">
+    <a href="#%e5%89%8d%e7%ab%af%e4%bb%a3%e7%a0%81%e8%a7%84%e8%8c%83" class="header-mark"></a>前端代码规范</h3><ul>
+<li>
+<p>功能相近的变量、方法、css 样式应写在一起</p>
+<ul>
+<li>templatr 标签内容顺序: 内容标签 👉 dialog 标签</li>
+<li>script 标签内容顺序: import 👉 功能性属性 👉 ref 属性 👉 reactive 属性 👉 方法 👉 钩子方法</li>
+</ul>
+</li>
+<li>
+<p>空的双标签应尽可能写为单标签</p>
+</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221126140500220.png" alt="image-20221126140500220" style="zoom: 80%;" />
+<h4 id="命名规范" class="headerLink">
+    <a href="#%e5%91%bd%e5%90%8d%e8%a7%84%e8%8c%83" class="header-mark"></a>命名规范</h4><ul>
+<li>views 文件名：小驼峰</li>
+<li>script 变量和方法名：小驼峰</li>
+<li>css 选择器：小驼峰</li>
+<li>常量：全大写</li>
+</ul>
+<h4 id="注释" class="headerLink">
+    <a href="#%e6%b3%a8%e9%87%8a" class="header-mark"></a>注释</h4><ul>
+<li>
+<p>template 中代码注释</p>
+  <img src="RMS招聘管理系统项目笔记.assets/image-20221126141031782.png" alt="image-20221126141031782" style="zoom: 80%;" />
+</li>
+<li>
+<p>script 中 import 语句注释</p>
+</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221123142512246.png" alt="image-20221123142512246" style="zoom:50%;" />
+<ul>
+<li>script 中 const 属性注释</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221123142548246.png" alt="image-20221123142548246" style="zoom:50%;" />
+<ul>
+<li>script 中方法注释</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221123142638211.png" alt="image-20221123142638211" style="zoom:50%;" />
+<ul>
+<li>style 中注释：需标明生效位置</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221123143034534.png" alt="image-20221123143034534" style="zoom:50%;" />
+<ul>
+<li><code>on-</code>、<code>before-</code> 开头的属性后对应的方法都叫做 <code>钩子方法</code>，<code>v-on</code>、<code>@</code> 开头的属性对应的方法叫做 <code>事件</code></li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221123150706429.png" alt="image-20221123150706429" style="zoom:50%;" />
+<h4 id="换行" class="headerLink">
+    <a href="#%e6%8d%a2%e8%a1%8c" class="header-mark"></a>换行</h4><ul>
+<li>分行书写标签属性时，<code>&gt;</code> 或 <code>/&gt;</code> 需单独一行</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221123142729550.png" alt="image-20221123142729550" style="zoom:50%;" />
+<ul>
+<li>template、script、style 标签之间空一行，代码文件最后一行空一行</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221123143420967.png" alt="image-20221123143420967" style="zoom:50%;" />
+<ul>
+<li>变量与变量之间、方法与方法之间、式样与式样之间，空一行</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221123144209035.png" alt="image-20221123144209035" style="zoom:50%;" />
+<h4 id="分号" class="headerLink">
+    <a href="#%e5%88%86%e5%8f%b7" class="header-mark"></a>分号</h4><ul>
+<li>script 中写的代码结尾都应添加分号，方法中的语句都应以分号结尾</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221124151326326.png" alt="image-20221124151326326" style="zoom:50%;" />
+<h4 id="其它" class="headerLink">
+    <a href="#%e5%85%b6%e5%ae%83" class="header-mark"></a>其它</h4><ul>
+<li>
+<p>图标的用法</p>
+<ul>
+<li>禁止使用 <code>:icon</code> 属性指定图标</li>
+<li>elementPlus 推荐使用 <code>el-icon</code> 标签指定图标，且不需要单独导入</li>
+</ul>
+  <img src="RMS招聘管理系统项目笔记.assets/image-20221203210909556.png" alt="image-20221203210909556" style="zoom:80%;" />
+</li>
+<li>
+<p>ts 说变量无法解析？</p>
+<ul>
+<li>因为这个变量没有显式定义在 resp 中</li>
+</ul>
+  <img src="RMS招聘管理系统项目笔记.assets/image-20221203212003396.png" alt="image-20221203212003396" style="zoom:80%;" />
+<ul>
+<li>可以使用 <code>data['variable']</code> 的方式取得</li>
+</ul>
+  <img src="RMS招聘管理系统项目笔记.assets/image-20221203212138251.png" alt="image-20221203212138251" style="zoom:80%;" />
+</li>
+</ul>
+<h3 id="后端代码规范" class="headerLink">
+    <a href="#%e5%90%8e%e7%ab%af%e4%bb%a3%e7%a0%81%e8%a7%84%e8%8c%83" class="header-mark"></a>后端代码规范</h3><ul>
+<li>后端写的代码中不要出现业务上的常量，如需获取要在 constValue.properties 文件中定义使用 @PropertySource 配合 @Value 获取</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221225152328026.png" alt="image-20221225152328026" style="zoom:80%;" />
+<h4 id="命名规范-1" class="headerLink">
+    <a href="#%e5%91%bd%e5%90%8d%e8%a7%84%e8%8c%83-1" class="header-mark"></a>命名规范</h4><ul>
+<li>Controller 及 Service 层接口及方法命名风格：add、remove、edit、get（getXxxxList、getXxxByXxx）</li>
+<li>Mapper 层方法命名风格：insert、delete、update、select（count）</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221225150621868.png" alt="image-20221225150621868" style="zoom:80%;" />
+<ul>
+<li>类变量命名：类名小驼峰</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221225150736202.png" alt="image-20221225150736202" style="zoom:80%;" />
+<ul>
+<li>功能性常量定义：全大写、<code>_</code> 分隔</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221225150847680.png" alt="image-20221225150847680" style="zoom:80%;" />
+<h4 id="注释-1" class="headerLink">
+    <a href="#%e6%b3%a8%e9%87%8a-1" class="header-mark"></a>注释</h4><ul>
+<li>每个类的 class 语句上方书写文档注释，并注明作者和创建时间</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221225151408622.png" alt="image-20221225151408622" style="zoom:80%;" />
+<ul>
+<li>在控制层的每个方法上方书写文档注释，并注明接口作用、参数内容、返回值功能</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221225151541564.png" alt="image-20221225151541564" style="zoom:80%;" />
+<ul>
+<li>在服务层接口的每个方法上方书写文档注释，并注明接口作用、参数内容、返回值功能</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221225151703346.png" alt="image-20221225151703346" style="zoom:80%;" />
+<ul>
+<li>在数据访问层接口的每个方法上方书写文档注释，并注明接口作用、参数内容、返回值功能</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221225151824550.png" alt="image-20221225151824550" style="zoom:80%;" />
+<ul>
+<li>在服务层实现类中书写单行注释，要求只看注释就能明白业务的执行流程</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221225151951289.png" alt="image-20221225151951289" style="zoom:80%;" />
+<h4 id="换行-1" class="headerLink">
+    <a href="#%e6%8d%a2%e8%a1%8c-1" class="header-mark"></a>换行</h4><ul>
+<li>保证每一个类变量、方法前后都有一个空行</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221225152452418.png" alt="image-20221225152452418" style="zoom:80%;" />
+<ul>
+<li>每个文件最后要有一个空行</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221225152611206.png" alt="image-20221225152611206" style="zoom:80%;" />
+<ul>
+<li>较长的业务可按照逻辑添加空行</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221225152714757.png" alt="image-20221225152714757" style="zoom:80%;" />
+<h3 id="式样书规范" class="headerLink">
+    <a href="#%e5%bc%8f%e6%a0%b7%e4%b9%a6%e8%a7%84%e8%8c%83" class="header-mark"></a>式样书规范</h3><ul>
+<li>各画面 ID
+<ul>
+<li>登录画面：RMSL0101</li>
+<li>菜单画面：RMSM0101</li>
+<li>工作台画面：RMSW0101</li>
+<li>简历上传画面：RMSU0101</li>
+<li>面试一览画面：RMSV0101</li>
+<li>面试Review画面：RMSR0101</li>
+<li>面试反馈画面：RMSF0101</li>
+<li>历史面试画面：RMSH0101</li>
+<li>数据字典类型管理画面：RMSD0101</li>
+<li>数据字典值管理画面：RMSD0201</li>
+<li>用户管理画面：RMSU0201</li>
+<li>角色管理画面：RMSU0202</li>
+<li>权限管理画面：RMSU0203</li>
+<li>部门管理画面：RMSD0301</li>
+</ul>
+</li>
+</ul>
+<h2 id="前端遇到的问题" class="headerLink">
+    <a href="#%e5%89%8d%e7%ab%af%e9%81%87%e5%88%b0%e7%9a%84%e9%97%ae%e9%a2%98" class="header-mark"></a>前端遇到的问题</h2><h3 id="vue3-如何打包成能直接运行的格式" class="headerLink">
+    <a href="#vue3-%e5%a6%82%e4%bd%95%e6%89%93%e5%8c%85%e6%88%90%e8%83%bd%e7%9b%b4%e6%8e%a5%e8%bf%90%e8%a1%8c%e7%9a%84%e6%a0%bc%e5%bc%8f" class="header-mark"></a>Vue3 如何打包成能直接运行的格式</h3><ol>
+<li>在 vite.config.js 中设置 base 为相对路径</li>
+</ol>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221103185741355.png" alt="image-20221103185741355" style="zoom:50%;" />
+<ol start="2">
+<li>添加 plugin-legacy 插件生成传统浏览器的 chunk 及与其相对应 ES 语言特性方面的 polyfill</li>
+</ol>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221103185830314.png" alt="image-20221103185830314" style="zoom:50%;" />
+<ol start="3">
+<li>将 router 文件配置为根据 hash 匹配路径</li>
+</ol>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221103185939672.png" alt="image-20221103185939672" style="zoom:50%;" />
+<ol start="4">
+<li>执行打包命令</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">npm run build
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="5">
+<li>修改打包 dist 文件夹中的 index.html
+<ul>
+<li>删除红框部分代码</li>
+</ul>
+</li>
+</ol>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221103190424518.png" alt="image-20221103190424518" style="zoom:50%;" />
+<h3 id="vue-如何修改-element-plus-的底层样式" class="headerLink">
+    <a href="#vue-%e5%a6%82%e4%bd%95%e4%bf%ae%e6%94%b9-element-plus-%e7%9a%84%e5%ba%95%e5%b1%82%e6%a0%b7%e5%bc%8f" class="header-mark"></a>Vue 如何修改 Element-Plus 的底层样式</h3><ul>
+<li>添加 <code>:deep()</code></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">:</span><span class="nd">deep</span><span class="o">(</span><span class="p">.</span><span class="nc">el-scrollbar__bar</span><span class="p">.</span><span class="nc">is-horizontal</span><span class="o">&gt;</span><span class="nt">div</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">height</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">margin-top</span><span class="p">:</span> <span class="mi">-5</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="vue3-如何修改-reactive-数组做响应式处理" class="headerLink">
+    <a href="#vue3-%e5%a6%82%e4%bd%95%e4%bf%ae%e6%94%b9-reactive-%e6%95%b0%e7%bb%84%e5%81%9a%e5%93%8d%e5%ba%94%e5%bc%8f%e5%a4%84%e7%90%86" class="header-mark"></a>Vue3 如何修改 reactive 数组做响应式处理</h3><ul>
+<li>
+<p>不使用数据接口的情况</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ts" data-lang="ts"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">xxxList</span> <span class="o">=</span> <span class="nx">reactive</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">arr</span><span class="o">:</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在 reactive 里面再封装一层，这样就可以直接 <code>xxxList.arr = xxx</code> 修改数组</li>
+</ul>
+</li>
+<li>
+<p>使用数据接口的情况</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">const xxxList = reactive&lt;xxxInterface[]&gt;([]);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>使用 push 方法将展开的数据传进数组中: <code>xxxList.push(...resp.data);</code></li>
+</ul>
+  <img src="RMS招聘管理系统项目笔记.assets/image-20221202184221088.png" alt="image-20221202184221088" style="zoom:80%;" />
+</li>
+</ul>
+<h3 id="vue3-ref-和-reactive-的区别" class="headerLink">
+    <a href="#vue3-ref-%e5%92%8c-reactive-%e7%9a%84%e5%8c%ba%e5%88%ab" class="header-mark"></a>Vue3 ref 和 reactive 的区别</h3><ul>
+<li><code>ref</code> 是用来定义基本类型和数组类型和对象类型的，使用 ref 定义数组或对象类型时内部还是会调用 reactive 转为代理对象</li>
+<li><code>reactive</code> 一般用来定义对象类型，它是通过使用 <strong>Proxy（代理模式）</strong> 来实现响应式, 并通过 <strong>Reflect</strong> 操作 <strong>源对象</strong> 内部的数据</li>
+</ul>
+<h3 id="vue-click-事件只点击一次却执行多次" class="headerLink">
+    <a href="#vue-click-%e4%ba%8b%e4%bb%b6%e5%8f%aa%e7%82%b9%e5%87%bb%e4%b8%80%e6%ac%a1%e5%8d%b4%e6%89%a7%e8%a1%8c%e5%a4%9a%e6%ac%a1" class="header-mark"></a>Vue @click 事件只点击一次却执行多次</h3><ul>
+<li>在为 <code>v-for</code> 的标签添加 <code>@click</code> 事件之后，每次点击都会被执行多次，暂时不了解因为什么</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221207004357027.png" alt="image-20221207004357027" style="zoom: 80%;" />
+<ul>
+<li>【解决】: 为事件添加 <code>$event</code> 参数，并执行方法即可解决</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221207004540818.png" alt="image-20221207004540818" style="zoom:80%;" />
+<h3 id="npm-install-下载缓慢" class="headerLink">
+    <a href="#npm-install-%e4%b8%8b%e8%bd%bd%e7%bc%93%e6%85%a2" class="header-mark"></a>npm install 下载缓慢</h3><ul>
+<li>因为服务器在国外，大陆有时候连接不上</li>
+<li>执行这条命令修改服务器为淘宝的就好了</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">npm config <span class="nb">set</span> registry https://registry.npm.taobao.org 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="后端遇到的问题" class="headerLink">
+    <a href="#%e5%90%8e%e7%ab%af%e9%81%87%e5%88%b0%e7%9a%84%e9%97%ae%e9%a2%98" class="header-mark"></a>后端遇到的问题</h2><h3 id="axios-传递的参数结尾多了一个等于号--" class="headerLink">
+    <a href="#axios-%e4%bc%a0%e9%80%92%e7%9a%84%e5%8f%82%e6%95%b0%e7%bb%93%e5%b0%be%e5%a4%9a%e4%ba%86%e4%b8%80%e4%b8%aa%e7%ad%89%e4%ba%8e%e5%8f%b7--" class="header-mark"></a>axios 传递的参数结尾多了一个等于号 &lsquo;=&rsquo; ?</h3><img src="RMS招聘管理系统项目笔记.assets/image-20221202213020218.png" alt="image-20221202213020218" style="zoom:80%;" />
+<ul>
+<li>
+<p>因为前端发送 axios 请求时，默认的请求头 headers 内部的 Content-Type 是 application/x-www-form-urlencoded;charset=UTF-8</p>
+</li>
+<li>
+<p>这是一种键值对的数据结构，传输过程中把 json 当作 key，而 value 当作空值，所以传输到后端会多出等号</p>
+</li>
+<li>
+<p>【解决】</p>
+<ul>
+<li>
+<p>可以通过修改前端和后端的数据编码格式解决</p>
+</li>
+<li>
+<p>可以在前端用花括号包起来作为 json 传输，后端用 Map 接收</p>
+</li>
+</ul>
+  <img src="RMS招聘管理系统项目笔记.assets/image-20221202213555789.png" alt="image-20221202213555789" style="zoom:80%;" />
+  <img src="RMS招聘管理系统项目笔记.assets/image-20221202213615981.png" alt="image-20221202213615981" style="zoom:80%;" />
+</li>
+</ul>
+<h3 id="mybatis-的-resultmap-映射问题" class="headerLink">
+    <a href="#mybatis-%e7%9a%84-resultmap-%e6%98%a0%e5%b0%84%e9%97%ae%e9%a2%98" class="header-mark"></a>mybatis 的 resultMap 映射问题</h3><ul>
+<li>当我将 <code>id</code> 当作参数传给另一个查询的时候，这个主查询的 id 结果都为 null ？
+<ul>
+<li>【解决】因为 mybatis 理解为这个属性应该被映射为别的值就没有给这个属性赋值，再次指定这个属性的映射即可</li>
+</ul>
+</li>
+</ul>
+<img src="RMS招聘管理系统项目笔记.assets/image-20221206231046444.png" alt="image-20221206231046444" style="zoom:80%;" />
+<h3 id="大写字母开头传值-springboot-为-null" class="headerLink">
+    <a href="#%e5%a4%a7%e5%86%99%e5%ad%97%e6%af%8d%e5%bc%80%e5%a4%b4%e4%bc%a0%e5%80%bc-springboot-%e4%b8%ba-null" class="header-mark"></a>大写字母开头传值 springboot 为 null</h3><ul>
+<li>
+<p>因为 springboot 默认按照小驼峰解析 json 的值</p>
+<ul>
+<li>【解决】将前端改为小驼峰即可，或使用 <code>@JsonProperty</code> 注明属性名</li>
+</ul>
+  <img src="RMS招聘管理系统项目笔记.assets/image-20221211061348700.png" alt="image-20221211061348700" style="zoom:80%;" />
+</li>
+</ul>
+<h2 id="服务器部署遇到的问题" class="headerLink">
+    <a href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e9%83%a8%e7%bd%b2%e9%81%87%e5%88%b0%e7%9a%84%e9%97%ae%e9%a2%98" class="header-mark"></a>服务器部署遇到的问题</h2><h3 id="vue-项目部署到-nginx-服务器后除首页外刷新都跳转-404-页面" class="headerLink">
+    <a href="#vue-%e9%a1%b9%e7%9b%ae%e9%83%a8%e7%bd%b2%e5%88%b0-nginx-%e6%9c%8d%e5%8a%a1%e5%99%a8%e5%90%8e%e9%99%a4%e9%a6%96%e9%a1%b5%e5%a4%96%e5%88%b7%e6%96%b0%e9%83%bd%e8%b7%b3%e8%bd%ac-404-%e9%a1%b5%e9%9d%a2" class="header-mark"></a>vue 项目部署到 nginx 服务器后，除首页外刷新都跳转 404 页面</h3><ul>
+<li>为 nginx 设置转发</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">try_files $uri $uri/ /index.html;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="RMS招聘管理系统项目笔记.assets/image-20221210020759475.png" alt="image-20221210020759475" style="zoom:80%;" />
+<h3 id="长时间不进行操作-redis-抛出异常" class="headerLink">
+    <a href="#%e9%95%bf%e6%97%b6%e9%97%b4%e4%b8%8d%e8%bf%9b%e8%a1%8c%e6%93%8d%e4%bd%9c-redis-%e6%8a%9b%e5%87%ba%e5%bc%82%e5%b8%b8" class="header-mark"></a>长时间不进行操作 redis 抛出异常</h3><ul>
+<li>
+<p>异常信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">org.springframework.data.redis.RedisSystemException: Redis exception<span class="p">;</span> nested exception is io.lettuce.core.RedisException: java.io.IOException: 远程主机强迫关闭了一个现有的连接。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>似乎是因为 ssh 的连接超时造成的, 根据网上的方法设置了 ssh <code>超时时长</code> 和 <code>重试次数</code> 但似乎无效</li>
+</ul>
+  <img src="RMS招聘管理系统项目笔记.assets/image-20221215082835238.png" alt="image-20221215082835238" style="zoom:80%;" />
+</li>
+<li>
+<p>2022-12-16 07:21:55 证实无效果，重试次数设置过高反而造成多次无响应之后才提示登录过期</p>
+</li>
+</ul>
+<h2 id="项目特色" class="headerLink">
+    <a href="#%e9%a1%b9%e7%9b%ae%e7%89%b9%e8%89%b2" class="header-mark"></a>项目特色</h2><ul>
+<li>主要
+<ul>
+<li>灵活性、可扩展性</li>
+<li>docker 部署、域名解析</li>
+</ul>
+</li>
+<li>数据库
+<ul>
+<li>标准的 RBAC 模型结构</li>
+<li>MySQL8 的 UUID</li>
+<li>数据字典</li>
+<li>索引</li>
+</ul>
+</li>
+<li>前端
+<ul>
+<li>axios 的前后置拦截</li>
+<li>错误页面</li>
+<li>Vue3 + Ts</li>
+<li>transition 过度动画、v-loading</li>
+<li>i18n</li>
+<li>组件化开发</li>
+<li>未使用任何前端模板</li>
+<li>实用的工作台画面</li>
+</ul>
+</li>
+<li>后端
+<ul>
+<li><i class="far fa-check-square fa-fw"></i> minio、kkfileview 简历预览</li>
+<li><i class="far fa-check-square fa-fw"></i> springSecurity 安全框架、一用户可同时拥有多角色</li>
+<li><i class="far fa-check-square fa-fw"></i> Redis 用户认证、令牌自动续约、数据字典缓存、缓存击穿的解决</li>
+<li><i class="far fa-check-square fa-fw"></i> 实时的用户锁定</li>
+<li><i class="far fa-check-square fa-fw"></i> 全局异常捕获、返回值枚举类、properties 配置文件</li>
+<li><i class="far fa-check-square fa-fw"></i> 事务、乐观锁</li>
+<li><i class="far fa-check-square fa-fw"></i> POI: easyExcel 数据导出</li>
+<li><i class="far fa-check-square fa-fw"></i> RabbitMQ 邮件</li>
+</ul>
+</li>
+</ul>
+</div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-12-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span><a class="link-to-mardown" href=/rms%E6%8B%9B%E8%81%98%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                    </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://liujjjjn.github.io/rms%E6%8B%9B%E8%81%98%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/" data-title="招聘管理系统项目笔记" data-ralateuid="6018937938"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://liujjjjn.github.io/rms%E6%8B%9B%E8%81%98%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/" data-title="招聘管理系统项目笔记"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/springsecurity%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/" class="prev" rel="prev" title="Spring Security自学笔记md版"><i class="fas fa-angle-left fa-fw"></i>Spring Security自学笔记md版</a></div>
+</div>
+</article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://liujjjjn.github.io/" target="_blank" rel="noopener noreferrer">刘嘉宁</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript></div>
+</body>
+
+</html>
