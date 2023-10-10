@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noodp" />
+    <title class="pjax-title">日常笔记 - LiuJN 的个人博客</title><meta name="Description" content="This is LiuJN"><meta property="og:title" content="日常笔记" />
+<meta property="og:description" content="MySQL 窗口函数 查询所有批次信息对应的最新一条工器具归还单 1 2 3 4 5 6 7 8 9 10 11 12 13 select * from (select row_number() over(partition by brii.batch_id order by brih.id desc) as row_num, brii.id, brii.batch_id, brii.head_id, brih.input_user_id from SDNPC_DEV.biz_receipt_input_item brii inner join SDNPC_DEV.biz_receipt_input_head brih ON brih.id = brii.head_id where brih.receipt_type" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://liujjjjn.github.io/%E7%AC%94%E8%AE%B0/" /><meta property="og:image" content="https://liujjjjn.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-10-10T00:00:00+08:00" />
+<meta property="article:modified_time" content="2023-10-10T00:00:00+08:00" /><meta property="og:site_name" content="刘嘉宁的个人博客" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://liujjjjn.github.io/logo.png"/>
+
+<meta name="twitter:title" content="日常笔记"/>
+<meta name="twitter:description" content="MySQL 窗口函数 查询所有批次信息对应的最新一条工器具归还单 1 2 3 4 5 6 7 8 9 10 11 12 13 select * from (select row_number() over(partition by brii.batch_id order by brih.id desc) as row_num, brii.id, brii.batch_id, brii.head_id, brih.input_user_id from SDNPC_DEV.biz_receipt_input_item brii inner join SDNPC_DEV.biz_receipt_input_head brih ON brih.id = brii.head_id where brih.receipt_type"/>
+<meta name="application-name" content="LiuJN">
+<meta name="apple-mobile-web-app-title" content="LiuJN">
+
+<meta name="theme-color" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="https://liujjjjn.github.io/%E7%AC%94%E8%AE%B0/" /><link rel="prev" href="https://liujjjjn.github.io/springcloud%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "日常笔记",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/liujjjjn.github.io\/%E7%AC%94%E8%AE%B0\/"
+        },"genre": "posts","wordcount":  5110 ,
+        "url": "https:\/\/liujjjjn.github.io\/%E7%AC%94%E8%AE%B0\/","datePublished": "2023-10-10T00:00:00+08:00","dateModified": "2023-10-10T00:00:00+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "刘嘉宁"
+            },"description": ""
+    }
+    </script></head>
+
+<body header-desktop="auto" header-mobile="auto"><script type="text/javascript">
+        function setTheme(theme) {document.body.setAttribute('theme', theme); document.documentElement.style.setProperty('color-scheme', theme === 'light' ? 'light' : 'dark');}
+        function saveTheme(theme) {window.localStorage && localStorage.setItem('theme', theme);}
+        function getMeta(metaName) {const metas = document.getElementsByTagName('meta'); for (let i = 0; i < metas.length; i++) if (metas[i].getAttribute('name') === metaName) return metas[i]; return '';}
+        if (window.localStorage && localStorage.getItem('theme')) {let theme = localStorage.getItem('theme');theme === 'light' || theme === 'dark' || theme === 'black' ? setTheme(theme) : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light')); } else { if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') setTheme('auto'), saveTheme('auto'); else saveTheme('auto'), window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? setTheme('dark') : setTheme('light');}
+        let metaColors = {'light': '#f8f8f8','dark': '#252627','black': '#000000'}
+        getMeta('theme-color').content = metaColors[document.body.getAttribute('theme')];
+    </script>
+    <div id="back-to-top"></div>
+    <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="LiuJN 的个人博客">刘嘉宁的个人博客</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="LiuJN 的个人博客">刘嘉宁的个人博客</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" onclick="return false;" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" onclick="return false;" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" onclick="return false;" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+            <div class="container"><script>document.getElementsByTagName("main")[0].setAttribute("pageStyle", "normal")</script><script>document.getElementsByTagName("main")[0].setAttribute("autoTOC", "false")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">日常笔记</h1><div class="post-meta">
+            <div class="post-meta-line">
+                <span class="post-author"><i class="author fas fa-user-circle fa-fw"></i><a href="https://liujjjjn.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author">刘嘉宁</a>
+                </span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-10-10">2023-10-10</time>&nbsp;<i class="far fa-edit fa-fw"></i>&nbsp;<time datetime="2023-10-10">2023-10-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5110 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="true">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#窗口函数">窗口函数</a>
+      <ul>
+        <li><a href="#查询所有批次信息对应的最新一条工器具归还单">查询所有批次信息对应的最新一条工器具归还单</a></li>
+      </ul>
+    </li>
+    <li><a href="#函数">函数</a>
+      <ul>
+        <li><a href="#concat-">concat( )</a></li>
+      </ul>
+    </li>
+    <li><a href="#间隙锁">间隙锁</a>
+      <ul>
+        <li><a href="#什么是间隙锁">什么是间隙锁</a></li>
+        <li><a href="#间隙锁导致死锁">间隙锁导致死锁</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#动态-sql">动态 SQL</a>
+      <ul>
+        <li><a href="#模糊查询">模糊查询</a></li>
+      </ul>
+    </li>
+    <li><a href="#标签">标签</a>
+      <ul>
+        <li><a href="#if-单双引号"><code>&lt;if&gt;</code> 单双引号</a></li>
+        <li><a href="#where-第一个-and-or"><code>&lt;WHERE&gt;</code> 第一个 AND OR</a></li>
+        <li><a href="#奇怪的知识">奇怪的知识</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#依赖注入">依赖注入</a>
+      <ul>
+        <li><a href="#自我注入self-injection-循环引用circular-dependency">自我注入(Self-Injection) 循环引用(circular dependency)</a></li>
+      </ul>
+    </li>
+    <li><a href="#token-过长">Token 过长</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#事务的调用失效场景">事务的调用失效场景</a>
+      <ul>
+        <li><a href="#this-调用">this 调用</a></li>
+        <li><a href="#事务注解中的-propagation-属性">事务注解中的 propagation 属性</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#stream-流">Stream 流</a>
+      <ul>
+        <li><a href="#常见操作">常见操作</a>
+          <ul>
+            <li><a href="#filter-过滤">filter 过滤</a></li>
+            <li><a href="#map-映射">map 映射</a></li>
+            <li><a href="#distinct-去重">distinct 去重</a></li>
+            <li><a href="#sorted-排序">sorted 排序</a></li>
+            <li><a href="#skip-跳过前-n-个元素limit-取前-n-个元素">skip 跳过前 n 个元素、limit 取前 n 个元素</a></li>
+            <li><a href="#flatmap-将数据拆分扁平化成一个流">flatMap 将数据拆分扁平化成一个流</a></li>
+            <li><a href="#peek-对元素遍历处理">peek 对元素遍历处理</a></li>
+            <li><a href="#collect-收集器将流转换为其他形式">collect 收集器：将流转换为其他形式</a>
+              <ul>
+                <li>
+                  <ul>
+                    <li><a href="#collectorstolist-转成-list"><code>Collectors.toList()</code> 转成 list</a></li>
+                    <li><a href="#collectorstoset-转成-set"><code>Collectors.toSet()</code> 转成 set</a></li>
+                    <li><a href="#collectorstomapkeyvalue-转成-map"><code>Collectors.toMap(key,value)</code> 转成 map</a></li>
+                    <li><a href="#collectorscounting-返回总数和-count-一样"><code>Collectors.counting()</code> 返回总数，和 <code>count()</code> 一样</a></li>
+                    <li><a href="#collectorsjoining-连接到一起"><code>Collectors.joining(&quot;&quot;)</code> 连接到一起</a></li>
+                    <li><a href="#collectorsgroupingby-分组"><code>Collectors.groupingBy()</code> 分组</a></li>
+                    <li><a href="#使用分组实现-tomap-操作">使用分组实现 toMap 操作</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li><a href="#findfirst-返回第一个元素findany-返回任意一个元素">findFirst 返回第一个元素、findAny 返回任意一个元素</a></li>
+            <li><a href="#count-总数sum-总和max-最大min-最小">count 总数、sum 总和、max 最大、min 最小</a></li>
+            <li><a href="#anymatch-是否至少匹配一个allmatch-是否全部匹配nonematch-是否全不匹配">anyMatch 是否至少匹配一个，allMatch 是否全部匹配、noneMatch 是否全不匹配</a></li>
+            <li><a href="#reduce-将流中元素反复结合起来得到一个值">reduce 将流中元素反复结合起来，得到一个值</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#集合">集合</a>
+      <ul>
+        <li><a href="#--语法糖"><code>{{ }}</code> 语法糖</a></li>
+        <li><a href="#arraysaslist-创建的集合调用-add-异常"><code>Arrays.asList()</code> 创建的集合调用 <code>add()</code> 异常</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="mysql" class="headerLink">
+    <a href="#mysql" class="header-mark"></a>MySQL</h1><h2 id="窗口函数" class="headerLink">
+    <a href="#%e7%aa%97%e5%8f%a3%e5%87%bd%e6%95%b0" class="header-mark"></a>窗口函数</h2><h3 id="查询所有批次信息对应的最新一条工器具归还单" class="headerLink">
+    <a href="#%e6%9f%a5%e8%af%a2%e6%89%80%e6%9c%89%e6%89%b9%e6%ac%a1%e4%bf%a1%e6%81%af%e5%af%b9%e5%ba%94%e7%9a%84%e6%9c%80%e6%96%b0%e4%b8%80%e6%9d%a1%e5%b7%a5%e5%99%a8%e5%85%b7%e5%bd%92%e8%bf%98%e5%8d%95" class="header-mark"></a>查询所有批次信息对应的最新一条工器具归还单</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="n">row_number</span><span class="p">()</span><span class="w"> </span><span class="n">over</span><span class="p">(</span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">brii</span><span class="p">.</span><span class="n">batch_id</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">brih</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">desc</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">row_num</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">             </span><span class="n">brii</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">             </span><span class="n">brii</span><span class="p">.</span><span class="n">batch_id</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">             </span><span class="n">brii</span><span class="p">.</span><span class="n">head_id</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">             </span><span class="n">brih</span><span class="p">.</span><span class="n">input_user_id</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">from</span><span class="w"> </span><span class="n">SDNPC_DEV</span><span class="p">.</span><span class="n">biz_receipt_input_item</span><span class="w"> </span><span class="n">brii</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">               </span><span class="k">inner</span><span class="w"> </span><span class="k">join</span><span class="w"> </span><span class="n">SDNPC_DEV</span><span class="p">.</span><span class="n">biz_receipt_input_head</span><span class="w"> </span><span class="n">brih</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                          </span><span class="k">ON</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                              </span><span class="n">brih</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">brii</span><span class="p">.</span><span class="n">head_id</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="k">where</span><span class="w"> </span><span class="n">brih</span><span class="p">.</span><span class="n">receipt_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">217</span><span class="w"> </span><span class="c1">-- 工器具归还
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">        </span><span class="k">and</span><span class="w"> </span><span class="n">brih</span><span class="p">.</span><span class="n">receipt_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">90</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">t</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">where</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">row_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="函数" class="headerLink">
+    <a href="#%e5%87%bd%e6%95%b0" class="header-mark"></a>函数</h2><h3 id="concat-" class="headerLink">
+    <a href="#concat-" class="header-mark"></a>concat( )</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">concat</span><span class="p">()</span><span class="w"> </span><span class="c1">-- 在 Oracle 中只能对两个字符串进行拼接
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">concat_ws</span><span class="p">(</span><span class="n">separator</span><span class="p">,</span><span class="w"> </span><span class="n">str1</span><span class="p">,</span><span class="w"> </span><span class="n">str2</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span><span class="w"> </span><span class="c1">-- 指定分隔符，分隔符不能为null，否则返回结果为null
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">group_concat</span><span class="p">([</span><span class="k">distinct</span><span class="p">]</span><span class="w"> </span><span class="err">要连接的字段</span><span class="w"> </span><span class="p">[</span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="err">排序字段</span><span class="w"> </span><span class="k">asc</span><span class="o">/</span><span class="k">desc</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">separator</span><span class="p">])</span><span class="w"> </span><span class="c1">-- 将group by产生的同一个分组中的值连接起来，默认逗号分隔
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">wm_concat</span><span class="p">([</span><span class="k">distinct</span><span class="p">]</span><span class="w"> </span><span class="err">要连接的字段</span><span class="p">)</span><span class="w"> </span><span class="c1">-- 达梦，逗号分隔
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="间隙锁" class="headerLink">
+    <a href="#%e9%97%b4%e9%9a%99%e9%94%81" class="header-mark"></a>间隙锁</h2><blockquote>
+<p>参考：<a href="https://blog.csdn.net/java_beautiful/article/details/125572280" target="_blank" rel="noopener noreffer">MySQL间隙锁死锁问题_间隙锁导致死锁_ikyrxbxfas的博客-CSDN博客</a></p>
+<p>行锁的分类：<a href="https://liujjjjn.github.io/mysql%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0%e8%bf%9b%e9%98%b6md%e7%89%88/#%e8%a1%8c%e9%94%81" target="_blank" rel="noopener noreffer">MySQL自学笔记进阶md版 - LiuJN 的个人博客 (liujjjjn.github.io)</a></p>
+</blockquote>
+<h3 id="什么是间隙锁" class="headerLink">
+    <a href="#%e4%bb%80%e4%b9%88%e6%98%af%e9%97%b4%e9%9a%99%e9%94%81" class="header-mark"></a>什么是间隙锁</h3><ul>
+<li>
+<p>间隙锁是MySQL行锁的一种，间隙锁可能锁定的是一行数据，也可能锁住一个间隙（一个范围）</p>
+<blockquote>
+<p>当修改的数据存在时，间隙锁只会锁定当前行。</p>
+<p>当修改的数据不存在时，间隙锁会向左找第一个比当前索引值小的值，向右找第一个比当前索引值大 的值（没有则为正无穷），将此区间锁住，从而阻止其他事务在此区间插入数据。</p>
+</blockquote>
+</li>
+<li>
+<p>间隙锁的出现是为了在 innodb 的 <code>可重复读隔离级别（PR）</code> 下，与行锁组合成 <code>Next-key lock（临键锁）</code>，一起工作避免 <code>幻读问题</code> （例如乐观锁高级实现，MVCC）</p>
+</li>
+</ul>
+<h3 id="间隙锁导致死锁" class="headerLink">
+    <a href="#%e9%97%b4%e9%9a%99%e9%94%81%e5%af%bc%e8%87%b4%e6%ad%bb%e9%94%81" class="header-mark"></a>间隙锁导致死锁</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mysql</span><span class="o">&gt;</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">t_gap_lock</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">name</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">age</span><span class="w">  </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+------+
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="o">|</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="err">张一</span><span class="w">    </span><span class="o">|</span><span class="w">   </span><span class="mi">21</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">5</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="err">李五</span><span class="w">    </span><span class="o">|</span><span class="w">   </span><span class="mi">25</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">6</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="err">赵六</span><span class="w">    </span><span class="o">|</span><span class="w">   </span><span class="mi">26</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w">  </span><span class="mi">9</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="err">王九</span><span class="w">    </span><span class="o">|</span><span class="w">   </span><span class="mi">29</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">|</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="err">十二</span><span class="w">    </span><span class="o">|</span><span class="w">   </span><span class="mi">12</span><span class="w"> </span><span class="o">|</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">+</span><span class="c1">----+--------+------+
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>
+<p>首先事务A开启事务后，更新 id=3 的数据，此数据不存在，所以事务一会锁住 1-5 这个间隙，即为 1-5 这个间隙添加间隙锁，同理，事务B会为 6-9 这个间隙添加间隙锁</p>
+</li>
+<li>
+<p>然后我们让事务A在 6-9 这个间隙插入数据，因为事务B已经加了间隙锁，所以事务A需要等待事务B释放间 隙锁才能进行插入操作，此时事务A等待事务B释放间隙锁</p>
+</li>
+<li>
+<p>同理，事务B在 1-5 间隙插入时需要等待事务A释放间隙锁，两个事务相互等待，死锁产生</p>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * &lt;p&gt;
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 根据updateWrapper尝试更新，否继续执行saveOrUpdate(T)方法
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 此次修改主要是减少了此项业务代码的代码量（存在性验证之后的saveOrUpdate操作）
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * &lt;/p&gt;
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @param entity 实体对象
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="k">default</span> <span class="kt">boolean</span> <span class="nf">saveOrUpdate</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">,</span> <span class="n">Wrapper</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">updateWrapper</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">update</span><span class="o">(</span><span class="n">entity</span><span class="o">,</span> <span class="n">updateWrapper</span><span class="o">)</span> <span class="o">||</span> <span class="n">saveOrUpdate</span><span class="o">(</span><span class="n">entity</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>由此可见 MyBatis 提供的 <code>saveOrUpdate</code> 方法或产生死锁，该方法会先执行更新语句当更新失败时执行新增语句</li>
+<li>当线上存在两个并发事务，然后更新的时候都没有更新到，此时都在自己的间隙加了间隙锁，然后再到彼此的区间进行数据插入，此时就会造成两个事务互相等待对方的释放间隙锁，从而导致死锁</li>
+</ul>
+<blockquote>
+<p>加锁规则：</p>
+<ul>
+<li>唯一索引 只有锁住多条记录或者一条不存在的记录的时候，才会产生间隙锁，指定给某条存在的记录加锁的时候，只会加记录锁，不会产生间隙锁；</li>
+<li>普通索引 不管是锁住单条，还是多条记录，都会产生间隙锁；</li>
+</ul>
+<blockquote>
+<p>对于 唯一索引 这条有疑虑：</p>
+<p><img
+        class="lazyload"
+        data-src="./%e7%ac%94%e8%ae%b0.assets/image-20231010174920708.png"
+        data-srcset="./%e7%ac%94%e8%ae%b0.assets/image-20231010174920708.png, ./%e7%ac%94%e8%ae%b0.assets/image-20231010174920708.png 1.5x, ./%e7%ac%94%e8%ae%b0.assets/image-20231010174920708.png 2x"
+        data-sizes="auto"
+        alt="./笔记.assets/image-20231010174920708.png"
+        title="image-20231010174920708"></p>
+<p>当我为主键字段 ID = 6 添加了锁（记录？间隙？），但与此同时无法向 ID = 5 添加数据，似乎产生了间隙锁</p>
+<p>参考：<a href="https://liujjjjn.github.io/mysql%e8%87%aa%e5%ad%a6%e7%ac%94%e8%ae%b0%e8%bf%9b%e9%98%b6md%e7%89%88/#%e9%97%b4%e6%ad%87%e9%94%81gap-locks" target="_blank" rel="noopener noreffer">MySQL自学笔记进阶md版 - LiuJN 的个人博客 (liujjjjn.github.io)</a></p>
+</blockquote>
+</blockquote>
+<h1 id="mybatis" class="headerLink">
+    <a href="#mybatis" class="header-mark"></a>MyBatis</h1><h2 id="动态-sql" class="headerLink">
+    <a href="#%e5%8a%a8%e6%80%81-sql" class="header-mark"></a>动态 SQL</h2><h3 id="模糊查询" class="headerLink">
+    <a href="#%e6%a8%a1%e7%b3%8a%e6%9f%a5%e8%af%a2" class="header-mark"></a>模糊查询</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">user_name</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="n">CONCAT</span><span class="p">(</span><span class="s1">&#39;%&#39;</span><span class="p">,</span><span class="o">#</span><span class="err">{</span><span class="n">param</span><span class="p">.</span><span class="n">userName</span><span class="err">}</span><span class="p">,</span><span class="s1">&#39;%&#39;</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>在 Oracle 中，<code>concat()</code> 只能对两个字符串进行拼接 (字符串多的话需嵌套使用)</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">company</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;%&#39;</span><span class="w"> </span><span class="o">#</span><span class="err">{</span><span class="n">company</span><span class="err">}</span><span class="w"> </span><span class="s1">&#39;%&#39;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">student_name</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;%&#39;</span><span class="o">||#</span><span class="err">{</span><span class="n">studentName</span><span class="err">}</span><span class="o">||</span><span class="s1">&#39;%&#39;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>双竖线 <code>||</code> 在 Oracle、达梦 里的意思是连接多个字符，而在 MySQL 和 Maria 中是 “或” 的意思</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;if</span> <span class="na">test=</span><span class="s">&#34;email != null&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="nt">&lt;bind</span> <span class="na">name=</span><span class="s">&#34;var&#34;</span><span class="na">value=</span><span class="s">&#34;&#39;%&#39; + email + &#39;%&#39;&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">	and email like #{var}
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/if&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230922143459229.png" alt="image-20230922143459229" style="zoom:50%;" />
+<h2 id="标签" class="headerLink">
+    <a href="#%e6%a0%87%e7%ad%be" class="header-mark"></a>标签</h2><h3 id="if-单双引号" class="headerLink">
+    <a href="#if-%e5%8d%95%e5%8f%8c%e5%bc%95%e5%8f%b7" class="header-mark"></a><code>&lt;if&gt;</code> 单双引号</h3><p>引用：<a href="https://blog.csdn.net/weixin_46046749/article/details/123579518" target="_blank" rel="noopener noreffer">mybatis ＜if ＞标签源码探究_mybatis if 标签 原理-CSDN博客</a></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;if</span> <span class="na">test=</span><span class="s">&#39;po.matDes != null and po.matDes == &#34;1&#34;&#39;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- 双引号在内 --&gt;</span>
+</span></span><span class="line"><span class="cl">    AND bbi.MAT_DES = &#39;1&#39;
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/if&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!-------------------------------------------------------------------------------------&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;if</span> <span class="na">test=</span><span class="s">&#34;po.matDes != null and po.matDes == &#39;1&#39;&#34;</span><span class="nt">&gt;</span> <span class="c">&lt;!-- 单引号在内【错误写法】 --&gt;</span>
+</span></span><span class="line"><span class="cl">    AND bbi.MAT_DES = &#39;1&#39;
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/if&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>MyBatis 底层会先映射出变量类型，使用 <code>equal()</code> 进行比较</li>
+<li>会将 “1” 解析成 String 类型，‘1’ 解析成 char 类型，1 解析成 Integer 类型，1.5 解析成 Double 类型</li>
+<li>不同类型之间进行比较，会返回 false 不进行 SQL 的拼接</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;if</span> <span class="na">test=</span><span class="s">&#34;isFixed != null and isFixed != &#39;&#39;&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    AND dm.is_fixed = #{isFixed}
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/if&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>【错误写法】isFixed 为数值类型，此判断失效</li>
+</ul>
+<h3 id="where-第一个-and-or" class="headerLink">
+    <a href="#where-%e7%ac%ac%e4%b8%80%e4%b8%aa-and-or" class="header-mark"></a><code>&lt;WHERE&gt;</code> 第一个 AND OR</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;where&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;if</span> <span class="na">test=</span><span class="s">&#34;po.matCode != null and po.matCode != &#39;&#39;&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">        AND t.mat_code = #{po.matCode}
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/if&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/where&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="c">&lt;!----------------------------------------------- 【两种写法均正确】 --------&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;where&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;if</span> <span class="na">test=</span><span class="s">&#34;po.matCode != null and po.matCode != &#39;&#39;&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">        t.mat_code = #{po.matCode}
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/if&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/where&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>若子句的开头为 “AND” 或 “OR”，<em>where</em> 元素会将它们去除</li>
+</ul>
+<h3 id="奇怪的知识" class="headerLink">
+    <a href="#%e5%a5%87%e6%80%aa%e7%9a%84%e7%9f%a5%e8%af%86" class="header-mark"></a>奇怪的知识</h3><p><img
+        class="lazyload"
+        data-src="./%e7%ac%94%e8%ae%b0.assets/image-20230922152619586.png"
+        data-srcset="./%e7%ac%94%e8%ae%b0.assets/image-20230922152619586.png, ./%e7%ac%94%e8%ae%b0.assets/image-20230922152619586.png 1.5x, ./%e7%ac%94%e8%ae%b0.assets/image-20230922152619586.png 2x"
+        data-sizes="auto"
+        alt="./笔记.assets/image-20230922152619586.png"
+        title="image-20230922152619586"></p>
+<h1 id="spring" class="headerLink">
+    <a href="#spring" class="header-mark"></a>Spring</h1><h2 id="依赖注入" class="headerLink">
+    <a href="#%e4%be%9d%e8%b5%96%e6%b3%a8%e5%85%a5" class="header-mark"></a>依赖注入</h2><h3 id="自我注入self-injection-循环引用circular-dependency" class="headerLink">
+    <a href="#%e8%87%aa%e6%88%91%e6%b3%a8%e5%85%a5self-injection-%e5%be%aa%e7%8e%af%e5%bc%95%e7%94%a8circular-dependency" class="header-mark"></a>自我注入(Self-Injection) 循环引用(circular dependency)</h3><ul>
+<li>在 Spring 4.3 对应 Boot版本 1.4.0 之前，自己注入自己会引发循环注入问题</li>
+<li>在 Spring 4.3 对应 Boot版本 1.4.0 之后解决此问题，<strong>前提是单例的情况下的、非构造方法注入的情况下</strong></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * Find bean instances that match the required type.
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * Called during autowiring for the specified bean.
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @param beanName the name of the bean that is about to be wired
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @param requiredType the actual type of bean to look for
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * (may be an array component type or collection element type)
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @param descriptor the descriptor of the dependency to resolve
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @return a Map of candidate names and candidate instances that match
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * the required type (never {@code null})
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @throws BeansException in case of errors
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @see #autowireByType
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * @see #autowireConstructor
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kd">protected</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="nf">findAutowireCandidates</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nd">@Nullable</span> <span class="n">String</span> <span class="n">beanName</span><span class="o">,</span> <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">requiredType</span><span class="o">,</span> <span class="n">DependencyDescriptor</span> <span class="n">descriptor</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">String</span><span class="o">[]</span> <span class="n">candidateNames</span> <span class="o">=</span> <span class="n">BeanFactoryUtils</span><span class="o">.</span><span class="na">beanNamesForTypeIncludingAncestors</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="o">,</span> <span class="n">requiredType</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="n">descriptor</span><span class="o">.</span><span class="na">isEager</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">CollectionUtils</span><span class="o">.</span><span class="na">newLinkedHashMap</span><span class="o">(</span><span class="n">candidateNames</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">Class</span><span class="o">&lt;?&gt;,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">classObjectEntry</span> <span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="na">resolvableDependencies</span><span class="o">.</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">autowiringType</span> <span class="o">=</span> <span class="n">classObjectEntry</span><span class="o">.</span><span class="na">getKey</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">autowiringType</span><span class="o">.</span><span class="na">isAssignableFrom</span><span class="o">(</span><span class="n">requiredType</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Object</span> <span class="n">autowiringValue</span> <span class="o">=</span> <span class="n">classObjectEntry</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">autowiringValue</span> <span class="o">=</span> <span class="n">AutowireUtils</span><span class="o">.</span><span class="na">resolveAutowiringValue</span><span class="o">(</span><span class="n">autowiringValue</span><span class="o">,</span> <span class="n">requiredType</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(</span><span class="n">requiredType</span><span class="o">.</span><span class="na">isInstance</span><span class="o">(</span><span class="n">autowiringValue</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">result</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">ObjectUtils</span><span class="o">.</span><span class="na">identityToString</span><span class="o">(</span><span class="n">autowiringValue</span><span class="o">),</span> <span class="n">autowiringValue</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">candidate</span> <span class="o">:</span> <span class="n">candidateNames</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(!</span><span class="n">isSelfReference</span><span class="o">(</span><span class="n">beanName</span><span class="o">,</span> <span class="n">candidate</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">isAutowireCandidate</span><span class="o">(</span><span class="n">candidate</span><span class="o">,</span> <span class="n">descriptor</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">addCandidateEntry</span><span class="o">(</span><span class="n">result</span><span class="o">,</span> <span class="n">candidate</span><span class="o">,</span> <span class="n">descriptor</span><span class="o">,</span> <span class="n">requiredType</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">boolean</span> <span class="n">multiple</span> <span class="o">=</span> <span class="n">indicatesMultipleBeans</span><span class="o">(</span><span class="n">requiredType</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Consider fallback matches if the first pass failed to find anything...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">DependencyDescriptor</span> <span class="n">fallbackDescriptor</span> <span class="o">=</span> <span class="n">descriptor</span><span class="o">.</span><span class="na">forFallbackMatch</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">candidate</span> <span class="o">:</span> <span class="n">candidateNames</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="o">(!</span><span class="n">isSelfReference</span><span class="o">(</span><span class="n">beanName</span><span class="o">,</span> <span class="n">candidate</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">isAutowireCandidate</span><span class="o">(</span><span class="n">candidate</span><span class="o">,</span> <span class="n">fallbackDescriptor</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">(!</span><span class="n">multiple</span> <span class="o">||</span> <span class="n">getAutowireCandidateResolver</span><span class="o">().</span><span class="na">hasQualifier</span><span class="o">(</span><span class="n">descriptor</span><span class="o">)))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">addCandidateEntry</span><span class="o">(</span><span class="n">result</span><span class="o">,</span> <span class="n">candidate</span><span class="o">,</span> <span class="n">descriptor</span><span class="o">,</span> <span class="n">requiredType</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">multiple</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Consider self references as a final pass...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="c1">// but in the case of a dependency collection, not the very same bean itself.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">candidate</span> <span class="o">:</span> <span class="n">candidateNames</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="o">(</span><span class="n">isSelfReference</span><span class="o">(</span><span class="n">beanName</span><span class="o">,</span> <span class="n">candidate</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">(!(</span><span class="n">descriptor</span> <span class="k">instanceof</span> <span class="n">MultiElementDescriptor</span><span class="o">)</span> <span class="o">||</span> <span class="o">!</span><span class="n">beanName</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">candidate</span><span class="o">))</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">isAutowireCandidate</span><span class="o">(</span><span class="n">candidate</span><span class="o">,</span> <span class="n">fallbackDescriptor</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">addCandidateEntry</span><span class="o">(</span><span class="n">result</span><span class="o">,</span> <span class="n">candidate</span><span class="o">,</span> <span class="n">descriptor</span><span class="o">,</span> <span class="n">requiredType</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * Determine whether the given beanName/candidateName pair indicates a self reference,
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * i.e. whether the candidate points back to the original bean or to a factory method
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * on the original bean.
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isSelfReference</span><span class="o">(</span><span class="nd">@Nullable</span> <span class="n">String</span> <span class="n">beanName</span><span class="o">,</span> <span class="nd">@Nullable</span> <span class="n">String</span> <span class="n">candidateName</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="o">(</span><span class="n">beanName</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">candidateName</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">(</span><span class="n">beanName</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">candidateName</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">containsBeanDefinition</span><span class="o">(</span><span class="n">candidateName</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">beanName</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">getMergedLocalBeanDefinition</span><span class="o">(</span><span class="n">candidateName</span><span class="o">).</span><span class="na">getFactoryBeanName</span><span class="o">()))));</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/**
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * Add an entry to the candidate map: a bean instance if available or just the resolved
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * type, preventing early bean initialization ahead of primary candidate selection.
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">addCandidateEntry</span><span class="o">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">candidates</span><span class="o">,</span> <span class="n">String</span> <span class="n">candidateName</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">DependencyDescriptor</span> <span class="n">descriptor</span><span class="o">,</span> <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">requiredType</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">(</span><span class="n">descriptor</span> <span class="k">instanceof</span> <span class="n">MultiElementDescriptor</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Object</span> <span class="n">beanInstance</span> <span class="o">=</span> <span class="n">descriptor</span><span class="o">.</span><span class="na">resolveCandidate</span><span class="o">(</span><span class="n">candidateName</span><span class="o">,</span> <span class="n">requiredType</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(!(</span><span class="n">beanInstance</span> <span class="k">instanceof</span> <span class="n">NullBean</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">candidates</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">candidateName</span><span class="o">,</span> <span class="n">beanInstance</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">containsSingleton</span><span class="o">(</span><span class="n">candidateName</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">descriptor</span> <span class="k">instanceof</span> <span class="n">StreamDependencyDescriptor</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">((</span><span class="n">StreamDependencyDescriptor</span><span class="o">)</span> <span class="n">descriptor</span><span class="o">).</span><span class="na">isOrdered</span><span class="o">()))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Object</span> <span class="n">beanInstance</span> <span class="o">=</span> <span class="n">descriptor</span><span class="o">.</span><span class="na">resolveCandidate</span><span class="o">(</span><span class="n">candidateName</span><span class="o">,</span> <span class="n">requiredType</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">candidates</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">candidateName</span><span class="o">,</span> <span class="o">(</span><span class="n">beanInstance</span> <span class="k">instanceof</span> <span class="n">NullBean</span> <span class="o">?</span> <span class="kc">null</span> <span class="o">:</span> <span class="n">beanInstance</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">candidates</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">candidateName</span><span class="o">,</span> <span class="n">getType</span><span class="o">(</span><span class="n">candidateName</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// descriptor.resolveCandidate() 方法即使用工厂创建 bean 对象
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        data-src="./%e7%ac%94%e8%ae%b0.assets/5188c8cb4e34433895697d180858685b.png"
+        data-srcset="./%e7%ac%94%e8%ae%b0.assets/5188c8cb4e34433895697d180858685b.png, ./%e7%ac%94%e8%ae%b0.assets/5188c8cb4e34433895697d180858685b.png 1.5x, ./%e7%ac%94%e8%ae%b0.assets/5188c8cb4e34433895697d180858685b.png 2x"
+        data-sizes="auto"
+        alt="./笔记.assets/5188c8cb4e34433895697d180858685b.png"
+        title="5188c8cb4e34433895697d180858685b"></p>
+<p><strong>A.class与B.class相互依赖，形成循环依赖</strong></p>
+<ol>
+<li>A实例化自己的时候发现自己依赖B，会先将自己放入三级缓存，先去实例化B</li>
+<li>B实例化的时候发现发现自己依赖A，先去查一级缓存，没有，接着去二级缓存查，还没有，再去查三级缓存，找到。然后将三级缓存中的A放入二级缓存，并删掉三级缓存中的A。此时B完成自己的实例化。然后把自己放入一级缓存中，同时删除二级缓存中的自己。</li>
+<li>再去实例化A，A再去查一级缓存，完成自己的实例化，然后把自己放入一级缓存中，同时删除三级缓存中的自己。</li>
+<li>完成1、2、3后完成各自的实例化。</li>
+</ol>
+<ul>
+<li>引出问题：<a href="https://segmentfault.com/q/1010000040994980" target="_blank" rel="noopener noreffer">java - Spring源码问题：findAutowireCandidates这个if的意义是什么？ - SegmentFault 思否</a></li>
+</ul>
+<h2 id="token-过长" class="headerLink">
+    <a href="#token-%e8%bf%87%e9%95%bf" class="header-mark"></a>Token 过长</h2><ul>
+<li>jwt 生成的 Token 携带的角色、配置信息过长，导致超过 4016k，报错 400 Bad Request</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">server</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8086</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">max-http-header-size</span><span class="p">:</span><span class="w"> </span><span class="m">102400</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="事务" class="headerLink">
+    <a href="#%e4%ba%8b%e5%8a%a1" class="header-mark"></a>事务</h1><h2 id="事务的调用失效场景" class="headerLink">
+    <a href="#%e4%ba%8b%e5%8a%a1%e7%9a%84%e8%b0%83%e7%94%a8%e5%a4%b1%e6%95%88%e5%9c%ba%e6%99%af" class="header-mark"></a>事务的调用失效场景</h2><h3 id="this-调用" class="headerLink">
+    <a href="#this-%e8%b0%83%e7%94%a8" class="header-mark"></a>this 调用</h3><ul>
+<li>
+<p>没开启事务的方法使用 this 关键字调用开启了事务的方法，被调用方法抛出异常之后【事务失效】未回滚</p>
+</li>
+<li>
+<p>原因：<a href="https://spring.io/blog/2012/05/23/transactions-caching-and-aop-understanding-proxy-usage-in-spring" target="_blank" rel="noopener noreffer">Transactions, Caching and AOP: understanding proxy usage in Spring</a></p>
+<blockquote>
+<p>在启动时，使用 AOP 特性，通过 <strong>反射</strong> 生成一个代理类负责添加事务。因此无法通过 <code>this.method()</code> 的方式开启事务</p>
+<p>事务注解生效的前提是 事务方法被当前类以外的代码调用 才得以被事务拦截器拦截</p>
+<p>在默认的代理模式下，只有目标方法由外部调用，才能被 Spring 的事务拦截器拦截。在同一个类中的两个方法直接调用，是不会被 Spring 的事务拦截器拦截，可以使用 AspectJ 取代 Spring AOP 代理来解决这个问题&hellip;</p>
+</blockquote>
+</li>
+</ul>
+<p><img
+        class="lazyload"
+        data-src="./%e7%ac%94%e8%ae%b0.assets/image-20230922154018319.png"
+        data-srcset="./%e7%ac%94%e8%ae%b0.assets/image-20230922154018319.png, ./%e7%ac%94%e8%ae%b0.assets/image-20230922154018319.png 1.5x, ./%e7%ac%94%e8%ae%b0.assets/image-20230922154018319.png 2x"
+        data-sizes="auto"
+        alt="./笔记.assets/image-20230922154018319.png"
+        title="image-20230922154018319"></p>
+<p><img
+        class="lazyload"
+        data-src="./%e7%ac%94%e8%ae%b0.assets/image-20230922155128050.png"
+        data-srcset="./%e7%ac%94%e8%ae%b0.assets/image-20230922155128050.png, ./%e7%ac%94%e8%ae%b0.assets/image-20230922155128050.png 1.5x, ./%e7%ac%94%e8%ae%b0.assets/image-20230922155128050.png 2x"
+        data-sizes="auto"
+        alt="./笔记.assets/image-20230922155128050.png"
+        title="image-20230922155128050"></p>
+<ul>
+<li>
+<p>解决方式：</p>
+<ol>
+<li>使用 AopContext 去获取当前的代理对象，再通过这个代理对象调用对应方法</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">StudentService</span> <span class="n">studentService</span> <span class="o">=</span> <span class="o">(</span><span class="n">StudentService</span><span class="o">)</span> <span class="n">AopContext</span><span class="o">.</span><span class="na">currentProxy</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">studentService</span><span class="o">.</span><span class="na">test2</span><span class="o">(</span><span class="n">ctx</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>在本类中注入自己，通过注入的这个实例来调用</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Service</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StudentService</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@Autowired</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="n">StudentService</span> <span class="n">studentService</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// studentService.otherMethod();
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h3 id="事务注解中的-propagation-属性" class="headerLink">
+    <a href="#%e4%ba%8b%e5%8a%a1%e6%b3%a8%e8%a7%a3%e4%b8%ad%e7%9a%84-propagation-%e5%b1%9e%e6%80%a7" class="header-mark"></a>事务注解中的 propagation 属性</h3><ul>
+<li><code>REQUIRED</code>：如果当前没有事务，就新建一个事务，如果已经存在一个事务中，加入到这个事务中。【默认】</li>
+<li><code>SUPPORTS</code>：持当前事务，如果当前有事务，就以事务方式执行；如果当前没有事务，就以非事务方式执行</li>
+<li><code>MANDATORY</code>：使用当前的事务，且必须在一个已有的事务中执行，如果当前不存在事务，否则抛出异常</li>
+<li><code>REQUIRES_NEW</code>：不管是否存在事务，都创建一个新的事务，原来的挂起，新的执行完毕，继续执行老的事务</li>
+<li><code>NOT_SUPPORTED</code>：以非事务方式执行，如果当前存在事务，就把当前事务挂起</li>
+<li><code>NEVER</code>：以非事务方式执行，且必须在一个没有的事务中执行，如果当前存在事务，则抛出异常【与Propagation.MANDATORY相反】</li>
+<li><code>NESTED</code>：如果当前存在事务，则在嵌套事务内执行；如果当前没有事务，则执行与【Propagation.REQUIRED 】类似的操作</li>
+</ul>
+<img src="./笔记.assets/image-20230922155208418.png" alt="image-20230922155208418" style="zoom:50%;" />
+<h1 id="java" class="headerLink">
+    <a href="#java" class="header-mark"></a>Java</h1><h2 id="stream-流" class="headerLink">
+    <a href="#stream-%e6%b5%81" class="header-mark"></a>Stream 流</h2><h3 id="常见操作" class="headerLink">
+    <a href="#%e5%b8%b8%e8%a7%81%e6%93%8d%e4%bd%9c" class="header-mark"></a>常见操作</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">List</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;</span> <span class="n">studentList</span> <span class="o">=</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">        <span class="k">new</span> <span class="n">Student</span><span class="o">(</span><span class="n">1L</span><span class="o">,</span> <span class="s">&#34;刘嘉宁&#34;</span><span class="o">,</span> <span class="s">&#34;男&#34;</span><span class="o">,</span> <span class="n">23</span><span class="o">,</span> <span class="n">85</span><span class="o">.</span><span class="na">5</span><span class="o">),</span>
+</span></span><span class="line"><span class="cl">        <span class="k">new</span> <span class="n">Student</span><span class="o">(</span><span class="n">2L</span><span class="o">,</span> <span class="s">&#34;王晓彤&#34;</span><span class="o">,</span> <span class="s">&#34;男&#34;</span><span class="o">,</span> <span class="n">23</span><span class="o">,</span> <span class="n">99</span><span class="o">.</span><span class="na">5</span><span class="o">),</span>
+</span></span><span class="line"><span class="cl">        <span class="k">new</span> <span class="n">Student</span><span class="o">(</span><span class="n">3L</span><span class="o">,</span> <span class="s">&#34;张钰曼&#34;</span><span class="o">,</span> <span class="s">&#34;女&#34;</span><span class="o">,</span> <span class="n">22</span><span class="o">,</span> <span class="n">98</span><span class="o">.</span><span class="na">5</span><span class="o">),</span>
+</span></span><span class="line"><span class="cl">        <span class="k">new</span> <span class="n">Student</span><span class="o">(</span><span class="n">4L</span><span class="o">,</span> <span class="s">&#34;张四四&#34;</span><span class="o">,</span> <span class="s">&#34;男&#34;</span><span class="o">,</span> <span class="n">23</span><span class="o">,</span> <span class="n">85</span><span class="o">.</span><span class="na">5</span><span class="o">),</span>
+</span></span><span class="line"><span class="cl">        <span class="k">new</span> <span class="n">Student</span><span class="o">(</span><span class="n">5L</span><span class="o">,</span> <span class="s">&#34;李五五&#34;</span><span class="o">,</span> <span class="s">&#34;女&#34;</span><span class="o">,</span> <span class="n">18</span><span class="o">,</span> <span class="n">65</span><span class="o">.</span><span class="na">5</span><span class="o">),</span>
+</span></span><span class="line"><span class="cl">        <span class="k">new</span> <span class="n">Student</span><span class="o">(</span><span class="n">6L</span><span class="o">,</span> <span class="s">&#34;王六六&#34;</span><span class="o">,</span> <span class="s">&#34;女&#34;</span><span class="o">,</span> <span class="n">19</span><span class="o">,</span> <span class="n">59</span><span class="o">.</span><span class="na">0</span><span class="o">),</span>
+</span></span><span class="line"><span class="cl">        <span class="k">new</span> <span class="n">Student</span><span class="o">(</span><span class="n">7L</span><span class="o">,</span> <span class="s">&#34;赵七七&#34;</span><span class="o">,</span> <span class="s">&#34;男&#34;</span><span class="o">,</span> <span class="n">17</span><span class="o">,</span> <span class="n">45</span><span class="o">.</span><span class="na">5</span><span class="o">),</span>
+</span></span><span class="line"><span class="cl">        <span class="k">new</span> <span class="n">Student</span><span class="o">(</span><span class="n">8L</span><span class="o">,</span> <span class="s">&#34;于八八&#34;</span><span class="o">,</span> <span class="s">&#34;男&#34;</span><span class="o">,</span> <span class="n">23</span><span class="o">,</span> <span class="n">85</span><span class="o">.</span><span class="na">5</span><span class="o">),</span>
+</span></span><span class="line"><span class="cl">        <span class="k">new</span> <span class="n">Student</span><span class="o">(</span><span class="n">9L</span><span class="o">,</span> <span class="s">&#34;付九九&#34;</span><span class="o">,</span> <span class="s">&#34;女&#34;</span><span class="o">,</span> <span class="n">23</span><span class="o">,</span> <span class="n">87</span><span class="o">.</span><span class="na">0</span><span class="o">),</span>
+</span></span><span class="line"><span class="cl">        <span class="k">new</span> <span class="n">Student</span><span class="o">(</span><span class="n">10L</span><span class="o">,</span> <span class="s">&#34;智十十&#34;</span><span class="o">,</span> <span class="s">&#34;男&#34;</span><span class="o">,</span> <span class="n">23</span><span class="o">,</span> <span class="n">73</span><span class="o">.</span><span class="na">5</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="filter-过滤" class="headerLink">
+    <a href="#filter-%e8%bf%87%e6%bb%a4" class="header-mark"></a>filter 过滤</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// filter 过滤出成绩大于 60 的学生
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">List</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;</span> <span class="n">filterList</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">filter</span><span class="o">(</span><span class="n">item</span> <span class="o">-&gt;</span> <span class="n">item</span><span class="o">.</span><span class="na">getScore</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">60</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl"><span class="n">filterList</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230512100904027.png" alt="image-20230512100904027" style="zoom:50%;" />
+<h4 id="map-映射" class="headerLink">
+    <a href="#map-%e6%98%a0%e5%b0%84" class="header-mark"></a>map 映射</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// map 映射出列表中的姓名字段
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">nameList</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">map</span><span class="o">(</span><span class="n">item</span> <span class="o">-&gt;</span> <span class="n">item</span><span class="o">.</span><span class="na">getName</span><span class="o">()).</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl"><span class="n">nameList</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">map</span><span class="o">(</span><span class="n">item</span> <span class="o">-&gt;</span> <span class="n">item</span><span class="o">.</span><span class="na">getName</span><span class="o">())</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 也可以这么写
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">map</span><span class="o">(</span><span class="n">Student</span><span class="o">::</span><span class="n">getName</span><span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230512101346500.png" alt="image-20230512101346500" style="zoom:50%;" />
+<h4 id="distinct-去重" class="headerLink">
+    <a href="#distinct-%e5%8e%bb%e9%87%8d" class="header-mark"></a>distinct 去重</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// dist 去重，将所有性别字段列表去重
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">distinctNameList</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">map</span><span class="o">(</span><span class="n">Student</span><span class="o">::</span><span class="n">getSex</span><span class="o">).</span><span class="na">distinct</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl"><span class="n">distinctNameList</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230512101813951.png" alt="image-20230512101813951" style="zoom:50%;" />
+<h4 id="sorted-排序" class="headerLink">
+    <a href="#sorted-%e6%8e%92%e5%ba%8f" class="header-mark"></a>sorted 排序</h4><ul>
+<li><code>Comparator.comparing()</code> 排序的比对方法</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// sorted 排序, 按照年龄逆序排序
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">List</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;</span> <span class="n">students</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">sorted</span><span class="o">(</span><span class="n">Comparator</span><span class="o">.</span><span class="na">comparing</span><span class="o">(</span><span class="n">Student</span><span class="o">::</span><span class="n">getAge</span><span class="o">).</span><span class="na">reversed</span><span class="o">()).</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl"><span class="n">students</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230512102150488.png" alt="image-20230512102150488" style="zoom:50%;" />
+<h4 id="skip-跳过前-n-个元素limit-取前-n-个元素" class="headerLink">
+    <a href="#skip-%e8%b7%b3%e8%bf%87%e5%89%8d-n-%e4%b8%aa%e5%85%83%e7%b4%a0limit-%e5%8f%96%e5%89%8d-n-%e4%b8%aa%e5%85%83%e7%b4%a0" class="header-mark"></a>skip 跳过前 n 个元素、limit 取前 n 个元素</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// skip limit 分页, 跳过前5条取2条
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">List</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;</span> <span class="n">top5</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">skip</span><span class="o">(</span><span class="n">5</span><span class="o">).</span><span class="na">limit</span><span class="o">(</span><span class="n">2</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl"><span class="n">top5</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230512102847116.png" alt="image-20230512102847116" style="zoom:50%;" />
+<h4 id="flatmap-将数据拆分扁平化成一个流" class="headerLink">
+    <a href="#flatmap-%e5%b0%86%e6%95%b0%e6%8d%ae%e6%8b%86%e5%88%86%e6%89%81%e5%b9%b3%e5%8c%96%e6%88%90%e4%b8%80%e4%b8%aa%e6%b5%81" class="header-mark"></a>flatMap 将数据拆分扁平化成一个流</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// flatMap 将姓名拆分, 将每个人的姓名列表扁平化成一个大列表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">flatMap</span><span class="o">(</span><span class="n">item</span> <span class="o">-&gt;</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">split</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">))).</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl"><span class="n">list</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230512104750413.png" alt="image-20230512104750413" style="zoom:50%;" />
+<h4 id="peek-对元素遍历处理" class="headerLink">
+    <a href="#peek-%e5%af%b9%e5%85%83%e7%b4%a0%e9%81%8d%e5%8e%86%e5%a4%84%e7%90%86" class="header-mark"></a>peek 对元素遍历处理</h4><blockquote>
+<p>在此处发现加了 <code>collect()</code> 方法之后会改变原始数据，不加则不会改变 ？？？</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// peek 对元素遍历处理，将每个学生的年龄 +1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">peek</span><span class="o">(</span><span class="n">stu</span> <span class="o">-&gt;</span> <span class="n">stu</span><span class="o">.</span><span class="na">setAge</span><span class="o">(</span><span class="n">stu</span><span class="o">.</span><span class="na">getAge</span><span class="o">()</span> <span class="o">+</span> <span class="n">1</span><span class="o">)).</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl"><span class="n">studentList</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230512105524195.png" alt="image-20230512105524195" style="zoom:50%;" />
+<h4 id="collect-收集器将流转换为其他形式" class="headerLink">
+    <a href="#collect-%e6%94%b6%e9%9b%86%e5%99%a8%e5%b0%86%e6%b5%81%e8%bd%ac%e6%8d%a2%e4%b8%ba%e5%85%b6%e4%bb%96%e5%bd%a2%e5%bc%8f" class="header-mark"></a>collect 收集器：将流转换为其他形式</h4><h6 id="collectorstolist-转成-list" class="headerLink">
+    <a href="#collectorstolist-%e8%bd%ac%e6%88%90-list" class="header-mark"></a><code>Collectors.toList()</code> 转成 list</h6><h6 id="collectorstoset-转成-set" class="headerLink">
+    <a href="#collectorstoset-%e8%bd%ac%e6%88%90-set" class="header-mark"></a><code>Collectors.toSet()</code> 转成 set</h6><h6 id="collectorstomapkeyvalue-转成-map" class="headerLink">
+    <a href="#collectorstomapkeyvalue-%e8%bd%ac%e6%88%90-map" class="header-mark"></a><code>Collectors.toMap(key,value)</code> 转成 map</h6><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// collect, list 转 map
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Map</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Student</span><span class="o">&gt;</span> <span class="n">studentMap</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toMap</span><span class="o">(</span><span class="n">Student</span><span class="o">::</span><span class="n">getId</span><span class="o">,</span> <span class="n">item</span> <span class="o">-&gt;</span> <span class="n">item</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl"><span class="n">studentMap</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="s">&#34; : &#34;</span> <span class="o">+</span> <span class="n">v</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">});</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230512110318547.png" alt="image-20230512110318547" style="zoom:50%;" />
+<h6 id="collectorscounting-返回总数和-count-一样" class="headerLink">
+    <a href="#collectorscounting-%e8%bf%94%e5%9b%9e%e6%80%bb%e6%95%b0%e5%92%8c-count-%e4%b8%80%e6%a0%b7" class="header-mark"></a><code>Collectors.counting()</code> 返回总数，和 <code>count()</code> 一样</h6><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">long</span> <span class="n">count</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">count</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">count</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">count</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">counting</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">count</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230512115717379.png" alt="image-20230512115717379" style="zoom:50%;" />
+<h6 id="collectorsjoining-连接到一起" class="headerLink">
+    <a href="#collectorsjoining-%e8%bf%9e%e6%8e%a5%e5%88%b0%e4%b8%80%e8%b5%b7" class="header-mark"></a><code>Collectors.joining(&quot;&quot;)</code> 连接到一起</h6><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">String</span> <span class="n">collect</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">map</span><span class="o">(</span><span class="n">Student</span><span class="o">::</span><span class="n">getName</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">joining</span><span class="o">(</span><span class="s">&#34;||&#34;</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">collect</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230512120007612.png" alt="image-20230512120007612" style="zoom:50%;" />
+<h6 id="collectorsgroupingby-分组" class="headerLink">
+    <a href="#collectorsgroupingby-%e5%88%86%e7%bb%84" class="header-mark"></a><code>Collectors.groupingBy()</code> 分组</h6><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 以学生性别分组，Map 的 key 为 sex 的类型，value 为 List&lt;Student&gt; 类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;&gt;</span> <span class="n">collect</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">groupingBy</span><span class="o">(</span><span class="n">Student</span><span class="o">::</span><span class="n">getSex</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">collect</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 同时按照 学生性别 和 学生年龄 分组，组名为 学生性别_学生年龄
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;&gt;</span> <span class="n">collect1</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">groupingBy</span><span class="o">(</span><span class="n">stu</span> <span class="o">-&gt;</span> <span class="n">stu</span><span class="o">.</span><span class="na">getSex</span><span class="o">()</span> <span class="o">+</span> <span class="s">&#34;_&#34;</span> <span class="o">+</span> <span class="n">stu</span><span class="o">.</span><span class="na">getAge</span><span class="o">()));</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">collect1</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 按照学生是否及格分组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;&gt;</span> <span class="n">collect2</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">groupingBy</span><span class="o">(</span><span class="n">stu</span> <span class="o">-&gt;</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">(</span><span class="n">stu</span><span class="o">.</span><span class="na">getScore</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">60</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s">&#34;及格学生&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s">&#34;不及格学生&#34;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}));</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">collect2</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230512143853343.png" alt="image-20230512143853343" style="zoom:50%;" />
+<h6 id="使用分组实现-tomap-操作" class="headerLink">
+    <a href="#%e4%bd%bf%e7%94%a8%e5%88%86%e7%bb%84%e5%ae%9e%e7%8e%b0-tomap-%e6%93%8d%e4%bd%9c" class="header-mark"></a>使用分组实现 toMap 操作</h6><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 1ms【数据量小的情况下】 209ms【数据量 &gt; 3W 的情况下(数据量越大越慢)】
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Map</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Student</span><span class="o">&gt;</span> <span class="n">studentMap2</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">groupingBy</span><span class="o">(</span><span class="n">Student</span><span class="o">::</span><span class="n">getId</span><span class="o">,</span> <span class="n">Collectors</span><span class="o">.</span><span class="na">collectingAndThen</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">(),</span> <span class="n">items</span> <span class="o">-&gt;</span> <span class="n">items</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">0</span><span class="o">))));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 替代
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 40ms【数据量小的情况下】 156ms【数据量 &gt; 3W 的情况下】
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Map</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Student</span><span class="o">&gt;</span> <span class="n">studentMap1</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toMap</span><span class="o">(</span><span class="n">Student</span><span class="o">::</span><span class="n">getId</span><span class="o">,</span> <span class="n">item</span> <span class="o">-&gt;</span> <span class="n">item</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 替代
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 0ms【数据量小的情况下】 78ms【数据量 &gt; 3W 的情况下】
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Map</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">Student</span><span class="o">&gt;</span> <span class="n">studentMap11</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">studentList</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">studentMap11</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">studentList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">j</span><span class="o">).</span><span class="na">getId</span><span class="o">(),</span> <span class="n">studentList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">j</span><span class="o">));</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="findfirst-返回第一个元素findany-返回任意一个元素" class="headerLink">
+    <a href="#findfirst-%e8%bf%94%e5%9b%9e%e7%ac%ac%e4%b8%80%e4%b8%aa%e5%85%83%e7%b4%a0findany-%e8%bf%94%e5%9b%9e%e4%bb%bb%e6%84%8f%e4%b8%80%e4%b8%aa%e5%85%83%e7%b4%a0" class="header-mark"></a>findFirst 返回第一个元素、findAny 返回任意一个元素</h4><blockquote>
+<p>findAny 需要在并行流中才会生效，否则和 findFirst 结果一致</p>
+<ul>
+<li>parallelStream 在并发量不大的情况下不建议使用，因为底层使用多线程 Fork/Join 实现，在创建销毁多线程时有资源消耗</li>
+</ul>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// findFirst 返回第一个元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Student</span> <span class="n">student</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">findFirst</span><span class="o">().</span><span class="na">get</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">student</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// findAny 获取任意一个元素
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Student</span> <span class="n">student1</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">parallelStream</span><span class="o">().</span><span class="na">findAny</span><span class="o">().</span><span class="na">get</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">student1</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230512111042176.png" alt="image-20230512111042176" style="zoom:50%;" />
+<h4 id="count-总数sum-总和max-最大min-最小" class="headerLink">
+    <a href="#count-%e6%80%bb%e6%95%b0sum-%e6%80%bb%e5%92%8cmax-%e6%9c%80%e5%a4%a7min-%e6%9c%80%e5%b0%8f" class="header-mark"></a>count 总数、sum 总和、max 最大、min 最小</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 返回分数小于 60 的学生总数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">long</span> <span class="n">count</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">filter</span><span class="o">(</span><span class="n">item</span> <span class="o">-&gt;</span> <span class="n">item</span><span class="o">.</span><span class="na">getScore</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">60</span><span class="o">).</span><span class="na">count</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">count</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 返回学生分数的总和，mapToDouble().sum()
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">double</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">mapToDouble</span><span class="o">(</span><span class="n">Student</span><span class="o">::</span><span class="n">getScore</span><span class="o">).</span><span class="na">sum</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sum</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 获取分数最高的学生
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Student</span> <span class="n">student1</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">max</span><span class="o">(</span><span class="n">Comparator</span><span class="o">.</span><span class="na">comparingDouble</span><span class="o">(</span><span class="n">Student</span><span class="o">::</span><span class="n">getScore</span><span class="o">)).</span><span class="na">get</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">student1</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 获取分数最低的学生
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Student</span> <span class="n">student2</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">min</span><span class="o">(</span><span class="n">Comparator</span><span class="o">.</span><span class="na">comparingDouble</span><span class="o">(</span><span class="n">Student</span><span class="o">::</span><span class="n">getScore</span><span class="o">)).</span><span class="na">get</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">student2</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230512112809602.png" alt="image-20230512112809602" style="zoom:50%;" />
+<h4 id="anymatch-是否至少匹配一个allmatch-是否全部匹配nonematch-是否全不匹配" class="headerLink">
+    <a href="#anymatch-%e6%98%af%e5%90%a6%e8%87%b3%e5%b0%91%e5%8c%b9%e9%85%8d%e4%b8%80%e4%b8%aaallmatch-%e6%98%af%e5%90%a6%e5%85%a8%e9%83%a8%e5%8c%b9%e9%85%8dnonematch-%e6%98%af%e5%90%a6%e5%85%a8%e4%b8%8d%e5%8c%b9%e9%85%8d" class="header-mark"></a>anyMatch 是否至少匹配一个，allMatch 是否全部匹配、noneMatch 是否全不匹配</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kt">boolean</span> <span class="n">match1</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">anyMatch</span><span class="o">(</span><span class="n">stu</span> <span class="o">-&gt;</span> <span class="s">&#34;女&#34;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">stu</span><span class="o">.</span><span class="na">getSex</span><span class="o">()));</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">match1</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">boolean</span> <span class="n">match2</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">allMatch</span><span class="o">(</span><span class="n">stu</span> <span class="o">-&gt;</span> <span class="s">&#34;女&#34;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">stu</span><span class="o">.</span><span class="na">getSex</span><span class="o">()));</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">match2</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">boolean</span> <span class="n">match3</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">noneMatch</span><span class="o">(</span><span class="n">stu</span> <span class="o">-&gt;</span> <span class="s">&#34;人妖&#34;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">stu</span><span class="o">.</span><span class="na">getSex</span><span class="o">()));</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">match3</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230512113206952.png" alt="image-20230512113206952" style="zoom:50%;" />
+<h4 id="reduce-将流中元素反复结合起来得到一个值" class="headerLink">
+    <a href="#reduce-%e5%b0%86%e6%b5%81%e4%b8%ad%e5%85%83%e7%b4%a0%e5%8f%8d%e5%a4%8d%e7%bb%93%e5%90%88%e8%b5%b7%e6%9d%a5%e5%be%97%e5%88%b0%e4%b8%80%e4%b8%aa%e5%80%bc" class="header-mark"></a>reduce 将流中元素反复结合起来，得到一个值</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">// 让每个学生的成绩等于他与前一个学生的成绩和，最后一个学生的成绩就是成绩总和
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Student</span> <span class="n">student</span> <span class="o">=</span> <span class="n">studentList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">reduce</span><span class="o">((</span><span class="n">thisStu</span><span class="o">,</span> <span class="n">nextStu</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">thisStu</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">nextStu</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nextStu</span><span class="o">.</span><span class="na">setScore</span><span class="o">(</span><span class="n">thisStu</span><span class="o">.</span><span class="na">getScore</span><span class="o">()</span> <span class="o">+</span> <span class="n">nextStu</span><span class="o">.</span><span class="na">getScore</span><span class="o">());</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">nextStu</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}).</span><span class="na">get</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">student</span><span class="o">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20230512114959111.png" alt="image-20230512114959111" style="zoom:50%;" />
+<h2 id="集合" class="headerLink">
+    <a href="#%e9%9b%86%e5%90%88" class="header-mark"></a>集合</h2><h3 id="--语法糖" class="headerLink">
+    <a href="#--%e8%af%ad%e6%b3%95%e7%b3%96" class="header-mark"></a><code>{{ }}</code> 语法糖</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;(){{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">add</span><span class="o">(</span><span class="s">&#34;item1&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">add</span><span class="o">(</span><span class="s">&#34;item2&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="o">}}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><img src="./笔记.assets/image-20231009174317303.png" alt="image-20231009174317303"  />
+<ul>
+<li>真正的写法</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;(){</span>
+</span></span><span class="line"><span class="cl">    <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">add</span><span class="o">(</span><span class="s">&#34;item1&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">add</span><span class="o">(</span><span class="s">&#34;item2&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>外侧花括号为创建一个继承当前对象的匿名内部类，花括号内就是这个内部类的内容</li>
+<li>内测花括号为创建一个代码块，代码块中的内容会在每次创建类的实例时被执行</li>
+<li>最后 new 出的对象为 匿名内部类 向上转型到当前对象的引用</li>
+<li>因此：每次执行这段代码都会创建一个 .class 文件。这个匿名内部类会持有外部对象的引用，会将外部对象暴露出去，造成内存泄漏</li>
+</ul>
+<h3 id="arraysaslist-创建的集合调用-add-异常" class="headerLink">
+    <a href="#arraysaslist-%e5%88%9b%e5%bb%ba%e7%9a%84%e9%9b%86%e5%90%88%e8%b0%83%e7%94%a8-add-%e5%bc%82%e5%b8%b8" class="header-mark"></a><code>Arrays.asList()</code> 创建的集合调用 <code>add()</code> 异常</h3><ul>
+<li><code>Arrays.asList()</code> 创建的是其内部类 ArrayList 实例，并非 <code>java.util.ArrayList</code></li>
+<li>这个类继承自 AbstractCollection 其中的 add 方法抛出异常</li>
+</ul>
+<p><img
+        class="lazyload"
+        data-src="./%e7%ac%94%e8%ae%b0.assets/image-20231009183534808.png"
+        data-srcset="./%e7%ac%94%e8%ae%b0.assets/image-20231009183534808.png, ./%e7%ac%94%e8%ae%b0.assets/image-20231009183534808.png 1.5x, ./%e7%ac%94%e8%ae%b0.assets/image-20231009183534808.png 2x"
+        data-sizes="auto"
+        alt="./笔记.assets/image-20231009183534808.png"
+        title="image-20231009183534808"></p>
+<p><img
+        class="lazyload"
+        data-src="./%e7%ac%94%e8%ae%b0.assets/image-20231009183746801.png"
+        data-srcset="./%e7%ac%94%e8%ae%b0.assets/image-20231009183746801.png, ./%e7%ac%94%e8%ae%b0.assets/image-20231009183746801.png 1.5x, ./%e7%ac%94%e8%ae%b0.assets/image-20231009183746801.png 2x"
+        data-sizes="auto"
+        alt="./笔记.assets/image-20231009183746801.png"
+        title="image-20231009183746801"></p>
+</div>
+
+        <div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-10-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span><a class="link-to-mardown" href=/%E7%AC%94%E8%AE%B0/index.md target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                    </span></div>
+            <div class="post-info-share">
+                <span><a href="#" onclick="return false;" title="分享到 微博" data-sharer="weibo" data-url="https://liujjjjn.github.io/%E7%AC%94%E8%AE%B0/" data-title="日常笔记" data-ralateuid="6018937938"><i class="fab fa-weibo fa-fw"></i></a><a href="#" onclick="return false;" title="分享到 Evernote" data-sharer="evernote" data-url="https://liujjjjn.github.io/%E7%AC%94%E8%AE%B0/" data-title="日常笔记"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/springcloud%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/" class="prev" rel="prev" title="SpringCloud自学笔记md版"><i class="fas fa-angle-left fa-fw"></i>SpringCloud自学笔记md版</a></div>
+</div>
+</article></div>
+        </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://liujjjjn.github.io/" target="_blank" rel="noopener noreferrer">刘嘉宁</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+            <div class="footer-line"></div>
+            <div class="footer-line">
+            </div>
+        </div></footer></div>
+
+    <div id="fixed-buttons"><a href="#back-to-top" id="back-to-top-button" class="fixed-button" title="回到顶部">
+            <i class="fas fa-arrow-up fa-fw"></i>
+        </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+            <i class="fas fa-comment fa-fw"></i>
+        </a>
+    </div><div class="assets"><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/fuse/fuse.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/tablesort/tablesort.min.js"></script><script type="text/javascript" src="/lib/topbar/topbar.min.js"></script><script type="text/javascript" src="/lib/pjax/pjax.min.js"></script><script type="text/javascript" src="/js/theme.min.js" defer></script></div>
+
+<div class="pjax-assets"><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"distance":100,"findAllMatches":false,"fuseIndexURL":"/index.json","highlightTag":"em","ignoreFieldNorm":false,"ignoreLocation":false,"isCaseSensitive":false,"location":0,"maxResultLength":10,"minMatchCharLength":2,"noResultsFound":"没有找到结果","snippetLength":50,"threshold":0.3,"type":"fuse","useExtendedSearch":false},"sharerjs":true,"table":{"sort":true}};</script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js" defer></script><script type="text/javascript" src="/lib/katex/auto-render.min.js" defer></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js" defer></script><script type="text/javascript" src="/lib/katex/mhchem.min.js" defer></script><script type="text/javascript" src="/js/katex.min.js" defer></script><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/katex/copy-tex.min.css">
+        <noscript><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"></noscript></div>
+</body>
+
+</html>

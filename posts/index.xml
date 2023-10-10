@@ -4,7 +4,14 @@
         <link>https://liujjjjn.github.io/posts/</link>
         <description>所有文章 | LiuJN 的个人博客</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>LiuJaNing@163.com (刘嘉宁)</managingEditor>
-            <webMaster>LiuJaNing@163.com (刘嘉宁)</webMaster><lastBuildDate>Fri, 14 Apr 2023 00:00:00 &#43;0800</lastBuildDate><atom:link href="https://liujjjjn.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>LiuJaNing@163.com (刘嘉宁)</webMaster><lastBuildDate>Tue, 10 Oct 2023 00:00:00 &#43;0800</lastBuildDate><atom:link href="https://liujjjjn.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>日常笔记</title>
+    <link>https://liujjjjn.github.io/%E7%AC%94%E8%AE%B0/</link>
+    <pubDate>Tue, 10 Oct 2023 00:00:00 &#43;0800</pubDate><author>
+        <name>刘嘉宁</name>
+    </author><guid>https://liujjjjn.github.io/%E7%AC%94%E8%AE%B0/</guid>
+    <description><![CDATA[MySQL 窗口函数 查询所有批次信息对应的最新一条工器具归还单 1 2 3 4 5 6 7 8 9 10 11 12 13 select * from (select row_number() over(partition by brii.batch_id order by brih.id desc) as row_num, brii.id, brii.batch_id, brii.head_id, brih.input_user_id from SDNPC_DEV.biz_receipt_input_item brii inner join SDNPC_DEV.biz_receipt_input_head brih ON brih.id = brii.head_id where brih.receipt_type]]></description>
+</item><item>
     <title>SpringCloud自学笔记md版</title>
     <link>https://liujjjjn.github.io/springcloud%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</link>
     <pubDate>Fri, 14 Apr 2023 00:00:00 &#43;0800</pubDate><author>
@@ -67,12 +74,5 @@
         <name>刘嘉宁</name>
     </author><guid>https://liujjjjn.github.io/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0md%E7%89%88/</guid>
     <description><![CDATA[Java 多线程笔记 大连交通大学 信息学院 刘嘉宁 笔记摘自 西部开源 秦疆 多线程基础 进程与线程 进程（Process）：进程就是程序的一次执行过程，是系统分配]]></description>
-</item><item>
-    <title>JUC自学笔记md版</title>
-    <link>https://liujjjjn.github.io/juc%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</link>
-    <pubDate>Tue, 05 Apr 2022 00:00:00 &#43;0800</pubDate><author>
-        <name>刘嘉宁</name>
-    </author><guid>https://liujjjjn.github.io/juc%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0md%E7%89%88/</guid>
-    <description><![CDATA[JUC 大连交通大学 信息学院 刘嘉宁 笔记摘自 尚硅谷 什么是 JUC 是 java.util.concurrent 工具包的简称 是一个线程处理工具包，从 JDK 1.5 开始出现 进程与线程 进程（Process）：指系]]></description>
 </item></channel>
 </rss>
